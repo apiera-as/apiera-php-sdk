@@ -11,7 +11,4 @@
     <!-- Base configuration -->
     <arg name="tab-width" value="4"/>
     <arg name="encoding" value="utf-8"/>
-
-    <!-- Register custom sniffs -->
-    <rule ref="Apiera.Declaring.StrictTypes"/>
 </ruleset>
