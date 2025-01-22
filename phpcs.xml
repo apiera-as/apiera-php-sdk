@@ -14,4 +14,7 @@
 
     <!-- Register custom sniffs -->
     <rule ref="Apiera.Declaring.StrictTypes"/>
+
+    <!-- Include the custom sniffs from the specified path -->
+    <include name="Apiera" />
 </ruleset>
