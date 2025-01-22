@@ -2,9 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   validate:
@@ -43,23 +43,11 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      # Install PHP_CodeSniffer globally
-      - name: Install PHP_CodeSniffer
-        run: composer global require "squizlabs/php_codesniffer"
-
-      # Set PHP_CodeSniffer installed paths
-      - name: Set PHP_CodeSniffer installed paths
-        run: phpcs --config-set installed_paths ./src/Tools/Apiera
-
-      # Verify that PHP_CodeSniffer is installed correctly
-      - name: Check PHP_CodeSniffer version
-        run: phpcs --version
-
       - name: Run PHPStan
-        run: composer phpstan --level max --no-progress --debug
+        run: composer phpstan
 
       - name: Run PHPCS
-        run: composer phpcs-check --verbose
+        run: composer phpcs-check
 
   #tests:
     #name: Tests

@@ -2,6 +2,9 @@
 <ruleset name="Apiera">
     <description>Apiera SDK Coding Standard</description>
 
+    <!-- Include custom sniffs directory -->
+    <arg name="standard" value="src/Tools/Apiera"/>
+
     <!-- Base PSR-12 standard -->
     <rule ref="PSR12"/>
 
