@@ -43,11 +43,17 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Set PHP_CodeSniffer installed paths
+        run: phpcs --config-set installed_paths ./path/to/your/sniffs
+
+      - name: Check PHP_CodeSniffer version
+        run: phpcs --version
+
       - name: Run PHPStan
-        run: composer phpstan
+        run: composer phpstan --level max --no-progress --debug
 
       - name: Run PHPCS
-        run: composer phpcs-check
+        run: composer phpcs-check --verbose
 
   tests:
     name: Tests

@@ -2,6 +2,7 @@
     "name": "apiera/apiera-php-sdk",
     "description": "Apiera PHP SDK composer library.",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Apiera\\Sdk\\": "src/",
