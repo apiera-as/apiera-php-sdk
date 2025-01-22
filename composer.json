@@ -5,8 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Apiera\\Sdk\\": "src/",
-            "Apiera\\": "src/Tools/Apiera/"
+            "Apiera\\Sdk\\": "src/"
         }
     },
     "autoload-dev": {
