@@ -43,6 +43,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Install PHP_CodeSniffer
+        run: composer global require "squizlabs/php_codesniffer=*"
+
       - name: Register Custom PHPCS Standard
         run: phpcs --config-set installed_paths ./src/Tools/Apiera
 
