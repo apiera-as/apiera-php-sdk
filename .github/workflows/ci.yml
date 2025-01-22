@@ -43,9 +43,15 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      # Install PHP_CodeSniffer globally
+      - name: Install PHP_CodeSniffer
+        run: composer global require "squizlabs/php_codesniffer"
+
+      # Set PHP_CodeSniffer installed paths
       - name: Set PHP_CodeSniffer installed paths
         run: phpcs --config-set installed_paths ./src/Tools/Apiera
 
+      # Verify that PHP_CodeSniffer is installed correctly
       - name: Check PHP_CodeSniffer version
         run: phpcs --version
 
