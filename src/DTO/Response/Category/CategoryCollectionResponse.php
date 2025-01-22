@@ -10,7 +10,7 @@ use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
  * @template-extends AbstractCollectionResponse<CategoryResponse>
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DTO\Response\Category
- * @since 1.0.0
+ * @since 0.1.0
  */
 final readonly class CategoryCollectionResponse extends AbstractCollectionResponse
 {

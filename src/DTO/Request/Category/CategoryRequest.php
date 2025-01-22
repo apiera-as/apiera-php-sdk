@@ -9,7 +9,7 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DTO\Request\Category
- * @since 1.0.0
+ * @since 0.1.0
  */
 final readonly class CategoryRequest implements RequestInterface
 {

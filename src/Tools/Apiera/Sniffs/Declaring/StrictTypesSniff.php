@@ -10,7 +10,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sniffs\Declaring
- * @since 1.0.0
+ * @since 0.1.0
  */
 class StrictTypesSniff implements Sniff
 {

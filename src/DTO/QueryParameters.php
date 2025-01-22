@@ -12,7 +12,7 @@ namespace Apiera\Sdk\DTO;
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DTO
- * @since 1.0.0
+ * @since 0.1.0
  */
 readonly class QueryParameters
 {

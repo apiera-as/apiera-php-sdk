@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DTO\Response
- * @since 1.0.0
+ * @since 0.1.0
  */
 readonly abstract class AbstractResponse implements JsonLDInterface, ResponseInterface
 {

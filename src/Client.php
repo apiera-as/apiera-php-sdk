@@ -21,7 +21,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk
- * @since 1.0.0
+ * @since 0.1.0
  */
 readonly class Client implements ClientInterface
 {
@@ -41,7 +41,7 @@ readonly class Client implements ClientInterface
             RequestOptions::DEBUG => $configuration->getDebugMode(),
             RequestOptions::HEADERS => [
                 HttpHeaders::UserAgent->value => $configuration->getUserAgent(),
-                HttpHeaders::ContentType->value => ContentTypes::LD_JSON->value,
+                HttpHeaders::ContentType->value => ContentTypes::JsonLD->value,
             ]
         ]);
 
@@ -132,7 +132,7 @@ readonly class Client implements ClientInterface
             return $this->client->request('PATCH', $endpoint, $this->mergeOptions([
                 RequestOptions::JSON => $body,
                 RequestOptions::HEADERS => [
-                    HttpHeaders::ContentType->value => ContentTypes::MERGE_PATCH->value,
+                    HttpHeaders::ContentType->value => ContentTypes::MergePatch->value,
                 ]
             ]));
         } catch (GuzzleException $exception) {

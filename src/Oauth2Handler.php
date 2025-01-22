@@ -20,7 +20,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk
- * @since 1.0.0
+ * @since 0.1.0
  */
 readonly final class Oauth2Handler implements Interface\Oauth2Interface
 {

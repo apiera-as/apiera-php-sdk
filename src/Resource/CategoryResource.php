@@ -21,7 +21,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\Resource
- * @since 1.0.0
+ * @since 0.1.0
  */
 readonly final class CategoryResource implements RequestResourceInterface
 {

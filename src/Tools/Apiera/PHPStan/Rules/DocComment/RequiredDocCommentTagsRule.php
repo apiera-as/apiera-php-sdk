@@ -19,7 +19,7 @@ use PHPStan\ShouldNotHappenException;
  * @implements Rule<Node\Stmt>
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\PHPStan\Rules\DocComment
- * @since 1.0.0
+ * @since 0.1.0
  */
 class RequiredDocCommentTagsRule implements Rule
 {

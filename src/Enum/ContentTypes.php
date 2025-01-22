@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\Enum;
 
+/**
+ * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
+ * @package Apiera\Sdk\Enum
+ * @since 0.1.0
+ */
 enum ContentTypes: string
 {
-    case LD_JSON = 'application/ld+json';
-    case MERGE_PATCH = 'application/merge-patch+json';
+    case JsonLD = 'application/ld+json';
+    case MergePatch = 'application/merge-patch+json';
 }

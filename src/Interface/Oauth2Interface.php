@@ -9,7 +9,7 @@ use DateTimeInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\Interface
- * @since 1.0.0
+ * @since 0.1.0
  */
 interface Oauth2Interface
 {
