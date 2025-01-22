@@ -44,7 +44,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Set PHP_CodeSniffer installed paths
-        run: phpcs --config-set installed_paths ./path/to/your/sniffs
+        run: phpcs --config-set installed_paths ./src/Tools/Apiera
 
       - name: Check PHP_CodeSniffer version
         run: phpcs --version
