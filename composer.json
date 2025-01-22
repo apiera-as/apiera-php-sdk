@@ -1,5 +1,5 @@
 {
-    "name": "apiera/apiera-php-sdk",
+    "name": "apiera/php-sdk",
     "description": "Apiera PHP SDK composer library.",
     "type": "library",
     "license": "MIT",
