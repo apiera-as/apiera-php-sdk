@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    scanDirectories:
+            - vendor/squizlabs/php_codesniffer/src
+
+services:
+    -
+        class: Apiera\PHPStan\Rules\DocComment\RequiredDocCommentTagsRule
+        tags:
+            - phpstan.rules.rule
