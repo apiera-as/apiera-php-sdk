@@ -2,8 +2,8 @@
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;

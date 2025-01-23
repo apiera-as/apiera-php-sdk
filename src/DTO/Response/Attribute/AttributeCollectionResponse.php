@@ -1,9 +1,8 @@
 <?php
 
-namespace Apiera\Sdk\DTO\Request\Attribute;
+namespace Apiera\Sdk\DTO\Response\Attribute;
 
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
-use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 
 /**
  * @template-extends AbstractCollectionResponse<AttributeResponse>
