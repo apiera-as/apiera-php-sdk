@@ -43,6 +43,7 @@
     "scripts": {
         "phpstan": "phpstan analyse",
         "phpcs-check": "phpcs",
-        "phpcs-fix": "phpcbf"
+        "phpcs-fix": "phpcbf",
+        "phpunit": "./vendor/bin/phpunit"
     }
 }
