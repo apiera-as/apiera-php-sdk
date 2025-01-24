@@ -17,25 +17,25 @@ readonly class AlternateIdentifierResponse extends AbstractResponse implements R
 {
     /**
      * @param string $id
-     * @param LdType $ldType
+     * @param LdType $type
      * @param Uuid $uuid
      * @param DateTimeInterface $createdAt
      * @param DateTimeInterface $updatedAt
-     * @param string $type
+     * @param string $identifierType
      * @param string $code
      */
     public function __construct(
         string $id,
-        LdType $ldType,
+        LdType $type,
         Uuid $uuid,
         DateTimeInterface $createdAt,
         DateTimeInterface $updatedAt,
-        private string $type,
+        private string $identifierType,
         private string $code
     ) {
         parent::__construct(
             $id,
-            $ldType,
+            $type,
             $uuid,
             $createdAt,
             $updatedAt
@@ -47,7 +47,7 @@ readonly class AlternateIdentifierResponse extends AbstractResponse implements R
      */
     public function getType(): string
     {
-        return $this->type;
+        return $this->identifierType;
     }
 
     /**
