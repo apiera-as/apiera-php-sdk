@@ -6,7 +6,6 @@ namespace Apiera\Sdk\DTO\Response\Category;
 
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
