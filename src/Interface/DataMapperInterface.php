@@ -27,11 +27,11 @@ interface DataMapperInterface
     /**
      * Maps raw API collection response data to an array of strongly-typed DTOs.
      *
-     * @param array<string, mixed> $collectionData
+     * @param array<string, mixed> $collectionResponseData
      * @return JsonLDInterface
      * @throws ClientExceptionInterface
      */
-    public function fromCollectionResponse(array $collectionData): JsonLDInterface;
+    public function fromCollectionResponse(array $collectionResponseData): JsonLDInterface;
 
     /**
      * Maps a request DTO to the format expected by the API.
