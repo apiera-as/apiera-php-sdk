@@ -23,17 +23,18 @@ The SDK can be configured with the following options:
 
 ```php
 $apieraConfig = new \Apiera\Sdk\Configuration(
-    timeout: 10,
-    debugMode: true,
-    baseUrl: 'https://api.example.com',
-    userAgent: 'MyApp/1.0',
-    authDomain: 'auth.example.com',
-    authClientId: 'client_id',
-    authClientSecret: 'client_secret',
-    authCookieSecret: 'cookie_secret',
-    authAudience: 'https://audience.example.com',
-    authOrganizationId: 'org_id',
-    cache: new CacheItemPoolInterface()
+    baseUrl: 'https://api.example.com', // The base URL of the API
+    userAgent: 'MyAppName/1.0', // Replace with your application user agent
+    oauthDomain: 'your-oauth-domain.com', // OAuth2 authentication domain
+    oauthClientId: 'your-oauth-client-id', // OAuth2 client ID
+    oauthClientSecret: 'your-oauth-client-secret', // OAuth2 client secret
+    oauthCookieSecret: 'your-oauth-cookie-secret', // OAuth2 cookie secret
+    oauthAudience: 'your-oauth-audience', // OAuth2 audience
+    oauthOrganizationId: 'your-organization-id', // OAuth2 organization ID
+    cache: $yourCacheInstance, // Pass a CacheItemPoolInterface object
+    timeout: 15, // Optional: Request timeout (default: 10 seconds)
+    debugMode: true, // Optional: Enable or disable debug mode (default: false)
+    options: [] // Optional: Pass your custom Guzzle handlers or middlewares
 );
 ```
 
@@ -60,7 +61,7 @@ More examples can be found [here](docs/examples.md)
 
 ## Support
 
-For support, please contact fredrik.tveraaen@apiera.io or visit our [documentation](https://app.swaggerhub.com/apis/FREDRIKTVERAAEN/apiera-organization-api/1.2.0#/).
+For support, please contact fredrik.tveraaen@apiera.io or visit our [documentation](https://app.swaggerhub.com/apis-docs/FREDRIKTVERAAEN/apiera-organization-api/1.2.0).
 
 ## License
 
