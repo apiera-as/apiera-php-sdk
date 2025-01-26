@@ -50,5 +50,5 @@ interface ClientInterface
      * @return array<string, mixed>
      * @throws ClientExceptionInterface
      */
-    public static function decodeResponse(ResponseInterface $response): array;
+    public function decodeResponse(ResponseInterface $response): array;
 }
