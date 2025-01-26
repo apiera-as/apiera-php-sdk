@@ -25,10 +25,10 @@ interface RequestResourceInterface
 
     /**
      * @param RequestInterface $request
-     * @param QueryParameters|null $params
+     * @param QueryParameters $params
      * @return ResponseInterface
      */
-    public function findOneBy(RequestInterface $request, ?QueryParameters $params = null): ResponseInterface;
+    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface;
 
     /**
      * @param RequestInterface $request
