@@ -23,7 +23,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  * @package Apiera\Sdk\Resource
  * @since 0.1.0
  */
-readonly final class CategoryResource implements RequestResourceInterface
+final readonly class CategoryResource implements RequestResourceInterface
 {
     private const string ENDPOINT = '/categories';
 
@@ -57,12 +57,12 @@ readonly final class CategoryResource implements RequestResourceInterface
 
     /**
      * @param CategoryRequest $request
-     * @param QueryParameters|null $params
+     * @param QueryParameters $params
      * @return CategoryResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function findOneBy(RequestInterface $request, QueryParameters $params = null): ResponseInterface
+    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
     {
         $collection = $this->find($request, $params);
 
