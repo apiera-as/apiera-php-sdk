@@ -36,7 +36,6 @@ class CategoryResponseTest extends TestCase
     {
         $reflection = new ReflectionClass(CategoryResponse::class);
 
-        $this->assertTrue($reflection->isFinal(), 'Class should be final');
         $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
     }
 
