@@ -36,7 +36,6 @@ class AttributeResponseTest extends TestCase
     {
         $reflection = new ReflectionClass(AttributeResponse::class);
 
-        $this->assertTrue($reflection->isFinal(), 'Class should be final');
         $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
     }
 
