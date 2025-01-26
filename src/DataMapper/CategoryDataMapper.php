@@ -15,13 +15,15 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
+use Throwable;
+use ValueError;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DataMapper
  * @since 0.1.0
  */
-class CategoryDataMapper implements DataMapperInterface
+final class CategoryDataMapper implements DataMapperInterface
 {
     /**
      * @param array<string, mixed> $responseData
@@ -39,41 +41,47 @@ class CategoryDataMapper implements DataMapperInterface
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
                 name: $responseData['name'],
                 store: $responseData['store'],
-                description: $responseData['description'],
-                parent: $responseData['parent'],
-                image: $responseData['image'],
+                description: $responseData['description'] ?? null,
+                parent: $responseData['parent'] ?? null,
+                image: $responseData['image'] ?? null,
             );
-        } catch (\DateMalformedStringException $exception) {
-            throw new ClientException($exception->getMessage(), $exception->getCode(), $exception);
+        } catch (Throwable $exception) {
+            throw new ClientException(
+                message: 'Failed to map response data: ' . $exception->getMessage(),
+                previous: $exception
+            );
         }
     }
 
     /**
-     * @param array<string, mixed> $collectionData
+     * @param array<string, mixed> $collectionResponseData
      * @return CategoryCollectionResponse
      * @throws ClientExceptionInterface
      */
-    public function fromCollectionResponse(array $collectionData): CategoryCollectionResponse
+    public function fromCollectionResponse(array $collectionResponseData): CategoryCollectionResponse
     {
-        $members = [];
-        foreach ($collectionData['member'] as $category) {
-            /** @var CategoryResponse $response */
-            $response = $this->fromResponse($category);
-            $members[] = $response;
+        try {
+            return new CategoryCollectionResponse(
+                context: $collectionResponseData['@context'],
+                id: $collectionResponseData['@id'],
+                type: LdType::from($collectionResponseData['@type']),
+                members: array_map(
+                    fn(array $category): CategoryResponse => $this->fromResponse($category),
+                    $collectionResponseData['member']
+                ),
+                totalItems: $collectionResponseData['totalItems'],
+                view: $collectionResponseData['view'] ?? null,
+                firstPage: $collectionResponseData['firstPage'] ?? null,
+                lastPage: $collectionResponseData['lastPage'] ?? null,
+                nextPage: $collectionResponseData['nextPage'] ?? null,
+                previousPage: $collectionResponseData['previousPage'] ?? null,
+            );
+        } catch (ValueError $exception) {
+            throw new ClientException(
+                message: 'Invalid collection type: ' . $exception->getMessage(),
+                previous: $exception
+            );
         }
-
-        return new CategoryCollectionResponse(
-            context: $collectionData['@context'],
-            id: $collectionData['@id'],
-            type: LdType::from($collectionData['@type']),
-            members: $members,
-            totalItems: $collectionData['totalItems'],
-            view: $collectionData['view'] ?? null,
-            firstPage: $collectionData['firstPage'] ?? null,
-            lastPage: $collectionData['lastPage'] ?? null,
-            nextPage: $collectionData['nextPage'] ?? null,
-            previousPage: $collectionData['previousPage'] ?? null,
-        );
     }
 
     /**
