@@ -1,4 +1,4 @@
-name: Tests
+name: Static Analysis
 
 on:
   push:
@@ -11,19 +11,14 @@ on:
       - 'bug/*'
 
 jobs:
-  test:
+  phpstan:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php-version: ['8.3']
-
     steps:
       - uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          coverage: xdebug
+          php-version: '8.3'
           tools: composer:v2
       - name: Cache Composer packages
         id: composer-cache
@@ -35,5 +30,5 @@ jobs:
             ${{ runner.os }}-php-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
-      - name: Run test suite
-        run: composer test
+      - name: Run PHPStan
+        run: composer static:analyse
