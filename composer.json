@@ -42,9 +42,20 @@
         }
     },
     "scripts": {
-        "phpstan": "phpstan analyse",
-        "phpcs-check": "phpcs",
-        "phpcs-fix": "phpcbf",
-        "phpunit": "./vendor/bin/phpunit"
+        "test": [
+            "@test:unit",
+            "@test:integration"
+        ],
+        "test:unit": "phpunit --testsuite=Unit",
+        "test:integration": "phpunit --testsuite=Integration",
+        "test:coverage": "phpunit --coverage-html coverage",
+        "cs:check": "phpcs",
+        "cs:fix": "phpcbf",
+        "static:analyse": "phpstan analyse --ansi",
+        "check": [
+            "@cs:check",
+            "@static:analyse",
+            "@test"
+        ]
     }
 }

@@ -2,6 +2,7 @@
 .phpunit.result.cache
 .phpunit.cache/
 phpunit.xml
+/coverage/
 .idea/
 .vscode/
 .DS_Store
