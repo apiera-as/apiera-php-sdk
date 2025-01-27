@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
@@ -20,15 +18,16 @@ use ValueError;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DataMapper
  * @since 0.1.0
  */
 final class CategoryDataMapper implements DataMapperInterface
 {
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $responseData
+     *
      * @return CategoryResponse
-     * @throws ClientExceptionInterface
      */
     public function fromResponse(array $responseData): ResponseInterface
     {
@@ -54,9 +53,9 @@ final class CategoryDataMapper implements DataMapperInterface
     }
 
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $collectionResponseData
-     * @return CategoryCollectionResponse
-     * @throws ClientExceptionInterface
      */
     public function fromCollectionResponse(array $collectionResponseData): CategoryCollectionResponse
     {
@@ -85,7 +84,8 @@ final class CategoryDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param CategoryRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\Category\CategoryRequest $requestDto
+     *
      * @return array<string, mixed>
      */
     public function toRequestData(RequestInterface $requestDto): array
