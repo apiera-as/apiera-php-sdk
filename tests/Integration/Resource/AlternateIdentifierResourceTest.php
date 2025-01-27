@@ -8,27 +8,25 @@ use Apiera\Sdk\ApieraSdk;
 use Apiera\Sdk\Configuration;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
-use Apiera\Sdk\Exception\ClientException;
-use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
-use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
-class AlternateIdentifierResourceTest extends TestCase
+final class AlternateIdentifierResourceTest extends TestCase
 {
     private MockHandler $mockHandler;
-    private array $requestHistory = [];
+
+    /** @var array<int, array<string, mixed>>|\ArrayAccess<int, array<string, mixed>> */
+    private array|\ArrayAccess $requestHistory = [];
     private ApieraSdk $sdk;
 
     /**
-     * @throws Exception
-     * @throws ClientException
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     * @throws \Apiera\Sdk\Exception\ClientException
      */
     protected function setUp(): void
     {
@@ -61,7 +59,7 @@ class AlternateIdentifierResourceTest extends TestCase
             timeout: 10,
             debugMode: false,
             options: [
-                'handler' => $handlerStack
+                'handler' => $handlerStack,
             ]
         );
 
@@ -69,14 +67,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testFindAlternateIdentifiersFlow(): void
     {
         $this->mockHandler->append(new Response(200, [], json_encode([
             'access_token' => 'test_token',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ])));
 
         $alternateIdentifierData = [
@@ -90,16 +88,16 @@ class AlternateIdentifierResourceTest extends TestCase
                 'createdAt' => '2024-12-17T09:18:32+00:00',
                 'updatedAt' => '2024-12-17T09:18:32+00:00',
                 'type' => 'gtin',
-                'code' => 'ABC123'
+                'code' => 'ABC123',
             ]],
-            'totalItems' => 1
+            'totalItems' => 1,
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($alternateIdentifierData)));
 
         $params = new QueryParameters(filters: ['code' => 'ABC123']);
         $response = $this->sdk->alternateIdentifier()->find(new AlternateIdentifierRequest(
             code: 'ABC123',
-            type: 'gtin'
+            type: 'gtin',
         ), $params);
 
         $this->assertCount(2, $this->requestHistory);
@@ -124,14 +122,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testFindOneByAlternateIdentifierFlow(): void
     {
         $this->mockHandler->append(new Response(200, [], json_encode([
             'access_token' => 'test_token',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ])));
 
         $alternateIdentifierData = [
@@ -145,9 +143,9 @@ class AlternateIdentifierResourceTest extends TestCase
                 'createdAt' => '2024-12-17T09:18:32+00:00',
                 'updatedAt' => '2024-12-17T09:18:32+00:00',
                 'type' => 'gtin',
-                'code' => 'ABC123'
+                'code' => 'ABC123',
             ]],
-            'totalItems' => 1
+            'totalItems' => 1,
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($alternateIdentifierData)));
 
@@ -177,14 +175,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testCreateAlternateIdentifierFlow(): void
     {
         $this->mockHandler->append(new Response(200, [], json_encode([
             'access_token' => 'test_token',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ])));
 
         $alternateIdentifierData = [
@@ -194,7 +192,7 @@ class AlternateIdentifierResourceTest extends TestCase
             'createdAt' => '2024-12-17T09:18:32+00:00',
             'updatedAt' => '2024-12-17T09:18:32+00:00',
             'type' => 'gtin',
-            'code' => 'ABC123'
+            'code' => 'ABC123',
         ];
         $this->mockHandler->append(new Response(201, [], json_encode($alternateIdentifierData)));
 
@@ -225,14 +223,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testUpdateAlternateIdentifierFlow(): void
     {
         $this->mockHandler->append(new Response(200, [], json_encode([
             'access_token' => 'test_token',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ])));
 
         $alternateIdentifierData = [
@@ -242,7 +240,7 @@ class AlternateIdentifierResourceTest extends TestCase
             'createdAt' => '2024-12-17T09:18:32+00:00',
             'updatedAt' => '2024-12-17T09:18:32+00:00',
             'type' => 'ean',
-            'code' => 'XYZ789'
+            'code' => 'XYZ789',
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($alternateIdentifierData)));
 
@@ -274,14 +272,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testDeleteAlternateIdentifierFlow(): void
     {
         $this->mockHandler->append(new Response(200, [], json_encode([
             'access_token' => 'test_token',
-            'expires_in' => 3600
+            'expires_in' => 3600,
         ])));
 
         $this->mockHandler->append(new Response(204));
