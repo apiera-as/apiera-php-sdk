@@ -4,68 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\Interface\ClientExceptionInterface;
-use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
-use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
+use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
+use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class CategoryDataMapperTest extends TestCase
+final class CategoryDataMapperTest extends TestCase
 {
     private CategoryDataMapper $mapper;
+
+    /** @var array<string, mixed> */
     private array $sampleResponseData;
+
+    /** @var array<string, mixed> */
     private array $sampleCollectionData;
     private CategoryRequest $sampleRequest;
 
-    protected function setUp(): void
-    {
-        $this->mapper = new CategoryDataMapper();
-
-        // Sample response data
-        $this->sampleResponseData = [
-            '@id' => '/api/categories/123',
-            '@type' => 'Category',
-            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
-            'createdAt' => '2025-01-01T00:00:00+00:00',
-            'updatedAt' => '2025-01-01T00:00:00+00:00',
-            'name' => 'Test Category',
-            'store' => '/api/stores/123',
-            'description' => 'Test Description',
-            'parent' => '/api/categories/parent',
-            'image' => '/api/files/123'
-        ];
-
-        // Sample collection data
-        $this->sampleCollectionData = [
-            '@context' => '/api/contexts/Category',
-            '@id' => '/api/categories',
-            '@type' => 'Collection',
-            'member' => [$this->sampleResponseData],
-            'totalItems' => 1,
-            'view' => '/api/categories?page=1',
-            'firstPage' => '/api/categories?page=1',
-            'lastPage' => '/api/categories?page=1',
-            'nextPage' => null,
-            'previousPage' => null
-        ];
-
-        // Sample request
-        $this->sampleRequest = new CategoryRequest(
-            name: 'Test Category',
-            store: '/api/stores/123',
-            description: 'Test Description',
-            parent: '/api/categories/parent',
-            image: '/api/files/123'
-        );
-    }
-
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -85,7 +46,7 @@ class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseHandlesNullableFieldsCorrectly(): void
     {
@@ -102,7 +63,7 @@ class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
@@ -114,7 +75,7 @@ class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
@@ -127,7 +88,7 @@ class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -148,7 +109,7 @@ class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -170,7 +131,7 @@ class CategoryDataMapperTest extends TestCase
             'name' => 'Test Category',
             'description' => 'Test Description',
             'parent' => '/api/categories/parent',
-            'image' => '/api/files/123'
+            'image' => '/api/files/123',
         ];
 
         $this->assertEquals($expected, $result);
@@ -188,14 +149,14 @@ class CategoryDataMapperTest extends TestCase
             'name' => 'Test Category',
             'description' => null,
             'parent' => null,
-            'image' => null
+            'image' => null,
         ];
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
@@ -204,5 +165,47 @@ class CategoryDataMapperTest extends TestCase
 
         $this->expectException(ClientException::class);
         $this->mapper->fromCollectionResponse($data);
+    }
+
+    protected function setUp(): void
+    {
+        $this->mapper = new CategoryDataMapper();
+
+        // Sample response data
+        $this->sampleResponseData = [
+            '@id' => '/api/categories/123',
+            '@type' => 'Category',
+            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
+            'createdAt' => '2025-01-01T00:00:00+00:00',
+            'updatedAt' => '2025-01-01T00:00:00+00:00',
+            'name' => 'Test Category',
+            'store' => '/api/stores/123',
+            'description' => 'Test Description',
+            'parent' => '/api/categories/parent',
+            'image' => '/api/files/123',
+        ];
+
+        // Sample collection data
+        $this->sampleCollectionData = [
+            '@context' => '/api/contexts/Category',
+            '@id' => '/api/categories',
+            '@type' => 'Collection',
+            'member' => [$this->sampleResponseData],
+            'totalItems' => 1,
+            'view' => '/api/categories?page=1',
+            'firstPage' => '/api/categories?page=1',
+            'lastPage' => '/api/categories?page=1',
+            'nextPage' => null,
+            'previousPage' => null,
+        ];
+
+        // Sample request
+        $this->sampleRequest = new CategoryRequest(
+            name: 'Test Category',
+            store: '/api/stores/123',
+            description: 'Test Description',
+            parent: '/api/categories/parent',
+            image: '/api/files/123'
+        );
     }
 }

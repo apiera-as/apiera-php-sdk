@@ -4,59 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\Interface\ClientExceptionInterface;
-use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
-use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
+use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class AttributeDataMapperTest extends TestCase
+final class AttributeDataMapperTest extends TestCase
 {
     private AttributeDataMapper $mapper;
+
+    /** @var array<string, mixed> */
     private array $sampleResponseData;
+
+    /** @var array<string, mixed> */
     private array $sampleCollectionData;
     private AttributeRequest $sampleRequest;
 
-    protected function setUp(): void
-    {
-        $this->mapper = new AttributeDataMapper();
-
-        $this->sampleResponseData = [
-            '@id' => '/api/attributes/123',
-            '@type' => 'Attribute',
-            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
-            'createdAt' => '2025-01-01T00:00:00+00:00',
-            'updatedAt' => '2025-01-01T00:00:00+00:00',
-            'name' => 'Test Attribute',
-            'store' => '/api/stores/123'
-        ];
-
-        $this->sampleCollectionData = [
-            '@context' => '/api/contexts/Attribute',
-            '@id' => '/api/attributes',
-            '@type' => 'Collection',
-            'member' => [$this->sampleResponseData],
-            'totalItems' => 1,
-            'view' => '/api/attributes?page=1',
-            'firstPage' => '/api/attributes?page=1',
-            'lastPage' => '/api/attributes?page=1',
-            'nextPage' => null,
-            'previousPage' => null
-        ];
-
-        $this->sampleRequest = new AttributeRequest(
-            name: 'Test Attribute',
-            store: '/api/stores/123'
-        );
-    }
-
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -73,7 +43,7 @@ class AttributeDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
@@ -85,7 +55,7 @@ class AttributeDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
@@ -98,7 +68,7 @@ class AttributeDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -119,7 +89,7 @@ class AttributeDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -138,14 +108,14 @@ class AttributeDataMapperTest extends TestCase
         $result = $this->mapper->toRequestData($this->sampleRequest);
 
         $expected = [
-            'name' => 'Test Attribute'
+            'name' => 'Test Attribute',
         ];
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
@@ -154,5 +124,38 @@ class AttributeDataMapperTest extends TestCase
 
         $this->expectException(ClientException::class);
         $this->mapper->fromCollectionResponse($data);
+    }
+
+    protected function setUp(): void
+    {
+        $this->mapper = new AttributeDataMapper();
+
+        $this->sampleResponseData = [
+            '@id' => '/api/attributes/123',
+            '@type' => 'Attribute',
+            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
+            'createdAt' => '2025-01-01T00:00:00+00:00',
+            'updatedAt' => '2025-01-01T00:00:00+00:00',
+            'name' => 'Test Attribute',
+            'store' => '/api/stores/123',
+        ];
+
+        $this->sampleCollectionData = [
+            '@context' => '/api/contexts/Attribute',
+            '@id' => '/api/attributes',
+            '@type' => 'Collection',
+            'member' => [$this->sampleResponseData],
+            'totalItems' => 1,
+            'view' => '/api/attributes?page=1',
+            'firstPage' => '/api/attributes?page=1',
+            'lastPage' => '/api/attributes?page=1',
+            'nextPage' => null,
+            'previousPage' => null,
+        ];
+
+        $this->sampleRequest = new AttributeRequest(
+            name: 'Test Attribute',
+            store: '/api/stores/123'
+        );
     }
 }
