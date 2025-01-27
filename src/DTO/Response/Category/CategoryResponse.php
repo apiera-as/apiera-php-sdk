@@ -6,7 +6,6 @@ namespace Apiera\Sdk\DTO\Response\Category;
 
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -15,7 +14,7 @@ use Symfony\Component\Uid\Uuid;
  * @package Apiera\Sdk\DTO\Response\Category
  * @since 0.1.0
  */
-final readonly class CategoryResponse extends AbstractResponse implements ResponseInterface
+final readonly class CategoryResponse extends AbstractResponse
 {
     /**
      * @param string $id

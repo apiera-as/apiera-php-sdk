@@ -4,7 +4,6 @@ namespace Apiera\Sdk\DTO\Response\Attribute;
 
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -13,7 +12,7 @@ use Symfony\Component\Uid\Uuid;
  * @package Apiera\Sdk\DTO\Response\Attribute
  * @since 0.2.0
  */
-final readonly class AttributeResponse extends AbstractResponse implements ResponseInterface
+final readonly class AttributeResponse extends AbstractResponse
 {
     /**
      * @param string $id

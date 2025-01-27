@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\Resource;
 
 use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
-use Apiera\Sdk\DTO\Request\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
@@ -22,7 +24,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  * @package Apiera\Sdk\Resource
  * @since 0.2.0
  */
-readonly final class AttributeResource implements RequestResourceInterface
+final readonly class AttributeResource implements RequestResourceInterface
 {
     private const string ENDPOINT = '/attributes';
 
@@ -56,12 +58,12 @@ readonly final class AttributeResource implements RequestResourceInterface
 
     /**
      * @param AttributeRequest $request
-     * @param QueryParameters|null $params
+     * @param QueryParameters $params
      * @return AttributeResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function findOneBy(RequestInterface $request, ?QueryParameters $params = null): ResponseInterface
+    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
     {
         $collection = $this->find($request, $params);
 
