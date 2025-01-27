@@ -6,7 +6,6 @@ namespace Apiera\Sdk\DTO\Response\AlternateIdentifier;
 
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -14,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 0.2.0
  */
-final readonly class AlternateIdentifierResponse extends AbstractResponse implements ResponseInterface
+final readonly class AlternateIdentifierResponse extends AbstractResponse
 {
     /**
      * @param string $identifierType Using "identifierType" instead of "type" to avoid conflicts with the parent class.

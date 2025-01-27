@@ -9,8 +9,6 @@ use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 0.1.0
- *
- * @template-extends AbstractCollectionResponse<CategoryResponse>
  */
 final readonly class CategoryCollectionResponse extends AbstractCollectionResponse
 {
