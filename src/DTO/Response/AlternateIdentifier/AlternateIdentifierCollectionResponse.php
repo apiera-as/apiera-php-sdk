@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\DTO\Response\AlternateIdentifier;
 
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
