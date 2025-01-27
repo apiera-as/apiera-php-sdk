@@ -1,20 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\DTO\Request\AlternateIdentifier;
 
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DTO\Request\Category
+ * @package Apiera\Sdk\DTO\Request\AlternateIdentifier
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierRequest implements RequestInterface
 {
     /**
-     * @param string $code
-     * @param string $type
-     * @param string|null $iri
+     * @param string $code The alternate identifier code
+     * @param string $type The alternate identifier type
+     * @param string|null $iri The alternate identifier iri
      */
     public function __construct(
         private string $code,
