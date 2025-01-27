@@ -52,7 +52,7 @@ final readonly class ApieraSdk
     /**
      * @return AlternateIdentifierResource
      */
-    public function alternateIdentifiers(): AlternateIdentifierResource
+    public function alternateIdentifier(): AlternateIdentifierResource
     {
         $dataMapper = new AlternateIdentifierDataMapper();
         return new AlternateIdentifierResource($this->client, $dataMapper);

@@ -1,13 +1,12 @@
 <?php
 
-namespace Apiera\Sdk\DTO\Request\AlternateIdentifier;
+namespace Apiera\Sdk\DTO\Response\AlternateIdentifier;
 
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
-use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 
 /**
  * @template-extends AbstractCollectionResponse<AlternateIdentifierResponse>
- * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
+ * @author Marie Rinden <marie@shoppingnorge.no>
  * @package Apiera\Sdk\DTO\Response\AlternateIdentifier
  * @since 0.2.0
  */

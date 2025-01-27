@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
  * @package Apiera\Sdk\DTO\Response\Category
  * @since 0.2.0
  */
-readonly class AlternateIdentifierResponse extends AbstractResponse implements ResponseInterface
+final readonly class AlternateIdentifierResponse extends AbstractResponse implements ResponseInterface
 {
     /**
      * @param string $id
@@ -21,6 +21,7 @@ readonly class AlternateIdentifierResponse extends AbstractResponse implements R
      * @param Uuid $uuid
      * @param DateTimeInterface $createdAt
      * @param DateTimeInterface $updatedAt
+     * Using "identifierType" instead of "type" to avoid conflicts with the parent class.
      * @param string $identifierType
      * @param string $code
      */
@@ -45,7 +46,7 @@ readonly class AlternateIdentifierResponse extends AbstractResponse implements R
     /**
      * @return string
      */
-    public function getType(): string
+    public function getIdentifierType(): string
     {
         return $this->identifierType;
     }

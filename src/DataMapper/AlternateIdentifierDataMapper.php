@@ -2,8 +2,8 @@
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
@@ -14,6 +14,7 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateMalformedStringException;
 use DateTimeImmutable;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
@@ -32,8 +33,8 @@ class AlternateIdentifierDataMapper implements DataMapperInterface
         try {
             return new AlternateIdentifierResponse(
                 id: $responseData['@id'],
-                type: $responseData['@type'],
-                uuid: $responseData['uuid'],
+                type: LdType::from($responseData['@type']),
+                uuid: Uuid::fromString($responseData['uuid']),
                 createdAt: new DateTimeImmutable($responseData['createdAt']),
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
                 identifierType: $responseData['type'],

@@ -9,32 +9,32 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
  * @package Apiera\Sdk\DTO\Request\Category
  * @since 0.2.0
  */
-readonly class AlternateIdentifierRequest implements RequestInterface
+final readonly class AlternateIdentifierRequest implements RequestInterface
 {
     /**
-     * @param string|null $code
-     * @param string|null $type
+     * @param string $code
+     * @param string $type
      * @param string|null $iri
      */
     public function __construct(
-        private ?string $code = null,
-        private ?string $type = null,
+        private string $code,
+        private string $type,
         private ?string $iri = null,
     ) {
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -48,7 +48,7 @@ readonly class AlternateIdentifierRequest implements RequestInterface
     }
 
     /**
-     * @return array|mixed[]
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

@@ -5,8 +5,8 @@ namespace Apiera\Sdk\Resource;
 use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
-use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
@@ -22,7 +22,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  * @package Apiera\Sdk\Resource
  * @since 0.2.0
  */
-readonly class AlternateIdentifierResource implements RequestResourceInterface
+final readonly class AlternateIdentifierResource implements RequestResourceInterface
 {
     private const string ENDPOINT = '/alternate_identifiers';
 
