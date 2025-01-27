@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\DTO\Request\Attribute;
 
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
-class AttributeRequestTest extends TestCase
+final class AttributeRequestTest extends TestCase
 {
     public function testInstanceOf(): void
     {
@@ -37,7 +39,7 @@ class AttributeRequestTest extends TestCase
         $this->assertNull($request->getStore());
         $this->assertNull($request->getIri());
     }
-    
+
     public function testToArray(): void
     {
         $request = new AttributeRequest(
@@ -45,7 +47,7 @@ class AttributeRequestTest extends TestCase
             store: '/api/v1/store/123',
             iri: '/api/v1/stores/123/attribute/321'
         );
-        
+
         $array = $request->toArray();
 
         $this->assertIsArray($array);

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\DTO\Request\Category;
 
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
-class CategoryRequestTest extends TestCase
+final class CategoryRequestTest extends TestCase
 {
     public function testInstanceOf(): void
     {
@@ -97,5 +99,4 @@ class CategoryRequestTest extends TestCase
             'image' => null,
         ], $array);
     }
-
 }
