@@ -8,20 +8,18 @@ use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
-use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Resource\AttributeResource;
 use DateTimeImmutable;
-use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 
-class AttributeResourceTest extends TestCase
+final class AttributeResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
     private AttributeDataMapper|MockObject $mapperMock;
@@ -29,73 +27,15 @@ class AttributeResourceTest extends TestCase
     private AttributeRequest $request;
     private AttributeResponse $response;
     private AttributeCollectionResponse $collectionResponse;
+
+    /** @var array<string, mixed> */
     private array $mockResponseData;
+
+    /** @var array<string, mixed> */
     private array $mockCollectionData;
 
     /**
-     * @throws Exception
-     */
-    protected function setUp(): void
-    {
-        $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(AttributeDataMapper::class);
-        $this->resource = new AttributeResource($this->clientMock, $this->mapperMock);
-
-        // Setup realistic test data
-        $this->request = new AttributeRequest(
-            name: 'Color',
-            store: '/api/stores/123'
-        );
-
-        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
-        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-
-        $this->response = new AttributeResponse(
-            id: '/api/attributes/456',
-            type: LdType::Attribute,
-            uuid: $uuid,
-            createdAt: $createdAt,
-            updatedAt: $updatedAt,
-            name: 'Color',
-            store: '/api/stores/123'
-        );
-
-        $this->mockResponseData = [
-            '@id' => '/api/attributes/456',
-            '@type' => 'Attribute',
-            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-            'name' => 'Color',
-            'store' => '/api/stores/123',
-            'createdAt' => '2024-01-25T12:00:00+00:00',
-            'updatedAt' => '2024-01-25T12:00:00+00:00'
-        ];
-
-        $this->mockCollectionData = [
-            '@context' => '/api/contexts/Attribute',
-            '@id' => '/api/attributes',
-            '@type' => 'Collection',
-            'member' => [$this->mockResponseData],
-            'totalItems' => 1,
-            'view' => '/api/attributes?page=1',
-            'firstPage' => '/api/attributes?page=1',
-            'lastPage' => '/api/attributes?page=1'
-        ];
-
-        $this->collectionResponse = new AttributeCollectionResponse(
-            context: '/api/contexts/Attribute',
-            id: '/api/attributes',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/attributes?page=1',
-            firstPage: '/api/attributes?page=1',
-            lastPage: '/api/attributes?page=1'
-        );
-    }
-
-    /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFindRequiresStoreIri(): void
     {
@@ -104,9 +44,9 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
     {
@@ -132,9 +72,9 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
     {
@@ -158,8 +98,8 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
     {
@@ -168,7 +108,7 @@ class AttributeResourceTest extends TestCase
             '@id' => '/api/attributes',
             '@type' => 'Collection',
             'member' => [],
-            'totalItems' => 0
+            'totalItems' => 0,
         ];
 
         $emptyCollection = new AttributeCollectionResponse(
@@ -193,7 +133,7 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testGetRequiresIri(): void
     {
@@ -202,9 +142,9 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsAttribute(): void
     {
@@ -235,7 +175,7 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testCreateRequiresStoreIri(): void
     {
@@ -244,14 +184,14 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateAttribute(): void
     {
         $requestData = [
-            'name' => 'Color'
+            'name' => 'Color',
         ];
 
         $responseMock = $this->createMock(ResponseInterface::class);
@@ -281,7 +221,7 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testUpdateRequiresIri(): void
     {
@@ -290,9 +230,9 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateAttribute(): void
     {
@@ -340,7 +280,7 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testDeleteRequiresIri(): void
     {
@@ -349,9 +289,9 @@ class AttributeResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testDeleteAttribute(): void
     {
@@ -368,5 +308,67 @@ class AttributeResourceTest extends TestCase
             ->willReturn($responseMock);
 
         $this->resource->delete($request);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    protected function setUp(): void
+    {
+        $this->clientMock = $this->createMock(Client::class);
+        $this->mapperMock = $this->createMock(AttributeDataMapper::class);
+        $this->resource = new AttributeResource($this->clientMock, $this->mapperMock);
+
+        // Setup realistic test data
+        $this->request = new AttributeRequest(
+            name: 'Color',
+            store: '/api/stores/123'
+        );
+
+        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+
+        $this->response = new AttributeResponse(
+            id: '/api/attributes/456',
+            type: LdType::Attribute,
+            uuid: $uuid,
+            createdAt: $createdAt,
+            updatedAt: $updatedAt,
+            name: 'Color',
+            store: '/api/stores/123'
+        );
+
+        $this->mockResponseData = [
+            '@id' => '/api/attributes/456',
+            '@type' => 'Attribute',
+            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+            'name' => 'Color',
+            'store' => '/api/stores/123',
+            'createdAt' => '2024-01-25T12:00:00+00:00',
+            'updatedAt' => '2024-01-25T12:00:00+00:00',
+        ];
+
+        $this->mockCollectionData = [
+            '@context' => '/api/contexts/Attribute',
+            '@id' => '/api/attributes',
+            '@type' => 'Collection',
+            'member' => [$this->mockResponseData],
+            'totalItems' => 1,
+            'view' => '/api/attributes?page=1',
+            'firstPage' => '/api/attributes?page=1',
+            'lastPage' => '/api/attributes?page=1',
+        ];
+
+        $this->collectionResponse = new AttributeCollectionResponse(
+            context: '/api/contexts/Attribute',
+            id: '/api/attributes',
+            type: LdType::Collection,
+            members: [$this->response],
+            totalItems: 1,
+            view: '/api/attributes?page=1',
+            firstPage: '/api/attributes?page=1',
+            lastPage: '/api/attributes?page=1'
+        );
     }
 }

@@ -8,20 +8,18 @@ use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
-use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
+use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Resource\CategoryResource;
 use DateTimeImmutable;
-use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 
-class CategoryResourceTest extends TestCase
+final class CategoryResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
     private CategoryDataMapper|MockObject $mapperMock;
@@ -29,76 +27,15 @@ class CategoryResourceTest extends TestCase
     private CategoryRequest $request;
     private CategoryResponse $response;
     private CategoryCollectionResponse $collectionResponse;
+
+    /** @var array<string, mixed> */
     private array $mockResponseData;
+
+    /** @var array<string, mixed> */
     private array $mockCollectionData;
 
     /**
-     * @throws Exception
-     */
-    protected function setUp(): void
-    {
-        $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(CategoryDataMapper::class);
-        $this->resource = new CategoryResource($this->clientMock, $this->mapperMock);
-
-        // Setup realistic test data
-        $this->request = new CategoryRequest(
-            name: 'Electronics',
-            store: '/api/stores/123',
-            description: 'Electronic devices and accessories'
-        );
-
-        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
-        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-
-        $this->response = new CategoryResponse(
-            id: '/api/categories/456',
-            type: LdType::Category,
-            uuid: $uuid,
-            createdAt: $createdAt,
-            updatedAt: $updatedAt,
-            name: 'Electronics',
-            store: '/api/stores/123',
-            description: 'Electronic devices and accessories'
-        );
-
-        $this->mockResponseData = [
-            '@id' => '/api/categories/456',
-            '@type' => 'Category',
-            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-            'name' => 'Electronics',
-            'store' => '/api/stores/123',
-            'description' => 'Electronic devices and accessories',
-            'createdAt' => '2024-01-25T12:00:00+00:00',
-            'updatedAt' => '2024-01-25T12:00:00+00:00'
-        ];
-
-        $this->mockCollectionData = [
-            '@context' => '/api/contexts/Category',
-            '@id' => '/api/categories',
-            '@type' => 'Collection',
-            'member' => [$this->mockResponseData],
-            'totalItems' => 1,
-            'view' => '/api/categories?page=1',
-            'firstPage' => '/api/categories?page=1',
-            'lastPage' => '/api/categories?page=1'
-        ];
-
-        $this->collectionResponse = new CategoryCollectionResponse(
-            context: '/api/contexts/Category',
-            id: '/api/categories',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/categories?page=1',
-            firstPage: '/api/categories?page=1',
-            lastPage: '/api/categories?page=1'
-        );
-    }
-
-    /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFindRequiresStoreIri(): void
     {
@@ -107,9 +44,9 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
     {
@@ -135,9 +72,9 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
     {
@@ -161,8 +98,8 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
     {
@@ -171,7 +108,7 @@ class CategoryResourceTest extends TestCase
             '@id' => '/api/categories',
             '@type' => 'Collection',
             'member' => [],
-            'totalItems' => 0
+            'totalItems' => 0,
         ];
 
         $emptyCollection = new CategoryCollectionResponse(
@@ -196,7 +133,7 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testGetRequiresIri(): void
     {
@@ -205,9 +142,9 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsCategory(): void
     {
@@ -238,7 +175,7 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testCreateRequiresStoreIri(): void
     {
@@ -247,15 +184,15 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateCategory(): void
     {
         $requestData = [
             'name' => 'Electronics',
-            'description' => 'Electronic devices and accessories'
+            'description' => 'Electronic devices and accessories',
         ];
 
         $responseMock = $this->createMock(ResponseInterface::class);
@@ -285,7 +222,7 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testUpdateRequiresIri(): void
     {
@@ -294,9 +231,9 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateCategory(): void
     {
@@ -345,7 +282,7 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testDeleteRequiresIri(): void
     {
@@ -354,9 +291,9 @@ class CategoryResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testDeleteCategory(): void
     {
@@ -373,5 +310,70 @@ class CategoryResourceTest extends TestCase
             ->willReturn($responseMock);
 
         $this->resource->delete($request);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    protected function setUp(): void
+    {
+        $this->clientMock = $this->createMock(Client::class);
+        $this->mapperMock = $this->createMock(CategoryDataMapper::class);
+        $this->resource = new CategoryResource($this->clientMock, $this->mapperMock);
+
+        // Setup realistic test data
+        $this->request = new CategoryRequest(
+            name: 'Electronics',
+            store: '/api/stores/123',
+            description: 'Electronic devices and accessories'
+        );
+
+        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+
+        $this->response = new CategoryResponse(
+            id: '/api/categories/456',
+            type: LdType::Category,
+            uuid: $uuid,
+            createdAt: $createdAt,
+            updatedAt: $updatedAt,
+            name: 'Electronics',
+            store: '/api/stores/123',
+            description: 'Electronic devices and accessories'
+        );
+
+        $this->mockResponseData = [
+            '@id' => '/api/categories/456',
+            '@type' => 'Category',
+            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+            'name' => 'Electronics',
+            'store' => '/api/stores/123',
+            'description' => 'Electronic devices and accessories',
+            'createdAt' => '2024-01-25T12:00:00+00:00',
+            'updatedAt' => '2024-01-25T12:00:00+00:00',
+        ];
+
+        $this->mockCollectionData = [
+            '@context' => '/api/contexts/Category',
+            '@id' => '/api/categories',
+            '@type' => 'Collection',
+            'member' => [$this->mockResponseData],
+            'totalItems' => 1,
+            'view' => '/api/categories?page=1',
+            'firstPage' => '/api/categories?page=1',
+            'lastPage' => '/api/categories?page=1',
+        ];
+
+        $this->collectionResponse = new CategoryCollectionResponse(
+            context: '/api/contexts/Category',
+            id: '/api/categories',
+            type: LdType::Collection,
+            members: [$this->response],
+            totalItems: 1,
+            view: '/api/categories?page=1',
+            firstPage: '/api/categories?page=1',
+            lastPage: '/api/categories?page=1'
+        );
     }
 }
