@@ -8,7 +8,6 @@ use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\Enum\ContentTypes;
 use Apiera\Sdk\Enum\HttpHeaders;
 use Apiera\Sdk\Exception\ClientException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\Oauth2Interface;
 use GuzzleHttp\Client as GuzzleClient;
@@ -20,17 +19,15 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk
  * @since 0.1.0
  */
-readonly class Client implements ClientInterface
+final readonly class Client implements ClientInterface
 {
     private GuzzleClientInterface $client;
     private Oauth2Interface $oauth2Handler;
 
     /**
-     * @param Configuration $configuration
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function __construct(
         Configuration $configuration,
@@ -42,54 +39,20 @@ readonly class Client implements ClientInterface
             RequestOptions::HEADERS => [
                 HttpHeaders::UserAgent->value => $configuration->getUserAgent(),
                 HttpHeaders::ContentType->value => ContentTypes::JsonLD->value,
-            ]
+            ],
         ], $configuration->getOptions()));
 
         $this->oauth2Handler = new Oauth2Handler($configuration);
     }
 
     /**
-     * Get authorization headers with OAuth2 token
-     *
-     * @return array<string, string>
-     * @throws ClientExceptionInterface
-     */
-    private function getAuthHeaders(): array
-    {
-        $token = $this->oauth2Handler->getAccessToken();
-        return [HttpHeaders::Authorization->value => 'Bearer ' . $token];
-    }
-
-    /**
-     * Merge default options with request-specific options
-     *
-     * @param array<string, mixed> $options
-     * @return array<string, mixed>
-     * @throws ClientExceptionInterface
-     */
-    private function mergeOptions(array $options): array
-    {
-        $headers = array_merge(
-            $options[RequestOptions::HEADERS] ?? [],
-            $this->getAuthHeaders()
-        );
-
-        return array_merge(
-            $options,
-            [RequestOptions::HEADERS => $headers]
-        );
-    }
-
-    /**
-     * @param string $endpoint
-     * @param QueryParameters|null $params
-     * @return ResponseInterface
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function get(string $endpoint, ?QueryParameters $params = null): ResponseInterface
     {
         try {
             $options = $params !== null ? [RequestOptions::QUERY => $params->toArray()] : [];
+
             return $this->client->request('GET', $endpoint, $this->mergeOptions($options));
         } catch (GuzzleException $exception) {
             throw new ClientException(
@@ -103,10 +66,9 @@ readonly class Client implements ClientInterface
     }
 
     /**
-     * @param string $endpoint
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $body
-     * @return ResponseInterface
-     * @throws ClientExceptionInterface
      */
     public function post(string $endpoint, array $body): ResponseInterface
     {
@@ -114,8 +76,8 @@ readonly class Client implements ClientInterface
             return $this->client->request('POST', $endpoint, $this->mergeOptions([
                 RequestOptions::JSON => $body,
                 RequestOptions::HEADERS => [
-                    HttpHeaders::ContentType->value => ContentTypes::JsonLD->value
-                ]
+                    HttpHeaders::ContentType->value => ContentTypes::JsonLD->value,
+                ],
             ]));
         } catch (GuzzleException $exception) {
             throw new ClientException(
@@ -129,10 +91,9 @@ readonly class Client implements ClientInterface
     }
 
     /**
-     * @param string $endpoint
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $body
-     * @return ResponseInterface
-     * @throws ClientExceptionInterface
      */
     public function patch(string $endpoint, array $body): ResponseInterface
     {
@@ -141,7 +102,7 @@ readonly class Client implements ClientInterface
                 RequestOptions::JSON => $body,
                 RequestOptions::HEADERS => [
                     HttpHeaders::ContentType->value => ContentTypes::MergePatch->value,
-                ]
+                ],
             ]));
         } catch (GuzzleException $exception) {
             throw new ClientException(
@@ -155,9 +116,7 @@ readonly class Client implements ClientInterface
     }
 
     /**
-     * @param string $endpoint
-     * @return ResponseInterface
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function delete(string $endpoint): ResponseInterface
     {
@@ -175,9 +134,9 @@ readonly class Client implements ClientInterface
     }
 
     /**
-     * @param ResponseInterface $response
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @return array<string, mixed>
-     * @throws ClientExceptionInterface
      */
     public function decodeResponse(ResponseInterface $response): array
     {
@@ -194,5 +153,39 @@ readonly class Client implements ClientInterface
                 previous: $exception,
             );
         }
+    }
+
+    /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
+     * @return array<string, string>
+     */
+    private function getAuthHeaders(): array
+    {
+        $token = $this->oauth2Handler->getAccessToken();
+
+        return [HttpHeaders::Authorization->value => 'Bearer ' . $token];
+    }
+
+    /**
+     * Merge default options with request-specific options
+     *
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
+     * @param array<string, mixed> $options
+     *
+     * @return array<string, mixed>
+     */
+    private function mergeOptions(array $options): array
+    {
+        $headers = array_merge(
+            $options[RequestOptions::HEADERS] ?? [],
+            $this->getAuthHeaders()
+        );
+
+        return array_merge(
+            $options,
+            [RequestOptions::HEADERS => $headers]
+        );
     }
 }
