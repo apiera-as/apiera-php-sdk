@@ -53,7 +53,7 @@
         "test:coverage": "phpunit --coverage-html coverage",
         "cs:check": "phpcs --standard=phpcs.xml",
         "cs:fix": "phpcbf --standard=phpcs.xml",
-        "static:analyse": "phpstan analyse --ansi -c phpstan.neon",
+        "static:analyse": "phpstan analyse --ansi -c vendor/apiera/php-standards/phpstan/phpstan.neon src/",
         "check": [
             "@cs:check",
             "@static:analyse",
