@@ -36,35 +36,40 @@ interface ConfigurationInterface
     /**
      * @return string
      */
-    public function getAuthDomain(): string;
+    public function getOauthDomain(): string;
 
     /**
      * @return string
      */
-    public function getAuthClientId(): string;
+    public function getOauthClientId(): string;
 
     /**
      * @return string
      */
-    public function getAuthClientSecret(): string;
+    public function getOauthClientSecret(): string;
 
     /**
      * @return string
      */
-    public function getAuthCookieSecret(): string;
+    public function getOauthCookieSecret(): string;
 
     /**
      * @return string
      */
-    public function getAuthAudience(): string;
+    public function getOauthAudience(): string;
 
     /**
      * @return string
      */
-    public function getAuthOrganizationId(): string;
+    public function getOauthOrganizationId(): string;
 
     /**
-     * @return CacheItemPoolInterface|null
+     * @return array<string, mixed>
      */
-    public function getCache(): ?CacheItemPoolInterface;
+    public function getOptions(): array;
+
+    /**
+     * @return CacheItemPoolInterface
+     */
+    public function getCache(): CacheItemPoolInterface;
 }

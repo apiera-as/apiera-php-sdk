@@ -12,33 +12,35 @@ use Psr\Cache\CacheItemPoolInterface;
  * @package Apiera\Sdk
  * @since 0.1.0
  */
-readonly class Configuration implements ConfigurationInterface
+final readonly class Configuration implements ConfigurationInterface
 {
     /**
      * @param int $timeout The request timeout in seconds. Defaults to 10.
      * @param bool $debugMode Enables or disables debug mode. Defaults to false.
      * @param string $baseUrl The base URL of the API.
      * @param string $userAgent The user agent string for HTTP requests.
-     * @param string $authDomain OAuth2 authentication domain.
-     * @param string $authClientId OAuth2 client ID.
-     * @param string $authClientSecret OAuth2 client secret.
-     * @param string $authCookieSecret OAuth2 cookie secret.
-     * @param string $authAudience Oauth2 audience
-     * @param string $authOrganizationId OAuth2 organization ID.
-     * @param CacheItemPoolInterface|null $cache
+     * @param string $oauthDomain OAuth2 authentication domain.
+     * @param string $oauthClientId OAuth2 client ID.
+     * @param string $oauthClientSecret OAuth2 client secret.
+     * @param string $oauthCookieSecret OAuth2 cookie secret.
+     * @param string $oauthAudience Oauth2 audience
+     * @param string $oauthOrganizationId OAuth2 organization ID.
+     * @param array<string, mixed> $options
+     * @param CacheItemPoolInterface $cache
      */
     public function __construct(
+        private string $baseUrl,
+        private string $userAgent,
+        private string $oauthDomain,
+        private string $oauthClientId,
+        private string $oauthClientSecret,
+        private string $oauthCookieSecret,
+        private string $oauthAudience,
+        private string $oauthOrganizationId,
+        private CacheItemPoolInterface $cache,
         private int $timeout = 10,
         private bool $debugMode = false,
-        private string $baseUrl = '',
-        private string $userAgent = '',
-        private string $authDomain = '',
-        private string $authClientId = '',
-        private string $authClientSecret = '',
-        private string $authCookieSecret = '',
-        private string $authAudience = '',
-        private string $authOrganizationId = '',
-        private ?CacheItemPoolInterface $cache = null,
+        private array $options = [],
     ) {
     }
 
@@ -77,49 +79,60 @@ readonly class Configuration implements ConfigurationInterface
     /**
      * @return string
      */
-    public function getAuthDomain(): string
+    public function getOauthDomain(): string
     {
-        return $this->authDomain;
+        return $this->oauthDomain;
     }
 
     /**
      * @return string
      */
-    public function getAuthClientId(): string
+    public function getOauthClientId(): string
     {
-        return $this->authClientId;
+        return $this->oauthClientId;
     }
 
     /**
      * @return string
      */
-    public function getAuthClientSecret(): string
+    public function getOauthClientSecret(): string
     {
-        return $this->authClientSecret;
+        return $this->oauthClientSecret;
     }
 
     /**
      * @return string
      */
-    public function getAuthCookieSecret(): string
+    public function getOauthCookieSecret(): string
     {
-        return $this->authCookieSecret;
+        return $this->oauthCookieSecret;
     }
 
-    public function getAuthAudience(): string
+    public function getOauthAudience(): string
     {
-        return $this->authAudience;
+        return $this->oauthAudience;
     }
 
     /**
      * @return string
      */
-    public function getAuthOrganizationId(): string
+    public function getOauthOrganizationId(): string
     {
-        return $this->authOrganizationId;
+        return $this->oauthOrganizationId;
     }
 
-    public function getCache(): ?CacheItemPoolInterface
+    /**
+     * @return array<string, mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * @return CacheItemPoolInterface
+     */
+    public function getCache(): CacheItemPoolInterface
     {
         return $this->cache;
     }

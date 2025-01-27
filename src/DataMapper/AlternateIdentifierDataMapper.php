@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
-use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
-use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
+use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
@@ -19,31 +19,28 @@ use Throwable;
 use ValueError;
 
 /**
- * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
+ * @author Marie Rinden <marie@shoppingnorge.no>
  * @package Apiera\Sdk\DataMapper
- * @since 0.1.0
+ * @since 0.2.0
  */
-final class CategoryDataMapper implements DataMapperInterface
+final readonly class AlternateIdentifierDataMapper implements DataMapperInterface
 {
     /**
      * @param array<string, mixed> $responseData
-     * @return CategoryResponse
+     * @return AlternateIdentifierResponse
      * @throws ClientExceptionInterface
      */
     public function fromResponse(array $responseData): ResponseInterface
     {
         try {
-            return new CategoryResponse(
+            return new AlternateIdentifierResponse(
                 id: $responseData['@id'],
                 type: LdType::from($responseData['@type']),
                 uuid: Uuid::fromString($responseData['uuid']),
                 createdAt: new DateTimeImmutable($responseData['createdAt']),
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
-                name: $responseData['name'],
-                store: $responseData['store'],
-                description: $responseData['description'] ?? null,
-                parent: $responseData['parent'] ?? null,
-                image: $responseData['image'] ?? null,
+                identifierType: $responseData['type'],
+                code: $responseData['code'],
             );
         } catch (Throwable $exception) {
             throw new ClientException(
@@ -55,20 +52,23 @@ final class CategoryDataMapper implements DataMapperInterface
 
     /**
      * @param array<string, mixed> $collectionResponseData
-     * @return CategoryCollectionResponse
+     * @return AlternateIdentifierCollectionResponse
      * @throws ClientExceptionInterface
      */
-    public function fromCollectionResponse(array $collectionResponseData): CategoryCollectionResponse
+    public function fromCollectionResponse(array $collectionResponseData): AlternateIdentifierCollectionResponse
     {
         try {
-            return new CategoryCollectionResponse(
+            $members = array_map(
+                fn(array $alternateIdentifier): AlternateIdentifierResponse =>
+                $this->fromResponse($alternateIdentifier),
+                $collectionResponseData['member']
+            );
+
+            return new AlternateIdentifierCollectionResponse(
                 context: $collectionResponseData['@context'],
                 id: $collectionResponseData['@id'],
                 type: LdType::from($collectionResponseData['@type']),
-                members: array_map(
-                    fn(array $category): CategoryResponse => $this->fromResponse($category),
-                    $collectionResponseData['member']
-                ),
+                members: $members,
                 totalItems: $collectionResponseData['totalItems'],
                 view: $collectionResponseData['view'] ?? null,
                 firstPage: $collectionResponseData['firstPage'] ?? null,
@@ -85,7 +85,7 @@ final class CategoryDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param CategoryRequest $requestDto
+     * @param AlternateIdentifierRequest $requestDto
      * @return array<string, mixed>
      */
     public function toRequestData(RequestInterface $requestDto): array

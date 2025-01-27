@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
-use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
-use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
+use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
@@ -21,19 +21,19 @@ use ValueError;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\DataMapper
- * @since 0.1.0
+ * @since 0.2.0
  */
-final class CategoryDataMapper implements DataMapperInterface
+final class AttributeDataMapper implements DataMapperInterface
 {
     /**
      * @param array<string, mixed> $responseData
-     * @return CategoryResponse
+     * @return AttributeResponse
      * @throws ClientExceptionInterface
      */
     public function fromResponse(array $responseData): ResponseInterface
     {
         try {
-            return new CategoryResponse(
+            return new AttributeResponse(
                 id: $responseData['@id'],
                 type: LdType::from($responseData['@type']),
                 uuid: Uuid::fromString($responseData['uuid']),
@@ -41,9 +41,6 @@ final class CategoryDataMapper implements DataMapperInterface
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
                 name: $responseData['name'],
                 store: $responseData['store'],
-                description: $responseData['description'] ?? null,
-                parent: $responseData['parent'] ?? null,
-                image: $responseData['image'] ?? null,
             );
         } catch (Throwable $exception) {
             throw new ClientException(
@@ -55,18 +52,18 @@ final class CategoryDataMapper implements DataMapperInterface
 
     /**
      * @param array<string, mixed> $collectionResponseData
-     * @return CategoryCollectionResponse
+     * @return AttributeCollectionResponse
      * @throws ClientExceptionInterface
      */
-    public function fromCollectionResponse(array $collectionResponseData): CategoryCollectionResponse
+    public function fromCollectionResponse(array $collectionResponseData): AttributeCollectionResponse
     {
         try {
-            return new CategoryCollectionResponse(
+            return new AttributeCollectionResponse(
                 context: $collectionResponseData['@context'],
                 id: $collectionResponseData['@id'],
                 type: LdType::from($collectionResponseData['@type']),
                 members: array_map(
-                    fn(array $category): CategoryResponse => $this->fromResponse($category),
+                    fn(array $attribute): AttributeResponse => $this->fromResponse($attribute),
                     $collectionResponseData['member']
                 ),
                 totalItems: $collectionResponseData['totalItems'],
@@ -85,7 +82,7 @@ final class CategoryDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param CategoryRequest $requestDto
+     * @param AttributeRequest $requestDto
      * @return array<string, mixed>
      */
     public function toRequestData(RequestInterface $requestDto): array

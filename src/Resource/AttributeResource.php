@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Apiera\Sdk\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\CategoryDataMapper;
+use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
-use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
-use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
-use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
+use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
+use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
+use Apiera\Sdk\Interface\DTO\JsonLDInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Apiera\Sdk\Interface\RequestResourceInterface;
@@ -21,15 +22,15 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @package Apiera\Sdk\Resource
- * @since 0.1.0
+ * @since 0.2.0
  */
-final readonly class CategoryResource implements RequestResourceInterface
+final readonly class AttributeResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/categories';
+    private const string ENDPOINT = '/attributes';
 
     /**
      * @param Client $client
-     * @param CategoryDataMapper $mapper
+     * @param AttributeDataMapper $mapper
      */
     public function __construct(
         private ClientInterface $client,
@@ -38,13 +39,13 @@ final readonly class CategoryResource implements RequestResourceInterface
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param AttributeRequest $request
      * @param QueryParameters|null $params
-     * @return CategoryCollectionResponse
+     * @return AttributeCollectionResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function find(RequestInterface $request, ?QueryParameters $params = null): CategoryCollectionResponse
+    public function find(RequestInterface $request, ?QueryParameters $params = null): JsonLDInterface
     {
         if (!$request->getStore()) {
             throw new InvalidRequestException('Store IRI is required for this operation');
@@ -56,9 +57,9 @@ final readonly class CategoryResource implements RequestResourceInterface
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param AttributeRequest $request
      * @param QueryParameters $params
-     * @return CategoryResponse
+     * @return AttributeResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
@@ -67,22 +68,22 @@ final readonly class CategoryResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getTotalItems() < 1) {
-            throw new InvalidRequestException('No category found matching the given criteria');
+            throw new InvalidRequestException('No attribute found matching the given criteria');
         }
 
         return $collection->getMembers()[0];
     }
 
     /**
-     * @param CategoryRequest $request
-     * @return CategoryResponse
+     * @param AttributeRequest $request
+     * @return AttributeResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function get(RequestInterface $request): ResponseInterface
     {
         if (!$request->getIri()) {
-            throw new InvalidRequestException('Category IRI is required for this operation');
+            throw new InvalidRequestException('Attribute IRI is required for this operation');
         }
 
         return $this->mapper->fromResponse($this->client->decodeResponse(
@@ -91,8 +92,8 @@ final readonly class CategoryResource implements RequestResourceInterface
     }
 
     /**
-     * @param CategoryRequest $request
-     * @return CategoryResponse
+     * @param AttributeRequest $request
+     * @return AttributeResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
@@ -110,15 +111,15 @@ final readonly class CategoryResource implements RequestResourceInterface
     }
 
     /**
-     * @param CategoryRequest $request
-     * @return CategoryResponse
+     * @param AttributeRequest $request
+     * @return AttributeResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function update(RequestInterface $request): ResponseInterface
     {
         if (!$request->getIri()) {
-            throw new InvalidRequestException('Category IRI is required for this operation');
+            throw new InvalidRequestException('Attribute IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
@@ -129,7 +130,7 @@ final readonly class CategoryResource implements RequestResourceInterface
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param AttributeRequest $request
      * @return void
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
@@ -137,7 +138,7 @@ final readonly class CategoryResource implements RequestResourceInterface
     public function delete(RequestInterface $request): void
     {
         if (!$request->getIri()) {
-            throw new InvalidRequestException('Category IRI is required for this operation');
+            throw new InvalidRequestException('Attribute IRI is required for this operation');
         }
 
         $this->client->delete($request->getIri());

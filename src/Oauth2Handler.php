@@ -53,11 +53,9 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     public function getAccessToken(): string
     {
         $cache = $this->configuration->getCache();
-        if ($cache !== null) {
-            $token = $this->getTokenFromCache($cache);
-            if ($token !== null) {
-                return $token;
-            }
+        $token = $this->getTokenFromCache($cache);
+        if ($token !== null) {
+            return $token;
         }
 
         try {
@@ -72,7 +70,7 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
                 throw new ClientException('No access token found in response');
             }
 
-            if ($cache !== null && isset($data['expires_in'])) {
+            if (isset($data['expires_in'])) {
                 $this->cacheToken($cache, $data['access_token'], (int) $data['expires_in']);
             }
 
@@ -93,11 +91,9 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     public function getTokenExpiration(string $token): DateTimeInterface
     {
         $cache = $this->configuration->getCache();
-        if ($cache !== null) {
-            $expiration = $this->getExpirationFromCache($cache);
-            if ($expiration !== null) {
-                return $expiration;
-            }
+        $expiration = $this->getExpirationFromCache($cache);
+        if ($expiration !== null) {
+            return $expiration;
         }
 
         try {
@@ -109,14 +105,8 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             );
 
             if (isset($data['expires_in']) && is_numeric($data['expires_in'])) {
-                $expiration = (new DateTimeImmutable())
+                return (new DateTimeImmutable())
                     ->modify(sprintf('+%d seconds', (int) $data['expires_in']));
-
-                if ($cache !== null) {
-                    $this->cacheExpiration($cache, $expiration);
-                }
-
-                return $expiration;
             }
 
             return new DateTimeImmutable();
@@ -134,7 +124,7 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
         return sprintf(
             '%s%s_%s',
             self::CACHE_PREFIX,
-            $this->configuration->getAuthOrganizationId(),
+            $this->configuration->getOauthOrganizationId(),
             $suffix
         );
     }
@@ -207,29 +197,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @param DateTimeInterface $expiration
-     * @return void
-     * @throws ClientException
-     */
-    private function cacheExpiration(CacheItemPoolInterface $cache, DateTimeInterface $expiration): void
-    {
-        try {
-            $item = $cache->getItem($this->getCacheKey('expiration'));
-            $item->set($expiration);
-            $item->expiresAt($expiration);
-            if (!$cache->save($item)) {
-                throw new ClientException('Failed to save token expiration to cache');
-            }
-        } catch (InvalidArgumentException $e) {
-            throw new ClientException(
-                message: 'Failed to cache token expiration: ' . $e->getMessage(),
-                previous: $e
-            );
-        }
-    }
-
-    /**
      * @return ResponseInterface
      * @throws ClientException
      */
@@ -237,8 +204,8 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     {
         try {
             return $this->auth0->authentication()->clientCredentials([
-                'audience' => $this->configuration->getAuthAudience(),
-                'organization' => $this->configuration->getAuthOrganizationId(),
+                'audience' => $this->configuration->getOauthAudience(),
+                'organization' => $this->configuration->getOauthOrganizationId(),
             ]);
         } catch (NetworkException | ConfigurationException $e) {
             throw new ClientException(
@@ -254,11 +221,19 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
      */
     private function createSdkConfiguration(): SdkConfiguration
     {
+        $options = $this->configuration->getOptions();
+
+        // Only use provided options if they include a handler
+        $httpClient = isset($options['handler'])
+            ? new \GuzzleHttp\Client($options)
+            : null;
+
         return new SdkConfiguration(
-            domain: $this->configuration->getAuthDomain(),
-            clientId: $this->configuration->getAuthClientId(),
-            clientSecret: $this->configuration->getAuthClientSecret(),
-            cookieSecret: $this->configuration->getAuthCookieSecret(),
+            domain: $this->configuration->getOauthDomain(),
+            clientId: $this->configuration->getOauthClientId(),
+            clientSecret: $this->configuration->getOauthClientSecret(),
+            httpClient: $httpClient,
+            cookieSecret: $this->configuration->getOauthCookieSecret()
         );
     }
 }

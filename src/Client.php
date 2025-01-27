@@ -35,7 +35,7 @@ readonly class Client implements ClientInterface
     public function __construct(
         Configuration $configuration,
     ) {
-        $this->client = new GuzzleClient([
+        $this->client = new GuzzleClient(array_merge([
             HttpHeaders::BaseUrl->value => $configuration->getBaseUrl(),
             RequestOptions::TIMEOUT => $configuration->getTimeout(),
             RequestOptions::DEBUG => $configuration->getDebugMode(),
@@ -43,7 +43,7 @@ readonly class Client implements ClientInterface
                 HttpHeaders::UserAgent->value => $configuration->getUserAgent(),
                 HttpHeaders::ContentType->value => ContentTypes::JsonLD->value,
             ]
-        ]);
+        ], $configuration->getOptions()));
 
         $this->oauth2Handler = new Oauth2Handler($configuration);
     }
@@ -69,9 +69,14 @@ readonly class Client implements ClientInterface
      */
     private function mergeOptions(array $options): array
     {
+        $headers = array_merge(
+            $options[RequestOptions::HEADERS] ?? [],
+            $this->getAuthHeaders()
+        );
+
         return array_merge(
             $options,
-            [RequestOptions::HEADERS => $this->getAuthHeaders()]
+            [RequestOptions::HEADERS => $headers]
         );
     }
 
@@ -107,7 +112,10 @@ readonly class Client implements ClientInterface
     {
         try {
             return $this->client->request('POST', $endpoint, $this->mergeOptions([
-                RequestOptions::JSON => $body
+                RequestOptions::JSON => $body,
+                RequestOptions::HEADERS => [
+                    HttpHeaders::ContentType->value => ContentTypes::JsonLD->value
+                ]
             ]));
         } catch (GuzzleException $exception) {
             throw new ClientException(
@@ -171,7 +179,7 @@ readonly class Client implements ClientInterface
      * @return array<string, mixed>
      * @throws ClientExceptionInterface
      */
-    public static function decodeResponse(ResponseInterface $response): array
+    public function decodeResponse(ResponseInterface $response): array
     {
         try {
             return json_decode(
