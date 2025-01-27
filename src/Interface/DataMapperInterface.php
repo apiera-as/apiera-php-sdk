@@ -10,7 +10,6 @@ use Apiera\Sdk\Interface\DTO\ResponseInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\Contract
  * @since 0.1.0
  */
 interface DataMapperInterface
@@ -18,25 +17,24 @@ interface DataMapperInterface
     /**
      * Maps raw API response data to a strongly-typed DTO.
      *
-     * @param array<string, mixed> $responseData
-     * @return ResponseInterface
      * @throws ClientExceptionInterface
+     *
+     * @param array<string, mixed> $responseData
      */
     public function fromResponse(array $responseData): ResponseInterface;
 
     /**
      * Maps raw API collection response data to an array of strongly-typed DTOs.
      *
-     * @param array<string, mixed> $collectionResponseData
-     * @return JsonLDInterface
      * @throws ClientExceptionInterface
+     *
+     * @param array<string, mixed> $collectionResponseData
      */
     public function fromCollectionResponse(array $collectionResponseData): JsonLDInterface;
 
     /**
      * Maps a request DTO to the format expected by the API.
      *
-     * @param RequestInterface $requestDto
      * @return array<string, mixed>
      */
     public function toRequestData(RequestInterface $requestDto): array;
