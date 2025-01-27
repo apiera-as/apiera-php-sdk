@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\DataMapper;
 
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
@@ -9,19 +11,19 @@ use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
 use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use DateMalformedStringException;
 use DateTimeImmutable;
 use Symfony\Component\Uid\Uuid;
+use Throwable;
+use ValueError;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @package Apiera\Sdk\DataMapper
  * @since 0.2.0
  */
-class AlternateIdentifierDataMapper implements DataMapperInterface
+final readonly class AlternateIdentifierDataMapper implements DataMapperInterface
 {
     /**
      * @param array<string, mixed> $responseData
@@ -40,37 +42,46 @@ class AlternateIdentifierDataMapper implements DataMapperInterface
                 identifierType: $responseData['type'],
                 code: $responseData['code'],
             );
-        } catch (DateMalformedStringException $exception) {
-            throw new ClientException($exception->getMessage(), $exception->getCode(), $exception);
+        } catch (Throwable $exception) {
+            throw new ClientException(
+                message: 'Failed to map response data: ' . $exception->getMessage(),
+                previous: $exception
+            );
         }
     }
 
     /**
-     * @param array<string, mixed> $collectionData
+     * @param array<string, mixed> $collectionResponseData
      * @return AlternateIdentifierCollectionResponse
      * @throws ClientExceptionInterface
      */
-    public function fromCollectionResponse(array $collectionData): JsonLDInterface
+    public function fromCollectionResponse(array $collectionResponseData): AlternateIdentifierCollectionResponse
     {
-        $members = [];
-        foreach ($collectionData['member'] as $alternateIdentifier) {
-            /** @var AlternateIdentifierResponse $response */
-            $response = $this->fromResponse($alternateIdentifier);
-            $members[] = $response;
-        }
+        try {
+            $members = array_map(
+                fn(array $alternateIdentifier): AlternateIdentifierResponse =>
+                $this->fromResponse($alternateIdentifier),
+                $collectionResponseData['member']
+            );
 
-        return new AlternateIdentifierCollectionResponse(
-            context: $collectionData['@context'],
-            id: $collectionData['@id'],
-            type: LdType::from($collectionData['@type']),
-            members: $members,
-            totalItems: $collectionData['totalItems'],
-            view: $collectionData['view'] ?? null,
-            firstPage: $collectionData['firstPage'] ?? null,
-            lastPage: $collectionData['lastPage'] ?? null,
-            nextPage: $collectionData['nextPage'] ?? null,
-            previousPage: $collectionData['previousPage'] ?? null,
-        );
+            return new AlternateIdentifierCollectionResponse(
+                context: $collectionResponseData['@context'],
+                id: $collectionResponseData['@id'],
+                type: LdType::from($collectionResponseData['@type']),
+                members: $members,
+                totalItems: $collectionResponseData['totalItems'],
+                view: $collectionResponseData['view'] ?? null,
+                firstPage: $collectionResponseData['firstPage'] ?? null,
+                lastPage: $collectionResponseData['lastPage'] ?? null,
+                nextPage: $collectionResponseData['nextPage'] ?? null,
+                previousPage: $collectionResponseData['previousPage'] ?? null,
+            );
+        } catch (ValueError $exception) {
+            throw new ClientException(
+                message: 'Invalid collection type: ' . $exception->getMessage(),
+                previous: $exception
+            );
+        }
     }
 
     /**
