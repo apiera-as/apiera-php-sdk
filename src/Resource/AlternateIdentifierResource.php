@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\Resource;
 
 use Apiera\Sdk\Client;
@@ -24,7 +26,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class AlternateIdentifierResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/alternate_identifiers';
+    private const string ENDPOINT = '/api/v1/alternate_identifiers';
 
     /**
      * @param Client $client
@@ -51,12 +53,12 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
 
     /**
      * @param AlternateIdentifierRequest $request
-     * @param QueryParameters|null $params
+     * @param QueryParameters $params
      * @return AlternateIdentifierResponse
      * @throws ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function findOneBy(RequestInterface $request, ?QueryParameters $params = null): ResponseInterface
+    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
     {
         $collection = $this->find($request, $params);
 
