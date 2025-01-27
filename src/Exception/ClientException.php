@@ -17,18 +17,10 @@ use Throwable;
  * request, response (if available), and underlying error details.
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\Exception
  * @since 0.1.0
  */
-class ClientException extends Exception implements ClientExceptionInterface
+final class ClientException extends Exception implements ClientExceptionInterface
 {
-    /**
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
-     * @param RequestInterface|null $request
-     * @param ResponseInterface|null $response
-     */
     public function __construct(
         string $message = "",
         int $code = 0,
@@ -39,17 +31,11 @@ class ClientException extends Exception implements ClientExceptionInterface
         parent::__construct($message, $code, $previous);
     }
 
-    /**
-     * @return RequestInterface|null
-     */
     public function getRequest(): ?RequestInterface
     {
         return $this->request;
     }
 
-    /**
-     * @return ResponseInterface|null
-     */
     public function getResponse(): ?ResponseInterface
     {
         return $this->response;
