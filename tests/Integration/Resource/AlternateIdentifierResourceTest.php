@@ -25,48 +25,6 @@ final class AlternateIdentifierResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
-     */
-    protected function setUp(): void
-    {
-        $this->mockHandler = new MockHandler();
-        $handlerStack = HandlerStack::create($this->mockHandler);
-
-        $history = Middleware::history($this->requestHistory);
-        $handlerStack->push($history);
-
-        $cacheItemMock = $this->createMock(CacheItemInterface::class);
-        $cacheItemMock->method('isHit')->willReturn(false);
-        $cacheItemMock->method('get')->willReturn(null);
-        $cacheItemMock->method('set')->willReturnSelf();
-        $cacheItemMock->method('expiresAfter')->willReturnSelf();
-
-        $cacheMock = $this->createMock(CacheItemPoolInterface::class);
-        $cacheMock->method('getItem')->willReturn($cacheItemMock);
-        $cacheMock->method('save')->willReturn(true);
-
-        $config = new Configuration(
-            baseUrl: 'https://api.test',
-            userAgent: 'Test/1.0',
-            oauthDomain: 'auth.test',
-            oauthClientId: 'test_client',
-            oauthClientSecret: 'test_secret',
-            oauthCookieSecret: 'test_cookie',
-            oauthAudience: 'test_audience',
-            oauthOrganizationId: 'test_org',
-            cache: $cacheMock,
-            timeout: 10,
-            debugMode: false,
-            options: [
-                'handler' => $handlerStack,
-            ]
-        );
-
-        $this->sdk = new ApieraSdk($config);
-    }
-
-    /**
      * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
@@ -305,5 +263,47 @@ final class AlternateIdentifierResourceTest extends TestCase
             'https://api.test/api/v1/alternate_identifiers/e548e809-2ab1-4832-8dd9-f67115da61fb',
             (string)$alternateIdentifierRequest->getUri()
         );
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     * @throws \Apiera\Sdk\Exception\ClientException
+     */
+    protected function setUp(): void
+    {
+        $this->mockHandler = new MockHandler();
+        $handlerStack = HandlerStack::create($this->mockHandler);
+
+        $history = Middleware::history($this->requestHistory);
+        $handlerStack->push($history);
+
+        $cacheItemMock = $this->createMock(CacheItemInterface::class);
+        $cacheItemMock->method('isHit')->willReturn(false);
+        $cacheItemMock->method('get')->willReturn(null);
+        $cacheItemMock->method('set')->willReturnSelf();
+        $cacheItemMock->method('expiresAfter')->willReturnSelf();
+
+        $cacheMock = $this->createMock(CacheItemPoolInterface::class);
+        $cacheMock->method('getItem')->willReturn($cacheItemMock);
+        $cacheMock->method('save')->willReturn(true);
+
+        $config = new Configuration(
+            baseUrl: 'https://api.test',
+            userAgent: 'Test/1.0',
+            oauthDomain: 'auth.test',
+            oauthClientId: 'test_client',
+            oauthClientSecret: 'test_secret',
+            oauthCookieSecret: 'test_cookie',
+            oauthAudience: 'test_audience',
+            oauthOrganizationId: 'test_org',
+            cache: $cacheMock,
+            timeout: 10,
+            debugMode: false,
+            options: [
+                'handler' => $handlerStack,
+            ]
+        );
+
+        $this->sdk = new ApieraSdk($config);
     }
 }
