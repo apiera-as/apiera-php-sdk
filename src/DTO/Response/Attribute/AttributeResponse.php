@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\DTO\Response\Attribute;
 
 use Apiera\Sdk\DTO\Response\AbstractResponse;
@@ -9,17 +11,11 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Response\Attribute
  * @since 0.2.0
  */
 final readonly class AttributeResponse extends AbstractResponse
 {
     /**
-     * @param string $id
-     * @param LdType $type
-     * @param Uuid $uuid
-     * @param DateTimeInterface $createdAt
-     * @param DateTimeInterface $updatedAt
      * @param string $name The attribute name
      * @param string $store The attribute store iri
      */
@@ -41,17 +37,11 @@ final readonly class AttributeResponse extends AbstractResponse
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getStore(): string
     {
         return $this->store;

@@ -8,7 +8,6 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DTO\Request\AlternateIdentifier
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierRequest implements RequestInterface
@@ -25,25 +24,16 @@ final readonly class AlternateIdentifierRequest implements RequestInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIri(): ?string
     {
         return $this->iri;

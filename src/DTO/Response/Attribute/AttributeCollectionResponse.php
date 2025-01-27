@@ -7,10 +7,10 @@ namespace Apiera\Sdk\DTO\Response\Attribute;
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 
 /**
- * @template-extends AbstractCollectionResponse<AttributeResponse>
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Response\Attribute
  * @since 0.2.0
+ *
+ * @template-extends AbstractCollectionResponse<AttributeResponse>
  */
 final readonly class AttributeCollectionResponse extends AbstractCollectionResponse
 {
@@ -19,7 +19,9 @@ final readonly class AttributeCollectionResponse extends AbstractCollectionRespo
      */
     public function getMembers(): array
     {
-        /** @var array<AttributeResponse> */
-        return parent::getMembers();
+        /** @var array<AttributeResponse> $members */
+        $members = parent::getMembers();
+
+        return $members;
     }
 }

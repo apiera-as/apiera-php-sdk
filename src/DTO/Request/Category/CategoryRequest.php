@@ -8,7 +8,6 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Request\Category
  * @since 0.1.0
  */
 final readonly class CategoryRequest implements RequestInterface
@@ -30,49 +29,31 @@ final readonly class CategoryRequest implements RequestInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getStore(): ?string
     {
         return $this->store;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
     public function getParent(): ?string
     {
         return $this->parent;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImage(): ?string
     {
         return $this->image;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIri(): ?string
     {
         return $this->iri;

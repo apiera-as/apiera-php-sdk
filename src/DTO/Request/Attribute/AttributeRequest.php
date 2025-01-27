@@ -8,7 +8,6 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Request\Attribute
  * @since 0.2.0
  */
 final readonly class AttributeRequest implements RequestInterface
@@ -25,25 +24,16 @@ final readonly class AttributeRequest implements RequestInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getStore(): ?string
     {
         return $this->store;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIri(): ?string
     {
         return $this->iri;
