@@ -30,7 +30,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     private Auth0 $auth0;
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function __construct(
         private Configuration $configuration,
@@ -46,7 +46,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function getAccessToken(): string
     {
@@ -83,7 +83,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function getTokenExpiration(string $token): DateTimeInterface
     {
@@ -124,7 +124,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     private function getTokenFromCache(CacheItemPoolInterface $cache): ?string
     {
@@ -145,7 +145,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     private function getExpirationFromCache(CacheItemPoolInterface $cache): ?DateTimeInterface
     {
@@ -166,7 +166,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     private function cacheToken(CacheItemPoolInterface $cache, string $token, int $expiresIn): void
     {
@@ -188,7 +188,7 @@ final readonly class Oauth2Handler implements Oauth2Interface
     }
 
     /**
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     private function getClientCredentials(): ResponseInterface
     {
