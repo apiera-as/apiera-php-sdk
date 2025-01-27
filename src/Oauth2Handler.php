@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Apiera\Sdk;
 
 use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Interface\Oauth2Interface;
 use Auth0\SDK\Auth0;
 use Auth0\SDK\Configuration\SdkConfiguration;
 use Auth0\SDK\Exception\ConfigurationException;
@@ -19,10 +20,9 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk
  * @since 0.1.0
  */
-readonly final class Oauth2Handler implements Interface\Oauth2Interface
+final readonly class Oauth2Handler implements Oauth2Interface
 {
     private const string CACHE_PREFIX = 'oauth2_token_';
     private const int EXPIRATION_BUFFER_SECONDS = 30;
@@ -30,7 +30,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     private Auth0 $auth0;
 
     /**
-     * @param Configuration $configuration
      * @throws ClientException
      */
     public function __construct(
@@ -47,13 +46,13 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @return string
      * @throws ClientException
      */
     public function getAccessToken(): string
     {
         $cache = $this->configuration->getCache();
         $token = $this->getTokenFromCache($cache);
+
         if ($token !== null) {
             return $token;
         }
@@ -84,14 +83,13 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param string $token
-     * @return DateTimeInterface
      * @throws ClientException
      */
     public function getTokenExpiration(string $token): DateTimeInterface
     {
         $cache = $this->configuration->getCache();
         $expiration = $this->getExpirationFromCache($cache);
+
         if ($expiration !== null) {
             return $expiration;
         }
@@ -115,10 +113,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
         }
     }
 
-    /**
-     * @param string $suffix
-     * @return string
-     */
     private function getCacheKey(string $suffix): string
     {
         return sprintf(
@@ -130,17 +124,17 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @return string|null
      * @throws ClientException
      */
     private function getTokenFromCache(CacheItemPoolInterface $cache): ?string
     {
         try {
             $item = $cache->getItem($this->getCacheKey('token'));
+
             if ($item->isHit()) {
                 return $item->get();
             }
+
             return null;
         } catch (InvalidArgumentException $e) {
             throw new ClientException(
@@ -151,17 +145,17 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @return DateTimeInterface|null
      * @throws ClientException
      */
     private function getExpirationFromCache(CacheItemPoolInterface $cache): ?DateTimeInterface
     {
         try {
             $item = $cache->getItem($this->getCacheKey('expiration'));
+
             if ($item->isHit()) {
                 return $item->get();
             }
+
             return null;
         } catch (InvalidArgumentException $e) {
             throw new ClientException(
@@ -172,10 +166,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @param string $token
-     * @param int $expiresIn
-     * @return void
      * @throws ClientException
      */
     private function cacheToken(CacheItemPoolInterface $cache, string $token, int $expiresIn): void
@@ -185,6 +175,7 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             $item->set($token);
             // Subtract buffer from expiration time
             $item->expiresAfter($expiresIn - self::EXPIRATION_BUFFER_SECONDS);
+
             if (!$cache->save($item)) {
                 throw new ClientException('Failed to save token to cache');
             }
@@ -197,7 +188,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @return ResponseInterface
      * @throws ClientException
      */
     private function getClientCredentials(): ResponseInterface
@@ -216,7 +206,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @return SdkConfiguration
      * @throws ConfigurationException
      */
     private function createSdkConfiguration(): SdkConfiguration
