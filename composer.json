@@ -33,12 +33,14 @@
         "phpstan/phpstan": "^2.1",
         "phpstan/extension-installer": "^1.4",
         "squizlabs/php_codesniffer": "^3.11",
-        "dg/bypass-finals": "^1.9"
+        "dg/bypass-finals": "^1.9",
+        "apiera/php-standards": "^1.0"
     },
     "config": {
         "allow-plugins": {
             "php-http/discovery": true,
-            "phpstan/extension-installer": true
+            "phpstan/extension-installer": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "scripts": {
@@ -49,13 +51,18 @@
         "test:unit": "phpunit --testsuite=Unit",
         "test:integration": "phpunit --testsuite=Integration",
         "test:coverage": "phpunit --coverage-html coverage",
-        "cs:check": "phpcs",
-        "cs:fix": "phpcbf",
-        "static:analyse": "phpstan analyse --ansi",
+        "cs:check": "phpcs --standard=phpcs.xml",
+        "cs:fix": "phpcbf --standard=phpcs.xml",
+        "static:analyse": "phpstan analyse --ansi -c phpstan.neon",
         "check": [
             "@cs:check",
             "@static:analyse",
             "@test"
+        ],
+        "pre-commit": [
+            "@cs:check",
+            "@static:analyse",
+            "@test:unit"
         ]
     }
 }
