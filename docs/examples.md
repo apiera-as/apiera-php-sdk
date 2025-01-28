@@ -6,6 +6,7 @@
     - [Setup and Configuration](#setup-and-configuration)
     - [Attributes](#attributes)
     - [Categories](#categories)
+    - [Distributors](#distributors)
 
 ---
 
@@ -215,4 +216,90 @@ $requestObject = new \Apiera\Sdk\DTO\Request\Category\CategoryRequest(
 );
 
 $responseObject = $sdk->category()->update($requestObject);
+```
+
+# Distributors
+
+### Find Distributors
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->distributor()->find($requestObject);
+```
+
+---
+
+### Find Distributors with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some distributor name'] // Add filters as needed
+);
+
+$responseObject = $sdk->distributor()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some distributor name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->distributor()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the distributor is not found
+}
+```
+
+---
+
+### Find a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/distributors/520413a8-509a-4048-96e6-81751e315c5d2' // Use the distributor IRI
+);
+
+$responseObject = $sdk->distributor()->get($requestObject);
+```
+
+---
+
+### Create a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    name: 'Some distributor name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->distributor()->create($requestObject);
+```
+
+---
+
+### Update a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    name: 'Some new distributor name',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/distributors/520413a8-509a-4048-96e6-81751e315c5d2' // Use the distributor IRI
+);
+
+$responseObject = $sdk->distributor()->update($requestObject);
 ```
