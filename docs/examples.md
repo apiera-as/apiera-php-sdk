@@ -7,7 +7,7 @@
     - [Attributes](#attributes)
     - [Categories](#categories)
     - [Distributors](#distributors)
-    - [Files](#file)
+    - [Files](#files)
 
 ---
 
