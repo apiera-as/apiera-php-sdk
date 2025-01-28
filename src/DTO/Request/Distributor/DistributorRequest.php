@@ -13,9 +13,9 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class DistributorRequest implements RequestInterface
 {
     /**
-     * @param string $name The attribute name
-     * @param string|null $store The attribute store iri
-     * @param string|null $iri The attribute iri
+     * @param string $name The distributor name
+     * @param string|null $store The distributor store iri
+     * @param string|null $iri The distributor iri
      */
     public function __construct(
         private string $name,
