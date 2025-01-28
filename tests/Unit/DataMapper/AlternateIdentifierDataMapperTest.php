@@ -4,59 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\Interface\ClientExceptionInterface;
-use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
-use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
+use DateTimeImmutable;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
-class AlternateIdentifierDataMapperTest extends TestCase
+final class AlternateIdentifierDataMapperTest extends TestCase
 {
     private AlternateIdentifierDataMapper $mapper;
+
+    /** @var array<string, mixed> */
     private array $sampleResponseData;
+
+    /** @var array<string, mixed> */
     private array $sampleCollectionData;
     private AlternateIdentifierRequest $sampleRequest;
 
-    protected function setUp(): void
-    {
-        $this->mapper = new AlternateIdentifierDataMapper();
-
-        $this->sampleResponseData = [
-            '@id' => '/api/alternate_identifiers/123',
-            '@type' => 'AlternateIdentifier',
-            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
-            'createdAt' => '2025-01-01T00:00:00+00:00',
-            'updatedAt' => '2025-01-01T00:00:00+00:00',
-            'type' => 'gtin',
-            'code' => 'ABC123'
-        ];
-
-        $this->sampleCollectionData = [
-            '@context' => '/api/contexts/AlternateIdentifier',
-            '@id' => '/api/alternate_identifiers',
-            '@type' => 'Collection',
-            'member' => [$this->sampleResponseData],
-            'totalItems' => 1,
-            'view' => '/api/alternate_identifiers?page=1',
-            'firstPage' => '/api/alternate_identifiers?page=1',
-            'lastPage' => '/api/alternate_identifiers?page=1',
-            'nextPage' => null,
-            'previousPage' => null
-        ];
-
-        $this->sampleRequest = new AlternateIdentifierRequest(
-            code: 'ABC123',
-            type: 'gtin'
-        );
-    }
-
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -73,7 +43,7 @@ class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
@@ -85,7 +55,7 @@ class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
@@ -98,7 +68,7 @@ class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -119,7 +89,7 @@ class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -139,14 +109,14 @@ class AlternateIdentifierDataMapperTest extends TestCase
 
         $expected = [
             'code' => 'ABC123',
-            'type' => 'gtin'
+            'type' => 'gtin',
         ];
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
@@ -155,5 +125,38 @@ class AlternateIdentifierDataMapperTest extends TestCase
 
         $this->expectException(ClientException::class);
         $this->mapper->fromCollectionResponse($data);
+    }
+
+    protected function setUp(): void
+    {
+        $this->mapper = new AlternateIdentifierDataMapper();
+
+        $this->sampleResponseData = [
+            '@id' => '/api/alternate_identifiers/123',
+            '@type' => 'AlternateIdentifier',
+            'uuid' => '123e4567-e89b-12d3-a456-426614174000',
+            'createdAt' => '2025-01-01T00:00:00+00:00',
+            'updatedAt' => '2025-01-01T00:00:00+00:00',
+            'type' => 'gtin',
+            'code' => 'ABC123',
+        ];
+
+        $this->sampleCollectionData = [
+            '@context' => '/api/contexts/AlternateIdentifier',
+            '@id' => '/api/alternate_identifiers',
+            '@type' => 'Collection',
+            'member' => [$this->sampleResponseData],
+            'totalItems' => 1,
+            'view' => '/api/alternate_identifiers?page=1',
+            'firstPage' => '/api/alternate_identifiers?page=1',
+            'lastPage' => '/api/alternate_identifiers?page=1',
+            'nextPage' => null,
+            'previousPage' => null,
+        ];
+
+        $this->sampleRequest = new AlternateIdentifierRequest(
+            code: 'ABC123',
+            type: 'gtin'
+        );
     }
 }

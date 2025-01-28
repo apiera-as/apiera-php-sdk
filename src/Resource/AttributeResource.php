@@ -4,34 +4,24 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\Resource;
 
-use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\Resource
  * @since 0.2.0
  */
 final readonly class AttributeResource implements RequestResourceInterface
 {
     private const string ENDPOINT = '/attributes';
 
-    /**
-     * @param Client $client
-     * @param AttributeDataMapper $mapper
-     */
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
@@ -39,32 +29,41 @@ final readonly class AttributeResource implements RequestResourceInterface
     }
 
     /**
-     * @param AttributeRequest $request
-     * @param QueryParameters|null $params
-     * @return AttributeCollectionResponse
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function find(RequestInterface $request, ?QueryParameters $params = null): JsonLDInterface
+    public function find(RequestInterface $request, ?QueryParameters $params = null): AttributeCollectionResponse
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         if (!$request->getStore()) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
-        return $this->mapper->fromCollectionResponse($this->client->decodeResponse(
+        /** @var AttributeCollectionResponse $collectionResponse */
+        $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
             $this->client->get($request->getStore() . self::ENDPOINT, $params)
         ));
+
+        return $collectionResponse;
     }
 
     /**
-     * @param AttributeRequest $request
-     * @param QueryParameters $params
-     * @return AttributeResponse
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
+    public function findOneBy(RequestInterface $request, QueryParameters $params): AttributeResponse
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         $collection = $this->find($request, $params);
 
         if ($collection->getTotalItems() < 1) {
@@ -75,68 +74,93 @@ final readonly class AttributeResource implements RequestResourceInterface
     }
 
     /**
-     * @param AttributeRequest $request
-     * @return AttributeResponse
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function get(RequestInterface $request): ResponseInterface
+    public function get(RequestInterface $request): AttributeResponse
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Attribute IRI is required for this operation');
         }
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AttributeResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->get($request->getIri())
         ));
+
+        return $response;
     }
 
     /**
-     * @param AttributeRequest $request
-     * @return AttributeResponse
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function create(RequestInterface $request): ResponseInterface
+    public function create(RequestInterface $request): AttributeResponse
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         if (!$request->getStore()) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AttributeResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
         ));
+
+        return $response;
     }
 
     /**
-     * @param AttributeRequest $request
-     * @return AttributeResponse
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function update(RequestInterface $request): ResponseInterface
+    public function update(RequestInterface $request): AttributeResponse
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Attribute IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AttributeResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->patch($request->getIri(), $requestData)
         ));
+
+        return $response;
     }
 
     /**
-     * @param AttributeRequest $request
-     * @return void
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function delete(RequestInterface $request): void
     {
+        if (!$request instanceof AttributeRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AttributeRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Attribute IRI is required for this operation');
         }

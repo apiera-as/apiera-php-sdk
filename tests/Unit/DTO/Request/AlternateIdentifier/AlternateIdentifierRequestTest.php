@@ -8,7 +8,7 @@ use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
-class AlternateIdentifierRequestTest extends TestCase
+final class AlternateIdentifierRequestTest extends TestCase
 {
     public function testInstanceOf(): void
     {
@@ -57,7 +57,7 @@ class AlternateIdentifierRequestTest extends TestCase
 
         $this->assertEquals([
             'code' => 'ABC123',
-            'type' => 'gtin'
+            'type' => 'gtin',
         ], $array);
     }
 }

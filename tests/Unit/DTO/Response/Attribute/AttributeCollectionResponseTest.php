@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\DTO\Response\Attribute;
 
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
@@ -12,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 
-class AttributeCollectionResponseTest extends TestCase
+final class AttributeCollectionResponseTest extends TestCase
 {
     public function testInstanceOf(): void
     {

@@ -8,20 +8,18 @@ use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
-use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
+use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use DateTimeImmutable;
-use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Uid\Uuid;
 
-class AlternateIdentifierResourceTest extends TestCase
+final class AlternateIdentifierResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
     private AlternateIdentifierDataMapper|MockObject $mapperMock;
@@ -29,74 +27,16 @@ class AlternateIdentifierResourceTest extends TestCase
     private AlternateIdentifierRequest $request;
     private AlternateIdentifierResponse $response;
     private AlternateIdentifierCollectionResponse $collectionResponse;
+
+    /** @var array<string, mixed> */
     private array $mockResponseData;
+
+    /** @var array<string, mixed> */
     private array $mockCollectionData;
 
     /**
-     * @throws Exception
-     */
-    protected function setUp(): void
-    {
-        $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(AlternateIdentifierDataMapper::class);
-        $this->resource = new AlternateIdentifierResource($this->clientMock, $this->mapperMock);
-
-        // Setup realistic test data
-        $this->request = new AlternateIdentifierRequest(
-            code: 'ABC123',
-            type: 'gtin'
-        );
-
-        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
-        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
-
-        $this->response = new AlternateIdentifierResponse(
-            id: '/api/alternate_identifiers/456',
-            type: LdType::AlternateIdentifier,
-            uuid: $uuid,
-            createdAt: $createdAt,
-            updatedAt: $updatedAt,
-            identifierType: 'gtin',
-            code: 'ABC123'
-        );
-
-        $this->mockResponseData = [
-            '@id' => '/api/alternate_identifiers/456',
-            '@type' => 'AlternateIdentifier',
-            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
-            'type' => 'gtin',
-            'code' => 'ABC123',
-            'createdAt' => '2024-01-25T12:00:00+00:00',
-            'updatedAt' => '2024-01-25T12:00:00+00:00'
-        ];
-
-        $this->mockCollectionData = [
-            '@context' => '/api/contexts/AlternateIdentifier',
-            '@id' => '/api/alternate_identifiers',
-            '@type' => 'Collection',
-            'member' => [$this->mockResponseData],
-            'totalItems' => 1,
-            'view' => '/api/alternate_identifiers?page=1',
-            'firstPage' => '/api/alternate_identifiers?page=1',
-            'lastPage' => '/api/alternate_identifiers?page=1'
-        ];
-
-        $this->collectionResponse = new AlternateIdentifierCollectionResponse(
-            context: '/api/contexts/AlternateIdentifier',
-            id: '/api/alternate_identifiers',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/alternate_identifiers?page=1',
-            firstPage: '/api/alternate_identifiers?page=1',
-            lastPage: '/api/alternate_identifiers?page=1'
-        );
-    }
-
-    /**
-     * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
     {
@@ -122,9 +62,9 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
     {
@@ -148,8 +88,8 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
     {
@@ -158,7 +98,7 @@ class AlternateIdentifierResourceTest extends TestCase
             '@id' => '/api/alternate_identifiers',
             '@type' => 'Collection',
             'member' => [],
-            'totalItems' => 0
+            'totalItems' => 0,
         ];
 
         $emptyCollection = new AlternateIdentifierCollectionResponse(
@@ -183,7 +123,7 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testGetRequiresIri(): void
     {
@@ -192,9 +132,9 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsAlternateIdentifier(): void
     {
@@ -226,14 +166,14 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateAlternateIdentifier(): void
     {
         $requestData = [
             'code' => 'ABC123',
-            'type' => 'gtin'
+            'type' => 'gtin',
         ];
 
         $responseMock = $this->createMock(ResponseInterface::class);
@@ -263,7 +203,7 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testUpdateRequiresIri(): void
     {
@@ -272,9 +212,9 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateAlternateIdentifier(): void
     {
@@ -323,7 +263,7 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      */
     public function testDeleteRequiresIri(): void
     {
@@ -332,9 +272,9 @@ class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws ClientExceptionInterface
-     * @throws InvalidRequestException
-     * @throws Exception
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testDeleteAlternateIdentifier(): void
     {
@@ -352,5 +292,67 @@ class AlternateIdentifierResourceTest extends TestCase
             ->willReturn($responseMock);
 
         $this->resource->delete($request);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    protected function setUp(): void
+    {
+        $this->clientMock = $this->createMock(Client::class);
+        $this->mapperMock = $this->createMock(AlternateIdentifierDataMapper::class);
+        $this->resource = new AlternateIdentifierResource($this->clientMock, $this->mapperMock);
+
+        // Setup realistic test data
+        $this->request = new AlternateIdentifierRequest(
+            code: 'ABC123',
+            type: 'gtin'
+        );
+
+        $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+        $createdAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+        $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
+
+        $this->response = new AlternateIdentifierResponse(
+            id: '/api/alternate_identifiers/456',
+            type: LdType::AlternateIdentifier,
+            uuid: $uuid,
+            createdAt: $createdAt,
+            updatedAt: $updatedAt,
+            identifierType: 'gtin',
+            code: 'ABC123'
+        );
+
+        $this->mockResponseData = [
+            '@id' => '/api/alternate_identifiers/456',
+            '@type' => 'AlternateIdentifier',
+            'uuid' => 'f47ac10b-58cc-4372-a567-0e02b2c3d479',
+            'type' => 'gtin',
+            'code' => 'ABC123',
+            'createdAt' => '2024-01-25T12:00:00+00:00',
+            'updatedAt' => '2024-01-25T12:00:00+00:00',
+        ];
+
+        $this->mockCollectionData = [
+            '@context' => '/api/contexts/AlternateIdentifier',
+            '@id' => '/api/alternate_identifiers',
+            '@type' => 'Collection',
+            'member' => [$this->mockResponseData],
+            'totalItems' => 1,
+            'view' => '/api/alternate_identifiers?page=1',
+            'firstPage' => '/api/alternate_identifiers?page=1',
+            'lastPage' => '/api/alternate_identifiers?page=1',
+        ];
+
+        $this->collectionResponse = new AlternateIdentifierCollectionResponse(
+            context: '/api/contexts/AlternateIdentifier',
+            id: '/api/alternate_identifiers',
+            type: LdType::Collection,
+            members: [$this->response],
+            totalItems: 1,
+            view: '/api/alternate_identifiers?page=1',
+            firstPage: '/api/alternate_identifiers?page=1',
+            lastPage: '/api/alternate_identifiers?page=1'
+        );
     }
 }

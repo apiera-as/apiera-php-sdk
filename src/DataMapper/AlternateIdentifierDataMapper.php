@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
@@ -20,15 +18,16 @@ use ValueError;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DataMapper
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierDataMapper implements DataMapperInterface
 {
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $responseData
+     *
      * @return AlternateIdentifierResponse
-     * @throws ClientExceptionInterface
      */
     public function fromResponse(array $responseData): ResponseInterface
     {
@@ -51,9 +50,9 @@ final readonly class AlternateIdentifierDataMapper implements DataMapperInterfac
     }
 
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $collectionResponseData
-     * @return AlternateIdentifierCollectionResponse
-     * @throws ClientExceptionInterface
      */
     public function fromCollectionResponse(array $collectionResponseData): AlternateIdentifierCollectionResponse
     {
@@ -85,7 +84,8 @@ final readonly class AlternateIdentifierDataMapper implements DataMapperInterfac
     }
 
     /**
-     * @param AlternateIdentifierRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest $requestDto
+     *
      * @return array<string, mixed>
      */
     public function toRequestData(RequestInterface $requestDto): array

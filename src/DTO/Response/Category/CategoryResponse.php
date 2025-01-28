@@ -11,17 +11,11 @@ use Symfony\Component\Uid\Uuid;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Response\Category
  * @since 0.1.0
  */
 final readonly class CategoryResponse extends AbstractResponse
 {
     /**
-     * @param string $id
-     * @param LdType $type
-     * @param Uuid $uuid
-     * @param DateTimeInterface $createdAt
-     * @param DateTimeInterface $updatedAt
      * @param string $name The category name
      * @param string|null $description The category description
      * @param string|null $parent The category parent iri
@@ -49,41 +43,26 @@ final readonly class CategoryResponse extends AbstractResponse
         );
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
     public function getParent(): ?string
     {
         return $this->parent;
     }
 
-    /**
-     * @return string
-     */
     public function getStore(): string
     {
         return $this->store;
     }
 
-    /**
-     * @return string|null
-     */
     public function getImage(): ?string
     {
         return $this->image;

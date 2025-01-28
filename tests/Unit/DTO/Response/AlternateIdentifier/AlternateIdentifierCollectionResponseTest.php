@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 
-class AlternateIdentifierCollectionResponseTest extends TestCase
+final class AlternateIdentifierCollectionResponseTest extends TestCase
 {
     public function testInstanceOf(): void
     {

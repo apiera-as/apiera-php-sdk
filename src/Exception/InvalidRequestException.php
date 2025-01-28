@@ -8,9 +8,8 @@ use Exception;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\Exception
  * @since 0.1.0
  */
-class InvalidRequestException extends Exception
+final class InvalidRequestException extends Exception
 {
 }
