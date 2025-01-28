@@ -78,7 +78,7 @@ final class FileDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param \Apiera\Sdk\DTO\Request\Attribute\AttributeRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\File\FileRequest $requestDto
      *
      * @return array<string, mixed>
      */
