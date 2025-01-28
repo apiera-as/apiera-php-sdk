@@ -7,9 +7,11 @@ namespace Apiera\Sdk;
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
+use Apiera\Sdk\DataMapper\DistributorDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
 use Apiera\Sdk\Resource\CategoryResource;
+use Apiera\Sdk\Resource\DistributorResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -47,5 +49,12 @@ final readonly class ApieraSdk
         $dataMapper = new AlternateIdentifierDataMapper();
 
         return new AlternateIdentifierResource($this->client, $dataMapper);
+    }
+
+    public function distributor(): DistributorResource
+    {
+        $dataMapper = new DistributorDataMapper();
+
+        return new DistributorResource($this->client, $dataMapper);
     }
 }
