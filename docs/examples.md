@@ -7,6 +7,7 @@
     - [Attributes](#attributes)
     - [Categories](#categories)
     - [Distributors](#distributors)
+    - [Files](#file)
 
 ---
 
@@ -302,4 +303,91 @@ $requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
 );
 
 $responseObject = $sdk->distributor()->update($requestObject);
+```
+
+## Files
+
+### Find Files
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$responseObject = $sdk->file()->find($requestObject);
+```
+
+---
+
+### Find Files with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'product.jpg'] // Add filters as needed
+);
+
+$responseObject = $sdk->file()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'product.jpg'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->file()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the file is not found
+}
+```
+
+---
+
+### Find a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    iri: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d' // Use the file IRI
+);
+
+$responseObject = $sdk->file()->get($requestObject);
+```
+
+---
+
+### Create a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    name: 'product.jpg'
+);
+
+$responseObject = $sdk->file()->create($requestObject);
+```
+
+---
+
+### Delete a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    iri: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d' // Use the file IRI
+);
+
+$sdk->file()->delete($requestObject);
 ```
