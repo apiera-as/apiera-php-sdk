@@ -32,10 +32,12 @@ final readonly class BrandResponse extends AbstractResponse
             $updatedAt
         );
     }
+
     public function getName(): string
     {
         return $this->name;
     }
+
     public function getDescription(): string
     {
         return $this->description;
