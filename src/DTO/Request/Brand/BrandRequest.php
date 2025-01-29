@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Apiera\Sdk\DTO\Request\Brand;
 
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -10,11 +12,6 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
  */
 final readonly class BrandRequest implements RequestInterface
 {
-    /**
-     * @param string $name
-     * @param string $description
-     * @param string|null $iri
-     */
     public function __construct(
         private string $name,
         private string $description,
