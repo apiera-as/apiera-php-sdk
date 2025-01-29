@@ -43,6 +43,10 @@ final readonly class BrandResource implements RequestResourceInterface
             );
         }
 
+        if (!$request->getStore()) {
+            throw new InvalidRequestException('Store IRI is required for this operation');
+        }
+
         /** @var BrandCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
             $this->client->get($request->getStore() . self::ENDPOINT, $params)
@@ -106,6 +110,10 @@ final readonly class BrandResource implements RequestResourceInterface
             throw new InvalidRequestException(
                 sprintf('Request must be an instance of %s', BrandRequest::class)
             );
+        }
+
+        if (!$request->getStore()) {
+            throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);

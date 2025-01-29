@@ -14,9 +14,9 @@ final readonly class BrandRequest implements RequestInterface
 {
     public function __construct(
         private string $name,
-        private string $description,
-        private string $store,
-        private string $image,
+        private ?string $description = null,
+        private ?string $store = null,
+        private ?string $image = null,
         private ?string $iri = null
     ) {
     }
@@ -26,17 +26,17 @@ final readonly class BrandRequest implements RequestInterface
         return $this->name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->store;
     }
 
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -54,6 +54,7 @@ final readonly class BrandRequest implements RequestInterface
         return [
           'name' => $this->name,
           'description' => $this->description,
+          'image' => $this->image,
         ];
     }
 }
