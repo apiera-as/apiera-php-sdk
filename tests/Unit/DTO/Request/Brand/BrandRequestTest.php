@@ -22,9 +22,9 @@ final class BrandRequestTest extends TestCase
     {
         $request = new BrandRequest(
             name: 'Apiera',
-            store: '/api/v1/stores/123',
             description: 'SaaS company',
             image: '/api/v1/files/789',
+            store: '/api/v1/stores/123',
             iri: '/api/v1/stores/123/brands/321'
         );
 
@@ -50,9 +50,9 @@ final class BrandRequestTest extends TestCase
     {
         $request = new BrandRequest(
             name: 'Apiera',
-            store: '/api/v1/stores/123',
             description: 'SaaS company',
             image: '/api/v1/files/789',
+            store: '/api/v1/stores/123',
             iri: '/api/v1/stores/123/brands/321'
         );
 

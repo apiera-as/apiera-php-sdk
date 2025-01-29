@@ -193,9 +193,9 @@ final class BrandDataMapperTest extends TestCase
 
         $this->sampleRequest = new BrandRequest(
             name: 'Test Brand',
-            store: '/api/v1/stores/123',
             description: 'Test Description',
-            image: '/api/v1/files/123'
+            image: '/api/v1/files/123',
+            store: '/api/v1/stores/123'
         );
     }
 }

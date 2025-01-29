@@ -269,9 +269,9 @@ final class BrandResourceTest extends TestCase
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             name: 'Updated Brand',
-            store: '/api/v1/stores/123',
             description: 'Test Description',
-            image: '/api/v1/files/789'
+            image: '/api/v1/files/789',
+            store: '/api/v1/stores/123'
         );
 
         $this->mapperMock->expects($this->once())
@@ -325,9 +325,9 @@ final class BrandResourceTest extends TestCase
 
         $this->request = new BrandRequest(
             name: 'Test Brand',
-            store: '/api/v1/stores/123',
             description: 'Test Description',
-            image: '/api/v1/files/789'
+            image: '/api/v1/files/789',
+            store: '/api/v1/stores/123'
         );
 
         $uuid = Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479');
@@ -341,9 +341,9 @@ final class BrandResourceTest extends TestCase
             createdAt: $createdAt,
             updatedAt: $updatedAt,
             name: 'Test Brand',
-            store: '/api/v1/stores/123',
             description: 'Test Description',
-            image: '/api/v1/files/789'
+            image: '/api/v1/files/789',
+            store: '/api/v1/stores/123'
         );
 
         $this->mockResponseData = [

@@ -23,8 +23,8 @@ final readonly class BrandResponse extends AbstractResponse
         DateTimeInterface $updatedAt,
         private string $name,
         private ?string $description = null,
+        private ?string $image = null,
         private ?string $store = null,
-        private ?string $image = null
     ) {
         parent::__construct(
             $id,

@@ -60,9 +60,9 @@ final class BrandResponseTest extends TestCase
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             name: 'Apiera',
-            store: '/api/v1/stores/321',
             description: 'A SaaS company',
             image: '/api/v1/files/789',
+            store: '/api/v1/stores/321',
         );
 
         $this->assertEquals('/api/v1/brands/123', $response->getLdId());
