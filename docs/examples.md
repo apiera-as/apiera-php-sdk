@@ -8,6 +8,7 @@
     - [Categories](#categories)
     - [Distributors](#distributors)
     - [Files](#files)
+    - [Brands](#brands)
 
 ---
 
@@ -390,4 +391,94 @@ $requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
 );
 
 $sdk->file()->delete($requestObject);
+```
+
+## Brands
+
+### Find Brands
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->brand()->find($requestObject);
+```
+
+---
+
+### Find Brands with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some brand name'] // Add filters as needed
+);
+
+$responseObject = $sdk->brand()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some brand name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->brand()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the brand is not found
+}
+```
+
+---
+
+### Find a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/brands/520413a8-509a-4048-96e6-81751e315c5d2' // Use the brand IRI
+);
+
+$responseObject = $sdk->brand()->get($requestObject);
+```
+
+---
+
+### Create a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    name: 'Some brand name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d', // Pass the store IRI
+    description: 'Some brand description',
+    image: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d'
+);
+
+$responseObject = $sdk->brand()->create($requestObject);
+```
+
+---
+
+### Update a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    name: 'Some new brand name',
+    description: 'Updated brand description',
+    image: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/brands/520413a8-509a-4048-96e6-81751e315c5d2' // Use the brand IRI
+);
+
+$responseObject = $sdk->brand()->update($requestObject);
 ```
