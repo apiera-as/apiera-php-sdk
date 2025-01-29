@@ -29,7 +29,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function find(
@@ -51,7 +51,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function findOneBy(RequestInterface $request, QueryParameters $params): AttributeTermResponse
@@ -72,7 +72,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function get(RequestInterface $request): AttributeTermResponse
@@ -96,7 +96,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function create(RequestInterface $request): AttributeTermResponse
@@ -118,7 +118,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function update(RequestInterface $request): AttributeTermResponse
@@ -144,7 +144,7 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function delete(RequestInterface $request): void
