@@ -83,7 +83,7 @@ final readonly class AttributeTermDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param AttributeTermRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\Category\CategoryRequest $requestDto
      *
      * @return array<string, mixed>
      */
