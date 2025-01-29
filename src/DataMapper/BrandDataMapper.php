@@ -40,6 +40,8 @@ final readonly class BrandDataMapper implements DataMapperInterface
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
                 name: $responseData['name'],
                 description: $responseData['description'],
+                store: $responseData['store'],
+                image: $responseData['image'] ?? null,
             );
         } catch (Throwable $exception) {
             throw new ClientException(
@@ -57,17 +59,14 @@ final readonly class BrandDataMapper implements DataMapperInterface
     public function fromCollectionResponse(array $collectionResponseData): BrandCollectionResponse
     {
         try {
-            $members = array_map(
-                fn(array $brand): ResponseInterface =>
-                $this->fromResponse($brand),
-                $collectionResponseData['member']
-            );
-
             return new BrandCollectionResponse(
                 context: $collectionResponseData['@context'],
                 id: $collectionResponseData['@id'],
                 type: LdType::from($collectionResponseData['@type']),
-                members: $members,
+                members: array_map(
+                    fn(array $attribute): BrandResponse => $this->fromResponse($attribute),
+                    $collectionResponseData['member']
+                ),
                 totalItems: $collectionResponseData['totalItems'],
                 view: $collectionResponseData['view'] ?? null,
                 firstPage: $collectionResponseData['firstPage'] ?? null,

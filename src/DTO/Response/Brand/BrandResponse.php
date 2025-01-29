@@ -22,7 +22,9 @@ final readonly class BrandResponse extends AbstractResponse
         DateTimeInterface $createdAt,
         DateTimeInterface $updatedAt,
         private string $name,
-        private string $description
+        private string $description,
+        private string $store,
+        private string $image
     ) {
         parent::__construct(
             $id,
@@ -41,5 +43,15 @@ final readonly class BrandResponse extends AbstractResponse
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getStore(): string
+    {
+        return $this->store;
+    }
+
+    public function getImage(): string
+    {
+        return $this->image;
     }
 }

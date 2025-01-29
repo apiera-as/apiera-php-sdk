@@ -21,7 +21,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class BrandResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/brand';
+    private const string ENDPOINT = '/brands';
 
     public function __construct(
         private ClientInterface $client,
@@ -45,7 +45,7 @@ final readonly class BrandResource implements RequestResourceInterface
 
         /** @var BrandCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get(self::ENDPOINT, $params)
+            $this->client->get($request->getStore() . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -66,7 +66,7 @@ final readonly class BrandResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getTotalItems() < 1) {
-            throw new InvalidRequestException('No alternate identifier found matching the given criteria');
+            throw new InvalidRequestException('No brand found matching the given criteria');
         }
 
         return $collection->getMembers()[0];
@@ -112,7 +112,7 @@ final readonly class BrandResource implements RequestResourceInterface
 
         /** @var BrandResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post(self::ENDPOINT, $requestData)
+            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
         ));
 
         return $response;
