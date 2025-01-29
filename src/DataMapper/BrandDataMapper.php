@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DataMapper;
 
-use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\DTO\Response\Brand\BrandCollectionResponse;
 use Apiera\Sdk\DTO\Response\Brand\BrandResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Exception\ClientException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
@@ -24,13 +22,12 @@ use ValueError;
  */
 final readonly class BrandDataMapper implements DataMapperInterface
 {
-
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     *
      * @param array<string, mixed> $responseData
      *
-     * @return ResponseInterface
-     *
-     * @throws ClientExceptionInterface
+     * @return BrandResponse
      */
     public function fromResponse(array $responseData): ResponseInterface
     {
@@ -53,13 +50,9 @@ final readonly class BrandDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param array $collectionResponseData
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      *
-     * @return BrandCollectionResponse
-     *
-     * @throws ClientException
-     *
-     * @throws ClientExceptionInterface
+     * @param array<string, mixed> $collectionResponseData
      */
     public function fromCollectionResponse(array $collectionResponseData): BrandCollectionResponse
     {
@@ -91,7 +84,7 @@ final readonly class BrandDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param BrandRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\Brand\BrandRequest $requestDto
      *
      * @return array<string, mixed>
      */
