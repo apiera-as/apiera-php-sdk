@@ -9,7 +9,6 @@ use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\DTO\Response\Brand\BrandCollectionResponse;
 use Apiera\Sdk\DTO\Response\Brand\BrandResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -22,7 +21,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class BrandResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/api/v1/brand';
+    private const string ENDPOINT = '/brand';
 
     public function __construct(
         private ClientInterface $client,
@@ -31,7 +30,7 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function find(
@@ -53,9 +52,9 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
-     * @throws ClientExceptionInterface
-     */
+    */
     public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
     {
         if (!$request instanceof BrandRequest) {
@@ -71,11 +70,10 @@ final readonly class BrandResource implements RequestResourceInterface
         }
 
         return $collection->getMembers()[0];
-
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function get(RequestInterface $request): BrandResponse
@@ -99,7 +97,7 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function create(RequestInterface $request): BrandResponse
@@ -121,7 +119,7 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function update(RequestInterface $request): BrandResponse
@@ -147,7 +145,7 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
     public function delete(RequestInterface $request): void
