@@ -14,6 +14,7 @@ final readonly class AttributeTermRequest implements RequestInterface
 {
     public function __construct(
         private string $name,
+        private ?string $attribute = null,
         private ?string $iri = null,
     ) {
     }
@@ -21,6 +22,11 @@ final readonly class AttributeTermRequest implements RequestInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getAttribute(): ?string
+    {
+        return $this->attribute;
     }
 
     public function getIri(): ?string

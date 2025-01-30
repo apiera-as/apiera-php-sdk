@@ -21,7 +21,9 @@ final readonly class AttributeTermResponse extends AbstractResponse
         Uuid $uuid,
         DateTimeInterface $createdAt,
         DateTimeInterface $updatedAt,
-        private string $name
+        private string $name,
+        private string $attribute,
+        private string $store
     ) {
         parent::__construct(
             $id,
@@ -35,5 +37,15 @@ final readonly class AttributeTermResponse extends AbstractResponse
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getAttribute(): string
+    {
+        return $this->attribute;
+    }
+
+    public function getStore(): string
+    {
+        return $this->store;
     }
 }

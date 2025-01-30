@@ -20,7 +20,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class AttributeTermResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/api/v1/attribute_terms';
+    private const string ENDPOINT = '/terms';
 
     public function __construct(
         private ClientInterface $client,
@@ -42,9 +42,13 @@ final readonly class AttributeTermResource implements RequestResourceInterface
             );
         }
 
+        if (!$request->getAttribute()) {
+            throw new InvalidRequestException('Attribute IRI is required for this operation');
+        }
+
         /** @var AttributeTermCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get(self::ENDPOINT, $params)
+            $this->client->get($request->getAttribute() . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -107,11 +111,15 @@ final readonly class AttributeTermResource implements RequestResourceInterface
             );
         }
 
+        if (!$request->getAttribute()) {
+            throw new InvalidRequestException('Attribute IRI is required for this operation');
+        }
+
         $requestData = $this->mapper->toRequestData($request);
 
         /** @var AttributeTermResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post(self::ENDPOINT, $requestData)
+            $this->client->post($request->getAttribute() . self::ENDPOINT, $requestData)
         ));
 
         return $response;

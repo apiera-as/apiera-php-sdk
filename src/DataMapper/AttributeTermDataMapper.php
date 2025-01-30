@@ -39,6 +39,8 @@ final readonly class AttributeTermDataMapper implements DataMapperInterface
                 createdAt: new DateTimeImmutable($responseData['createdAt']),
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
                 name: $responseData['name'],
+                attribute: $responseData['attribute'],
+                store: $responseData['store'],
             );
         } catch (Throwable $exception) {
             throw new ClientException(

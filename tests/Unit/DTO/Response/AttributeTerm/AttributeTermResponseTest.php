@@ -24,7 +24,9 @@ final class AttributeTermResponseTest extends TestCase
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
-            name: ''
+            name: '',
+            attribute: '',
+            store: ''
         );
 
         $this->assertInstanceOf(AttributeTermResponse::class, $response);
