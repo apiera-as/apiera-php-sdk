@@ -58,7 +58,7 @@ final class InventoryResourceTest extends TestCase
                     'quantity' => 10,
                     'sku' => sprintf('%s/skus/123', $baseUrl),
                     'inventoryLocation' => sprintf('%s/inventory_locations/%s', $baseUrl, $inventoryLocationId),
-                ]
+                ],
             ],
             'totalItems' => 1,
         ];
@@ -127,7 +127,7 @@ final class InventoryResourceTest extends TestCase
                     'quantity' => 10,
                     'sku' => sprintf('%s/skus/123', $baseUrl),
                     'inventoryLocation' => sprintf('%s/inventory_locations/%s', $baseUrl, $inventoryLocationId),
-                ]
+                ],
             ],
             'totalItems' => 1,
         ];
