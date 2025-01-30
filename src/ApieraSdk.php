@@ -10,12 +10,14 @@ use Apiera\Sdk\DataMapper\BrandDataMapper;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DataMapper\DistributorDataMapper;
 use Apiera\Sdk\DataMapper\FileDataMapper;
+use Apiera\Sdk\DataMapper\PropertyDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
 use Apiera\Sdk\Resource\BrandResource;
 use Apiera\Sdk\Resource\CategoryResource;
 use Apiera\Sdk\Resource\DistributorResource;
 use Apiera\Sdk\Resource\FileResource;
+use Apiera\Sdk\Resource\PropertyResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -74,5 +76,12 @@ final readonly class ApieraSdk
         $dataMapper = new FileDataMapper();
 
         return new FileResource($this->client, $dataMapper);
+    }
+
+    public function property(): PropertyResource
+    {
+        $dataMapper = new PropertyDataMapper();
+
+        return new PropertyResource($this->client, $dataMapper);
     }
 }
