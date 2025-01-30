@@ -9,6 +9,7 @@
     - [Distributors](#distributors)
     - [Files](#files)
     - [Brands](#brands)
+    - [Properties](#properties)
 
 ---
 
@@ -481,4 +482,102 @@ $requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
 );
 
 $responseObject = $sdk->brand()->update($requestObject);
+```
+
+## Properties
+
+### Find Properties
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->property()->find($requestObject);
+```
+
+---
+
+### Find Properties with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some property name'] // Add filters as needed
+);
+
+$responseObject = $sdk->property()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some property name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->property()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the property is not found
+}
+```
+
+---
+
+### Find a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$responseObject = $sdk->property()->get($requestObject);
+```
+
+---
+
+### Create a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    name: 'Some property name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->property()->create($requestObject);
+```
+
+---
+
+### Update a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    name: 'Some new property name',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$responseObject = $sdk->property()->update($requestObject);
+```
+
+---
+
+### Delete a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$sdk->property()->delete($requestObject);
 ```
