@@ -32,10 +32,8 @@ final readonly class AttributeTermResource implements RequestResourceInterface
      * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
      */
-    public function find(
-        RequestInterface $request,
-        ?QueryParameters $params = null
-    ): AttributeTermCollectionResponse {
+    public function find(RequestInterface $request, ?QueryParameters $params = null): AttributeTermCollectionResponse
+    {
         if (!$request instanceof AttributeTermRequest) {
             throw new InvalidRequestException(
                 sprintf('Request must be an instance of %s', AttributeTermRequest::class)
