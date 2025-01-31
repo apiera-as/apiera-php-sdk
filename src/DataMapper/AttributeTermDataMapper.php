@@ -59,7 +59,7 @@ final readonly class AttributeTermDataMapper implements DataMapperInterface
     {
         try {
             $members = array_map(
-                fn(array $attributeTerm): ResponseInterface =>
+                fn(array $attributeTerm): AttributeTermResponse =>
                 $this->fromResponse($attributeTerm),
                 $collectionResponseData['member']
             );
@@ -85,7 +85,7 @@ final readonly class AttributeTermDataMapper implements DataMapperInterface
     }
 
     /**
-     * @param \Apiera\Sdk\DTO\Request\Category\CategoryRequest $requestDto
+     * @param \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest $requestDto
      *
      * @return array<string, mixed>
      */
