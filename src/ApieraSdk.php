@@ -6,6 +6,7 @@ namespace Apiera\Sdk;
 
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
+use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
 use Apiera\Sdk\DataMapper\BrandDataMapper;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DataMapper\DistributorDataMapper;
@@ -13,6 +14,7 @@ use Apiera\Sdk\DataMapper\FileDataMapper;
 use Apiera\Sdk\DataMapper\PropertyDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
+use Apiera\Sdk\Resource\AttributeTermResource;
 use Apiera\Sdk\Resource\BrandResource;
 use Apiera\Sdk\Resource\CategoryResource;
 use Apiera\Sdk\Resource\DistributorResource;
@@ -76,6 +78,13 @@ final readonly class ApieraSdk
         $dataMapper = new FileDataMapper();
 
         return new FileResource($this->client, $dataMapper);
+    }
+
+    public function attributeTerm(): AttributeTermResource
+    {
+        $dataMapper = new AttributeTermDataMapper();
+
+        return new AttributeTermResource($this->client, $dataMapper);
     }
 
     public function property(): PropertyResource

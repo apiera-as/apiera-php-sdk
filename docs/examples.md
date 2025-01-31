@@ -10,6 +10,7 @@
     - [Files](#files)
     - [Brands](#brands)
     - [Properties](#properties)
+    - [Attribute Terms](#attribute-terms)
 
 ---
 
@@ -580,4 +581,95 @@ $requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
 );
 
 $sdk->property()->delete($requestObject);
+```
+
+## Attribute Terms
+
+### Find Attribute Terms
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$responseObject = $sdk->attributeTerm()->find($requestObject);
+```
+
+### Find Attribute Terms with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => '32GB'] // Add filters as needed
+);
+
+$responseObject = $sdk->attributeTerm()->find($requestObject, $queryParamObject);
+```
+
+### Search a Single Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => '32GB'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->attributeTerm()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the attribute term is not found
+}
+```
+
+### Find an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$responseObject = $sdk->attributeTerm()->get($requestObject);
+```
+
+### Create an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$responseObject = $sdk->attributeTerm()->create($requestObject);
+```
+
+### Update an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '64GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$responseObject = $sdk->attributeTerm()->update($requestObject);
+```
+
+### Delete an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$sdk->attributeTerm()->delete($requestObject);
 ```
