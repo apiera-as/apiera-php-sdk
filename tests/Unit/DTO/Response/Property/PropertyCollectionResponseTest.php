@@ -41,8 +41,8 @@ final class PropertyCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $propertyResponse = new PropertyResponse(
-            id: '/api/v1/stores/321/properties/123',
-            type: LdType::Property,
+            ldId: '/api/v1/stores/321/properties/123',
+            ldType: LdType::Property,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),

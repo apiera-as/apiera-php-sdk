@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\PropertyDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Property\PropertyRequest;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class PropertyDataMapperTest extends TestCase
 {
-    private PropertyDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -128,7 +128,7 @@ final class PropertyDataMapperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mapper = new PropertyDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/v1/stores/123/properties/456',

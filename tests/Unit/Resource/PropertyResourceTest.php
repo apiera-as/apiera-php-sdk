@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\PropertyDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Property\PropertyRequest;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 final class PropertyResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private PropertyDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private PropertyResource $resource;
     private PropertyRequest $request;
     private PropertyResponse $response;
@@ -261,8 +261,8 @@ final class PropertyResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new PropertyResponse(
-            id: '/api/v1/stores/123/properties/456',
-            type: LdType::Property,
+            ldId: '/api/v1/stores/123/properties/456',
+            ldType: LdType::Property,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
@@ -316,7 +316,7 @@ final class PropertyResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(PropertyDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new PropertyResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -330,8 +330,8 @@ final class PropertyResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new PropertyResponse(
-            id: '/api/v1/stores/123/properties/456',
-            type: LdType::Property,
+            ldId: '/api/v1/stores/123/properties/456',
+            ldType: LdType::Property,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,

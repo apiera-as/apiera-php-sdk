@@ -9,7 +9,6 @@ use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
 use Apiera\Sdk\DataMapper\BrandDataMapper;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
-use Apiera\Sdk\DataMapper\PropertyDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -88,7 +87,7 @@ final readonly class ApieraSdk
 
     public function property(): PropertyResource
     {
-        $dataMapper = new PropertyDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new PropertyResource($this->client, $dataMapper);
     }
