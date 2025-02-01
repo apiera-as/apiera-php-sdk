@@ -6,7 +6,6 @@ namespace Apiera\Sdk;
 
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
-use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -78,7 +77,7 @@ final readonly class ApieraSdk
 
     public function attributeTerm(): AttributeTermResource
     {
-        $dataMapper = new AttributeTermDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AttributeTermResource($this->client, $dataMapper);
     }

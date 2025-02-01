@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest;
 use Apiera\Sdk\DTO\Response\AttributeTerm\AttributeTermCollectionResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 final class AttributeTermResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private AttributeTermDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private AttributeTermResource $resource;
     private AttributeTermRequest $request;
     private AttributeTermResponse $response;
@@ -261,8 +261,8 @@ final class AttributeTermResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new AttributeTermResponse(
-            id: '/api/v1/stores/321/attributes/123/terms/456',
-            type: LdType::AttributeTerm,
+            ldId: '/api/v1/stores/321/attributes/123/terms/456',
+            ldType: LdType::AttributeTerm,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
@@ -317,7 +317,7 @@ final class AttributeTermResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(AttributeTermDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new AttributeTermResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -331,8 +331,8 @@ final class AttributeTermResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new AttributeTermResponse(
-            id: '/api/v1/stores/321/attributes/123/terms/456',
-            type: LdType::AttributeTerm,
+            ldId: '/api/v1/stores/321/attributes/123/terms/456',
+            ldType: LdType::AttributeTerm,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,
