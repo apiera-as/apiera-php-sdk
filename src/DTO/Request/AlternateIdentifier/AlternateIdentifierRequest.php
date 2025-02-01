@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\AlternateIdentifier;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -18,8 +20,11 @@ final readonly class AlternateIdentifierRequest implements RequestInterface
      * @param string|null $iri The alternate identifier iri
      */
     public function __construct(
+        #[RequestField('code')]
         private string $code,
+        #[RequestField('type')]
         private string $type,
+        #[SkipRequest]
         private ?string $iri = null,
     ) {
     }

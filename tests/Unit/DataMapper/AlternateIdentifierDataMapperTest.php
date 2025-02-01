@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class AlternateIdentifierDataMapperTest extends TestCase
 {
-    private AlternateIdentifierDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -38,7 +38,7 @@ final class AlternateIdentifierDataMapperTest extends TestCase
         $this->assertEquals(Uuid::fromString('123e4567-e89b-12d3-a456-426614174000'), $result->getUuid());
         $this->assertInstanceOf(DateTimeImmutable::class, $result->getCreatedAt());
         $this->assertInstanceOf(DateTimeImmutable::class, $result->getUpdatedAt());
-        $this->assertEquals('gtin', $result->getIdentifierType());
+        $this->assertEquals('gtin', $result->getType());
         $this->assertEquals('ABC123', $result->getCode());
     }
 
@@ -129,7 +129,7 @@ final class AlternateIdentifierDataMapperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mapper = new AlternateIdentifierDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/alternate_identifiers/123',

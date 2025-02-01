@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk;
 
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -48,7 +47,7 @@ final readonly class ApieraSdk
 
     public function alternateIdentifier(): AlternateIdentifierResource
     {
-        $dataMapper = new AlternateIdentifierDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AlternateIdentifierResource($this->client, $dataMapper);
     }

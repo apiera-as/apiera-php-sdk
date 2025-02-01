@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 final class AlternateIdentifierResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private AlternateIdentifierDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private AlternateIdentifierResource $resource;
     private AlternateIdentifierRequest $request;
     private AlternateIdentifierResponse $response;
@@ -244,12 +244,12 @@ final class AlternateIdentifierResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new AlternateIdentifierResponse(
-            id: '/api/v1/alternate_identifiers/456',
-            type: LdType::AlternateIdentifier,
+            ldId: '/api/v1/alternate_identifiers/456',
+            ldType: LdType::AlternateIdentifier,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
-            identifierType: 'ean',
+            type: 'ean',
             code: 'XYZ789'
         );
 
@@ -300,7 +300,7 @@ final class AlternateIdentifierResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(AlternateIdentifierDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new AlternateIdentifierResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -314,12 +314,12 @@ final class AlternateIdentifierResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new AlternateIdentifierResponse(
-            id: '/api/alternate_identifiers/456',
-            type: LdType::AlternateIdentifier,
+            ldId: '/api/alternate_identifiers/456',
+            ldType: LdType::AlternateIdentifier,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,
-            identifierType: 'gtin',
+            type: 'gtin',
             code: 'ABC123'
         );
 

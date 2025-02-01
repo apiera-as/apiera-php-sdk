@@ -76,7 +76,7 @@ final class AlternateIdentifierResourceTest extends TestCase
         $this->assertEquals(1, $response->getTotalItems());
         $this->assertCount(1, $response->getMembers());
         $this->assertEquals('ABC123', $response->getMembers()[0]->getCode());
-        $this->assertEquals('gtin', $response->getMembers()[0]->getIdentifierType());
+        $this->assertEquals('gtin', $response->getMembers()[0]->getType());
     }
 
     /**
@@ -129,7 +129,7 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('ABC123', $response->getCode());
-        $this->assertEquals('gtin', $response->getIdentifierType());
+        $this->assertEquals('gtin', $response->getType());
     }
 
     /**
@@ -177,7 +177,7 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('ABC123', $response->getCode());
-        $this->assertEquals('gtin', $response->getIdentifierType());
+        $this->assertEquals('gtin', $response->getType());
     }
 
     /**
@@ -226,7 +226,7 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('XYZ789', $response->getCode());
-        $this->assertEquals('ean', $response->getIdentifierType());
+        $this->assertEquals('ean', $response->getType());
     }
 
     /**
