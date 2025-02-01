@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
