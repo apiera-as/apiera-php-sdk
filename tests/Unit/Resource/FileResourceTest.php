@@ -6,6 +6,7 @@ namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\FileDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\File\FileRequest;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
@@ -23,7 +24,7 @@ use Symfony\Component\Uid\Uuid;
 final class FileResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private FileDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private FileResource $resource;
     private FileRequest $request;
     private FileResponse $response;
@@ -249,7 +250,7 @@ final class FileResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(FileDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new FileResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -263,8 +264,8 @@ final class FileResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new FileResponse(
-            id: '/api/v1/files/456',
-            type: LdType::File,
+            ldId: '/api/v1/files/456',
+            ldType: LdType::File,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,

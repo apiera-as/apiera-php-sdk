@@ -41,8 +41,8 @@ final class FileCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $fileResponse = new FileResponse(
-            id: '/api/v1/files/123',
-            type: LdType::File,
+            ldId: '/api/v1/files/123',
+            ldType: LdType::File,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
