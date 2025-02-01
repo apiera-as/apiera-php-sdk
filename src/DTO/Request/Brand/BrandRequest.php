@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\Brand;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -13,10 +15,15 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class BrandRequest implements RequestInterface
 {
     public function __construct(
+        #[RequestField('name')]
         private string $name,
+        #[RequestField('description')]
         private ?string $description = null,
+        #[RequestField('image')]
         private ?string $image = null,
+        #[SkipRequest]
         private ?string $store = null,
+        #[SkipRequest]
         private ?string $iri = null
     ) {
     }

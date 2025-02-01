@@ -19,8 +19,8 @@ final class BrandResponseTest extends TestCase
     public function testInstanceOf(): void
     {
         $response = new BrandResponse(
-            id: '',
-            type: LdType::Brand,
+            ldId: '',
+            ldType: LdType::Brand,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
@@ -54,8 +54,8 @@ final class BrandResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $response = new BrandResponse(
-            id: '/api/v1/brands/123',
-            type: LdType::Brand,
+            ldId: '/api/v1/brands/123',
+            ldType: LdType::Brand,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
@@ -80,8 +80,8 @@ final class BrandResponseTest extends TestCase
     public function testConstructorWithMinimalParameters(): void
     {
         $response = new BrandResponse(
-            id: '/api/v1/brands/123',
-            type: LdType::Brand,
+            ldId: '/api/v1/brands/123',
+            ldType: LdType::Brand,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),

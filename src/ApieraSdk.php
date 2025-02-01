@@ -7,7 +7,6 @@ namespace Apiera\Sdk;
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
-use Apiera\Sdk\DataMapper\BrandDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -58,7 +57,7 @@ final readonly class ApieraSdk
 
     public function brand(): BrandResource
     {
-        $dataMapper = new BrandDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new BrandResource($this->client, $dataMapper);
     }

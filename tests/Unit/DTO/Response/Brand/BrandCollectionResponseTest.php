@@ -41,8 +41,8 @@ final class BrandCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $brandResponse = new BrandResponse(
-            id: '/api/v1/stores/123/brands/321',
-            type: LdType::Brand,
+            ldId: '/api/v1/stores/123/brands/321',
+            ldType: LdType::Brand,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),

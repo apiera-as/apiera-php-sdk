@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\BrandDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\DTO\Response\Brand\BrandCollectionResponse;
@@ -22,7 +22,7 @@ use Symfony\Component\Uid\Uuid;
 final class BrandResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private BrandDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private BrandResource $resource;
     private BrandRequest $request;
     private BrandResponse $response;
@@ -263,8 +263,8 @@ final class BrandResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new BrandResponse(
-            id: '/api/v1/stores/123/brands/456',
-            type: LdType::Brand,
+            ldId: '/api/v1/stores/123/brands/456',
+            ldType: LdType::Brand,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
@@ -320,7 +320,7 @@ final class BrandResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(BrandDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new BrandResource($this->clientMock, $this->mapperMock);
 
         $this->request = new BrandRequest(
@@ -335,8 +335,8 @@ final class BrandResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new BrandResponse(
-            id: '/api/v1/stores/123/brands/456',
-            type: LdType::Brand,
+            ldId: '/api/v1/stores/123/brands/456',
+            ldType: LdType::Brand,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,
