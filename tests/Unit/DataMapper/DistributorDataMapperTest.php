@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\DistributorDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Distributor\DistributorRequest;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorCollectionResponse;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class DistributorDataMapperTest extends TestCase
 {
-    private DistributorDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -128,7 +128,7 @@ final class DistributorDataMapperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mapper = new DistributorDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/distributors/123',

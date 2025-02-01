@@ -41,8 +41,8 @@ final class DistributorCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $distributorResponse = new DistributorResponse(
-            id: '/api/v1/stores/321/distributors/123',
-            type: LdType::Distributor,
+            ldId: '/api/v1/stores/321/distributors/123',
+            ldType: LdType::Distributor,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),

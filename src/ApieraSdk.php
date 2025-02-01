@@ -9,9 +9,9 @@ use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
 use Apiera\Sdk\DataMapper\BrandDataMapper;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
-use Apiera\Sdk\DataMapper\DistributorDataMapper;
 use Apiera\Sdk\DataMapper\FileDataMapper;
 use Apiera\Sdk\DataMapper\PropertyDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
 use Apiera\Sdk\Resource\AttributeTermResource;
@@ -68,7 +68,7 @@ final readonly class ApieraSdk
 
     public function distributor(): DistributorResource
     {
-        $dataMapper = new DistributorDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new DistributorResource($this->client, $dataMapper);
     }

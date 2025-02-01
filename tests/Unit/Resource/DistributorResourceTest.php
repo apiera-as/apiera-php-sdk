@@ -6,6 +6,7 @@ namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\DistributorDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Distributor\DistributorRequest;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorCollectionResponse;
@@ -22,7 +23,7 @@ use Symfony\Component\Uid\Uuid;
 final class DistributorResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private DistributorDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private DistributorResource $resource;
     private DistributorRequest $request;
     private DistributorResponse $response;
@@ -261,8 +262,8 @@ final class DistributorResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new DistributorResponse(
-            id: '/api/v1/stores/123/distributors/456',
-            type: LdType::Distributor,
+            ldId: '/api/v1/stores/123/distributors/456',
+            ldType: LdType::Distributor,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
@@ -316,7 +317,7 @@ final class DistributorResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(DistributorDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new DistributorResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -330,8 +331,8 @@ final class DistributorResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new DistributorResponse(
-            id: '/api/v1/stores/123/distributors/456',
-            type: LdType::Distributor,
+            ldId: '/api/v1/stores/123/distributors/456',
+            ldType: LdType::Distributor,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,
