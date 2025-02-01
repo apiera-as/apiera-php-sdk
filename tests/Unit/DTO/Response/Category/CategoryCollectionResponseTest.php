@@ -41,8 +41,8 @@ final class CategoryCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $categoryResponse = new CategoryResponse(
-            id: '/api/v1/categories/123',
-            type: LdType::Category,
+            ldId: '/api/v1/categories/123',
+            ldType: LdType::Category,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),

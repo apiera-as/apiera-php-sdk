@@ -6,6 +6,7 @@ namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
 use Apiera\Sdk\DataMapper\CategoryDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
@@ -22,7 +23,7 @@ use Symfony\Component\Uid\Uuid;
 final class CategoryResourceTest extends TestCase
 {
     private Client|MockObject $clientMock;
-    private CategoryDataMapper|MockObject $mapperMock;
+    private ReflectionAttributeDataMapper|MockObject $mapperMock;
     private CategoryResource $resource;
     private CategoryRequest $request;
     private CategoryResponse $response;
@@ -262,8 +263,8 @@ final class CategoryResourceTest extends TestCase
             ->willReturn($updatedResponseData);
 
         $updatedResponse = new CategoryResponse(
-            id: '/api/categories/456',
-            type: LdType::Category,
+            ldId: '/api/categories/456',
+            ldType: LdType::Category,
             uuid: Uuid::fromString('f47ac10b-58cc-4372-a567-0e02b2c3d479'),
             createdAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
             updatedAt: new DateTimeImmutable('2024-01-25T12:00:00+00:00'),
@@ -318,7 +319,7 @@ final class CategoryResourceTest extends TestCase
     protected function setUp(): void
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(CategoryDataMapper::class);
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new CategoryResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -333,8 +334,8 @@ final class CategoryResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new CategoryResponse(
-            id: '/api/categories/456',
-            type: LdType::Category,
+            ldId: '/api/categories/456',
+            ldType: LdType::Category,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,

@@ -8,7 +8,6 @@ use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
 use Apiera\Sdk\DataMapper\BrandDataMapper;
-use Apiera\Sdk\DataMapper\CategoryDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -38,7 +37,7 @@ final readonly class ApieraSdk
 
     public function category(): CategoryResource
     {
-        $dataMapper = new CategoryDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new CategoryResource($this->client, $dataMapper);
     }

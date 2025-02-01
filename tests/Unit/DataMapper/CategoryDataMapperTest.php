@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\CategoryDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class CategoryDataMapperTest extends TestCase
 {
-    private CategoryDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -169,7 +169,7 @@ final class CategoryDataMapperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mapper = new CategoryDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         // Sample response data
         $this->sampleResponseData = [
@@ -202,10 +202,10 @@ final class CategoryDataMapperTest extends TestCase
         // Sample request
         $this->sampleRequest = new CategoryRequest(
             name: 'Test Category',
-            store: '/api/stores/123',
             description: 'Test Description',
             parent: '/api/categories/parent',
-            image: '/api/files/123'
+            image: '/api/files/123',
+            store: '/api/stores/123'
         );
     }
 }

@@ -22,10 +22,10 @@ final class CategoryRequestTest extends TestCase
     {
         $request = new CategoryRequest(
             name: 'Electronics',
-            store: '/api/v1/stores/123',
             description: 'Electronic products',
             parent: '/api/v1/stores/123/categories/456',
             image: '/api/v1/files/789',
+            store: '/api/v1/stores/123',
             iri: '/api/v1/stores/123/categories/321'
         );
 
@@ -53,10 +53,10 @@ final class CategoryRequestTest extends TestCase
     {
         $request = new CategoryRequest(
             name: 'Electronics',
-            store: '/api/v1/stores/123',
             description: 'Electronic products',
             parent: '/api/v1/stores/123/categories/456',
             image: '/api/v1/files/789',
+            store: '/api/v1/stores/123',
             iri: '/api/v1/stores/123/categories/321'
         );
 
