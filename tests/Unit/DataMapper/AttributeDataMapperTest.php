@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\AttributeDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\Uid\Uuid;
 
 final class AttributeDataMapperTest extends TestCase
 {
-    private AttributeDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -128,7 +128,7 @@ final class AttributeDataMapperTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->mapper = new AttributeDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/attributes/123',

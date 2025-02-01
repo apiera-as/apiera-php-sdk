@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Apiera\Sdk;
 
 use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
-use Apiera\Sdk\DataMapper\AttributeDataMapper;
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
@@ -42,7 +41,7 @@ final readonly class ApieraSdk
 
     public function attribute(): AttributeResource
     {
-        $dataMapper = new AttributeDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AttributeResource($this->client, $dataMapper);
     }

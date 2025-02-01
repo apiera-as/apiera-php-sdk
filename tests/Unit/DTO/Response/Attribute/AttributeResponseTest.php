@@ -19,8 +19,8 @@ final class AttributeResponseTest extends TestCase
     public function testInstanceOf(): void
     {
         $response = new AttributeResponse(
-            id: '',
-            type: LdType::Attribute,
+            ldId: '',
+            ldType: LdType::Attribute,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
@@ -54,8 +54,8 @@ final class AttributeResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $response = new AttributeResponse(
-            id: '/api/v1/attributes/123',
-            type: LdType::Attribute,
+            ldId: '/api/v1/attributes/123',
+            ldType: LdType::Attribute,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
