@@ -35,6 +35,7 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
     {
         try {
             $type = LdType::from($responseData['@type']);
+            /** @var class-string<ResponseInterface> $responseClass */
             $responseClass = LdType::getResponseClassForType($type, ResponseType::Single);
             $reflectionClass = new ReflectionClass($responseClass);
 
@@ -63,7 +64,7 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
             $contextParts = explode('/', rtrim($context));
             $contextType = end($contextParts);
 
-            /** @var \Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface $collectionClass */
+            /** @var class-string<\Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface> $collectionClass */
             $collectionClass = LdType::getResponseClassForType(
                 LdType::from($contextType),
                 ResponseType::Collection
@@ -152,6 +153,7 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
      * @throws \Apiera\Sdk\Exception\TransformationException
      *
      * @param array<string, mixed> $responseData
+     * @param ReflectionClass<ResponseInterface> $reflectionClass
      *
      * @return array<string, mixed>
      */
