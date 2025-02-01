@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Apiera\Sdk\Attribute;
 
 use Apiera\Sdk\Interface\RequestFieldInterface;
+use Apiera\Sdk\Interface\TransformerInterface;
 use Attribute;
 
 /**
@@ -14,6 +15,9 @@ use Attribute;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 final readonly class RequestField implements RequestFieldInterface
 {
+    /**
+     * @param class-string<TransformerInterface>|null $transformerClass
+     */
     public function __construct(
         private string $name,
         private ?string $transformerClass = null,
