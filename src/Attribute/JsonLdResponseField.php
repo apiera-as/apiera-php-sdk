@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Apiera\Sdk\Attribute;
 
 use Apiera\Sdk\Interface\ResponseFieldInterface;
-use Apiera\Sdk\Interface\TransformerInterface;
 use Attribute;
 
 /**
@@ -16,7 +15,7 @@ use Attribute;
 final readonly class JsonLdResponseField implements ResponseFieldInterface
 {
     /**
-     * @param class-string<TransformerInterface>|null $transformerClass
+     * @param class-string<\Apiera\Sdk\Interface\TransformerInterface>|null $transformerClass
      */
     public function __construct(
         private string $name,
