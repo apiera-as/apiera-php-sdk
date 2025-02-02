@@ -28,6 +28,9 @@ final readonly class JsonLdResponseField implements ResponseFieldInterface
         return $this->name;
     }
 
+    /**
+     * @return class-string<\Apiera\Sdk\Interface\TransformerInterface>|null
+     */
     public function getTransformerClass(): ?string
     {
         return $this->transformerClass;
