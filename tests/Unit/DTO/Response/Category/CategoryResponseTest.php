@@ -19,8 +19,8 @@ final class CategoryResponseTest extends TestCase
     public function testInstanceOf(): void
     {
         $response = new CategoryResponse(
-            id: '',
-            type: LdType::Category,
+            ldId: '',
+            ldType: LdType::Category,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
@@ -54,8 +54,8 @@ final class CategoryResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $response = new CategoryResponse(
-            id: '/api/v1/categories/123',
-            type: LdType::Category,
+            ldId: '/api/v1/categories/123',
+            ldType: LdType::Category,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
@@ -82,8 +82,8 @@ final class CategoryResponseTest extends TestCase
     public function testConstructorWithMinimalParameters(): void
     {
         $response = new CategoryResponse(
-            id: '/api/v1/categories/123',
-            type: LdType::Category,
+            ldId: '/api/v1/categories/123',
+            ldType: LdType::Category,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),

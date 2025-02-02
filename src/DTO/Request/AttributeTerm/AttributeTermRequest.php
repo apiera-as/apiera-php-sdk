@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\AttributeTerm;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -13,8 +15,11 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class AttributeTermRequest implements RequestInterface
 {
     public function __construct(
+        #[RequestField('name')]
         private string $name,
+        #[SkipRequest]
         private ?string $attribute = null,
+        #[SkipRequest]
         private ?string $iri = null,
     ) {
     }

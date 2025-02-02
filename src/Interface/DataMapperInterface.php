@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\Interface;
 
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
+use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 
@@ -17,7 +17,7 @@ interface DataMapperInterface
     /**
      * Maps raw API response data to a strongly-typed DTO.
      *
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @param array<string, mixed> $responseData
      */
@@ -26,14 +26,16 @@ interface DataMapperInterface
     /**
      * Maps raw API collection response data to an array of strongly-typed DTOs.
      *
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @param array<string, mixed> $collectionResponseData
      */
-    public function fromCollectionResponse(array $collectionResponseData): JsonLDInterface;
+    public function fromCollectionResponse(array $collectionResponseData): JsonLDCollectionInterface;
 
     /**
      * Maps a request DTO to the format expected by the API.
+     *
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @return array<string, mixed>
      */

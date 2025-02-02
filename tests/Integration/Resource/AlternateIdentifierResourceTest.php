@@ -25,8 +25,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindAlternateIdentifiersFlow(): void
     {
@@ -76,12 +77,13 @@ final class AlternateIdentifierResourceTest extends TestCase
         $this->assertEquals(1, $response->getTotalItems());
         $this->assertCount(1, $response->getMembers());
         $this->assertEquals('ABC123', $response->getMembers()[0]->getCode());
-        $this->assertEquals('gtin', $response->getMembers()[0]->getIdentifierType());
+        $this->assertEquals('gtin', $response->getMembers()[0]->getType());
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByAlternateIdentifierFlow(): void
     {
@@ -129,12 +131,13 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('ABC123', $response->getCode());
-        $this->assertEquals('gtin', $response->getIdentifierType());
+        $this->assertEquals('gtin', $response->getType());
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateAlternateIdentifierFlow(): void
     {
@@ -177,12 +180,13 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('ABC123', $response->getCode());
-        $this->assertEquals('gtin', $response->getIdentifierType());
+        $this->assertEquals('gtin', $response->getType());
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateAlternateIdentifierFlow(): void
     {
@@ -226,12 +230,13 @@ final class AlternateIdentifierResourceTest extends TestCase
         );
 
         $this->assertEquals('XYZ789', $response->getCode());
-        $this->assertEquals('ean', $response->getIdentifierType());
+        $this->assertEquals('ean', $response->getType());
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteAlternateIdentifierFlow(): void
     {
@@ -267,7 +272,7 @@ final class AlternateIdentifierResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

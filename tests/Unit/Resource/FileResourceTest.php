@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Resource;
 
 use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\FileDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\File\FileRequest;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
@@ -22,8 +22,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class FileResourceTest extends TestCase
 {
-    private Client|MockObject $clientMock;
-    private FileDataMapper|MockObject $mapperMock;
+    private MockObject $clientMock;
+    private MockObject $mapperMock;
     private FileResource $resource;
     private FileRequest $request;
     private FileResponse $response;
@@ -36,7 +36,9 @@ final class FileResourceTest extends TestCase
     private array $mockCollectionData;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
@@ -63,7 +65,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
@@ -88,7 +92,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
@@ -123,7 +129,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testGetRequiresIri(): void
     {
@@ -132,8 +140,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsFile(): void
@@ -166,7 +175,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateFile(): void
@@ -202,9 +213,6 @@ final class FileResourceTest extends TestCase
         $this->assertSame($this->response, $result);
     }
 
-    /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
-     */
     public function testUpdateThrowsNotSupportedException(): void
     {
         $this->expectException(NotSupportedOperationException::class);
@@ -212,7 +220,8 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testDeleteRequiresIri(): void
     {
@@ -221,7 +230,7 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
@@ -248,8 +257,10 @@ final class FileResourceTest extends TestCase
      */
     protected function setUp(): void
     {
+        /** @phpstan-ignore-next-line */
         $this->clientMock = $this->createMock(Client::class);
-        $this->mapperMock = $this->createMock(FileDataMapper::class);
+        /** @phpstan-ignore-next-line */
+        $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new FileResource($this->clientMock, $this->mapperMock);
 
         // Setup realistic test data
@@ -263,8 +274,8 @@ final class FileResourceTest extends TestCase
         $updatedAt = new DateTimeImmutable('2024-01-25T12:00:00+00:00');
 
         $this->response = new FileResponse(
-            id: '/api/v1/files/456',
-            type: LdType::File,
+            ldId: '/api/v1/files/456',
+            ldType: LdType::File,
             uuid: $uuid,
             createdAt: $createdAt,
             updatedAt: $updatedAt,

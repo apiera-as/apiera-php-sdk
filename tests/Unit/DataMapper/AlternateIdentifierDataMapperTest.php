@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 final class AlternateIdentifierDataMapperTest extends TestCase
 {
-    private AlternateIdentifierDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -26,7 +26,7 @@ final class AlternateIdentifierDataMapperTest extends TestCase
     private AlternateIdentifierRequest $sampleRequest;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -38,37 +38,37 @@ final class AlternateIdentifierDataMapperTest extends TestCase
         $this->assertEquals(Uuid::fromString('123e4567-e89b-12d3-a456-426614174000'), $result->getUuid());
         $this->assertInstanceOf(DateTimeImmutable::class, $result->getCreatedAt());
         $this->assertInstanceOf(DateTimeImmutable::class, $result->getUpdatedAt());
-        $this->assertEquals('gtin', $result->getIdentifierType());
+        $this->assertEquals('gtin', $result->getType());
         $this->assertEquals('ABC123', $result->getCode());
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
         $data = $this->sampleResponseData;
         $data['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
         $data = $this->sampleCollectionData;
         $data['@type'] = 'InvalidType';
 
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage('Invalid collection type');
+        $this->expectException(ResponseMappingException::class);
+        $this->expectExceptionMessage('Failed to map collection data');
         $this->mapper->fromCollectionResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -89,7 +89,7 @@ final class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -103,6 +103,9 @@ final class AlternateIdentifierDataMapperTest extends TestCase
         $this->assertEquals(0, $result->getTotalItems());
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataIncludesRequiredFields(): void
     {
         $result = $this->mapper->toRequestData($this->sampleRequest);
@@ -116,20 +119,20 @@ final class AlternateIdentifierDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
         $data = $this->sampleCollectionData;
         $data['member'][0]['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromCollectionResponse($data);
     }
 
     protected function setUp(): void
     {
-        $this->mapper = new AlternateIdentifierDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/alternate_identifiers/123',

@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk;
 
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
-use Apiera\Sdk\DataMapper\AttributeDataMapper;
-use Apiera\Sdk\DataMapper\AttributeTermDataMapper;
-use Apiera\Sdk\DataMapper\BrandDataMapper;
-use Apiera\Sdk\DataMapper\CategoryDataMapper;
-use Apiera\Sdk\DataMapper\DistributorDataMapper;
-use Apiera\Sdk\DataMapper\FileDataMapper;
-use Apiera\Sdk\DataMapper\PropertyDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
 use Apiera\Sdk\Resource\AttributeTermResource;
@@ -30,7 +23,7 @@ final readonly class ApieraSdk
     private Client $client;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     public function __construct(
         private Configuration $configuration,
@@ -40,56 +33,56 @@ final readonly class ApieraSdk
 
     public function category(): CategoryResource
     {
-        $dataMapper = new CategoryDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new CategoryResource($this->client, $dataMapper);
     }
 
     public function attribute(): AttributeResource
     {
-        $dataMapper = new AttributeDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AttributeResource($this->client, $dataMapper);
     }
 
     public function alternateIdentifier(): AlternateIdentifierResource
     {
-        $dataMapper = new AlternateIdentifierDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AlternateIdentifierResource($this->client, $dataMapper);
     }
 
     public function brand(): BrandResource
     {
-        $dataMapper = new BrandDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new BrandResource($this->client, $dataMapper);
     }
 
     public function distributor(): DistributorResource
     {
-        $dataMapper = new DistributorDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new DistributorResource($this->client, $dataMapper);
     }
 
     public function file(): FileResource
     {
-        $dataMapper = new FileDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new FileResource($this->client, $dataMapper);
     }
 
     public function attributeTerm(): AttributeTermResource
     {
-        $dataMapper = new AttributeTermDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new AttributeTermResource($this->client, $dataMapper);
     }
 
     public function property(): PropertyResource
     {
-        $dataMapper = new PropertyDataMapper();
+        $dataMapper = new ReflectionAttributeDataMapper();
 
         return new PropertyResource($this->client, $dataMapper);
     }

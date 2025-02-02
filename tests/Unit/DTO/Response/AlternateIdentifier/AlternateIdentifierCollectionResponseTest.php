@@ -41,12 +41,12 @@ final class AlternateIdentifierCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $alternateIdentifierResponse = new AlternateIdentifierResponse(
-            id: '/api/v1/alternate_identifiers/123',
-            type: LdType::AlternateIdentifier,
+            ldId: '/api/v1/alternate_identifiers/123',
+            ldType: LdType::AlternateIdentifier,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
-            identifierType: 'gtin',
+            type: 'gtin',
             code: 'ABC123'
         );
 

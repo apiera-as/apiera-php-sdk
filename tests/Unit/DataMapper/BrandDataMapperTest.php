@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\BrandDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\DTO\Response\Brand\BrandCollectionResponse;
 use Apiera\Sdk\DTO\Response\Brand\BrandResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 final class BrandDataMapperTest extends TestCase
 {
-    private BrandDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -26,7 +26,7 @@ final class BrandDataMapperTest extends TestCase
     private BrandRequest $sampleRequest;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -45,7 +45,7 @@ final class BrandDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseHandlesNullableFieldsCorrectly(): void
     {
@@ -53,6 +53,7 @@ final class BrandDataMapperTest extends TestCase
         $data['description'] = null;
         $data['image'] = null;
 
+        /** @var \Apiera\Sdk\DTO\Response\Brand\BrandResponse $result */
         $result = $this->mapper->fromResponse($data);
 
         $this->assertNull($result->getDescription());
@@ -60,32 +61,32 @@ final class BrandDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
         $data = $this->sampleResponseData;
         $data['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
         $data = $this->sampleCollectionData;
         $data['@type'] = 'InvalidType';
 
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage('Invalid collection type');
+        $this->expectException(ResponseMappingException::class);
+        $this->expectExceptionMessage('Failed to map collection data');
         $this->mapper->fromCollectionResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -106,7 +107,7 @@ final class BrandDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -120,6 +121,9 @@ final class BrandDataMapperTest extends TestCase
         $this->assertEquals(0, $result->getTotalItems());
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataIncludesRequiredFields(): void
     {
         $result = $this->mapper->toRequestData($this->sampleRequest);
@@ -133,6 +137,9 @@ final class BrandDataMapperTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataHandlesNullFields(): void
     {
         $request = new BrandRequest(
@@ -151,20 +158,20 @@ final class BrandDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
         $data = $this->sampleCollectionData;
         $data['member'][0]['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromCollectionResponse($data);
     }
 
     protected function setUp(): void
     {
-        $this->mapper = new BrandDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/v1/stores/123/brands/321',

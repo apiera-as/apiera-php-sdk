@@ -50,7 +50,6 @@ final class FileRequestTest extends TestCase
 
         $array = $request->toArray();
 
-        $this->assertIsArray($array);
         $this->assertArrayHasKey('url', $array);
         $this->assertArrayHasKey('name', $array);
         $this->assertArrayNotHasKey('iri', $array);

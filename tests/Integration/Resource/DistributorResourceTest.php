@@ -25,8 +25,9 @@ final class DistributorResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindDistributorsFlow(): void
     {
@@ -87,8 +88,9 @@ final class DistributorResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByDistributorFlow(): void
     {
@@ -153,8 +155,9 @@ final class DistributorResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateDistributorFlow(): void
     {
@@ -205,8 +208,9 @@ final class DistributorResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateDistributorFlow(): void
     {
@@ -262,8 +266,9 @@ final class DistributorResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteDistributorFlow(): void
     {
@@ -302,7 +307,7 @@ final class DistributorResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

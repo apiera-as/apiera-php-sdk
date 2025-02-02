@@ -50,7 +50,6 @@ final class AlternateIdentifierRequestTest extends TestCase
 
         $array = $request->toArray();
 
-        $this->assertIsArray($array);
         $this->assertArrayHasKey('code', $array);
         $this->assertArrayHasKey('type', $array);
         $this->assertArrayNotHasKey('iri', $array);

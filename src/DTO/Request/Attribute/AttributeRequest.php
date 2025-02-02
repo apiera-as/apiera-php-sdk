@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\Attribute;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -18,8 +20,11 @@ final readonly class AttributeRequest implements RequestInterface
      * @param string|null $iri The attribute iri
      */
     public function __construct(
+        #[RequestField('name')]
         private string $name,
+        #[SkipRequest]
         private ?string $store = null,
+        #[SkipRequest]
         private ?string $iri = null
     ) {
     }

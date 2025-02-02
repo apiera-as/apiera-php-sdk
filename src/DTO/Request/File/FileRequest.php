@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\File;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -18,8 +20,11 @@ final readonly class FileRequest implements RequestInterface
      * @param string|null $iri The file iri
      */
     public function __construct(
+        #[RequestField('url')]
         private string $url,
+        #[RequestField('name')]
         private ?string $name = null,
+        #[SkipRequest]
         private ?string $iri = null
     ) {
     }

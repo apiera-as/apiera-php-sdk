@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DataMapper;
 
-use Apiera\Sdk\DataMapper\FileDataMapper;
+use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
 use Apiera\Sdk\DTO\Request\File\FileRequest;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 
 final class FileDataMapperTest extends TestCase
 {
-    private FileDataMapper $mapper;
+    private ReflectionAttributeDataMapper $mapper;
 
     /** @var array<string, mixed> */
     private array $sampleResponseData;
@@ -26,7 +26,7 @@ final class FileDataMapperTest extends TestCase
     private FileRequest $sampleRequest;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -43,32 +43,32 @@ final class FileDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
         $data = $this->sampleResponseData;
         $data['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
         $data = $this->sampleCollectionData;
         $data['@type'] = 'InvalidType';
 
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage('Invalid collection type');
+        $this->expectException(ResponseMappingException::class);
+        $this->expectExceptionMessage('Failed to map collection data');
         $this->mapper->fromCollectionResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -89,7 +89,7 @@ final class FileDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -103,6 +103,9 @@ final class FileDataMapperTest extends TestCase
         $this->assertEquals(0, $result->getTotalItems());
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataIncludesRequiredFields(): void
     {
         $result = $this->mapper->toRequestData($this->sampleRequest);
@@ -116,20 +119,20 @@ final class FileDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
         $data = $this->sampleCollectionData;
         $data['member'][0]['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromCollectionResponse($data);
     }
 
     protected function setUp(): void
     {
-        $this->mapper = new FileDataMapper();
+        $this->mapper = new ReflectionAttributeDataMapper();
 
         $this->sampleResponseData = [
             '@id' => '/api/v1/files/123',

@@ -30,8 +30,9 @@ final readonly class FileResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function find(RequestInterface $request, ?QueryParameters $params = null): FileCollectionResponse
     {
@@ -50,8 +51,9 @@ final readonly class FileResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function findOneBy(RequestInterface $request, QueryParameters $params): FileResponse
     {
@@ -71,8 +73,9 @@ final readonly class FileResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function get(RequestInterface $request): FileResponse
     {
@@ -95,8 +98,9 @@ final readonly class FileResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function create(RequestInterface $request): FileResponse
     {
@@ -125,8 +129,8 @@ final readonly class FileResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(RequestInterface $request): void
     {

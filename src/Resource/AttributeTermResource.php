@@ -29,8 +29,9 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function find(RequestInterface $request, ?QueryParameters $params = null): AttributeTermCollectionResponse
     {
@@ -53,8 +54,9 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function findOneBy(RequestInterface $request, QueryParameters $params): AttributeTermResponse
     {
@@ -74,8 +76,9 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function get(RequestInterface $request): AttributeTermResponse
     {
@@ -98,8 +101,9 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function create(RequestInterface $request): AttributeTermResponse
     {
@@ -124,8 +128,9 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function update(RequestInterface $request): AttributeTermResponse
     {
@@ -150,8 +155,8 @@ final readonly class AttributeTermResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(RequestInterface $request): void
     {

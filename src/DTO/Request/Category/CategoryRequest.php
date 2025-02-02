@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\Category;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
@@ -14,17 +16,24 @@ final readonly class CategoryRequest implements RequestInterface
 {
     /**
      * @param string $name The category name
-     * @param string|null $store The category store iri
      * @param string|null $description The category description
      * @param string|null $parent The category parent iri
      * @param string|null $image The category image iri
+     * @param string|null $store The category store iri
+     * @param string|null $iri The category iri
      */
     public function __construct(
+        #[RequestField('name')]
         private string $name,
-        private ?string $store = null,
+        #[RequestField('description')]
         private ?string $description = null,
+        #[RequestField('parent')]
         private ?string $parent = null,
+        #[RequestField('image')]
         private ?string $image = null,
+        #[SkipRequest]
+        private ?string $store = null,
+        #[SkipRequest]
         private ?string $iri = null
     ) {
     }
@@ -32,11 +41,6 @@ final readonly class CategoryRequest implements RequestInterface
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getStore(): ?string
-    {
-        return $this->store;
     }
 
     public function getDescription(): ?string
@@ -52,6 +56,11 @@ final readonly class CategoryRequest implements RequestInterface
     public function getImage(): ?string
     {
         return $this->image;
+    }
+
+    public function getStore(): ?string
+    {
+        return $this->store;
     }
 
     public function getIri(): ?string

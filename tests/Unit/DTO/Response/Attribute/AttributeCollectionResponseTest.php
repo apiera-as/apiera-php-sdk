@@ -41,8 +41,8 @@ final class AttributeCollectionResponseTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $attributeResponse = new AttributeResponse(
-            id: '/api/v1/attributes/123',
-            type: LdType::Attribute,
+            ldId: '/api/v1/attributes/123',
+            ldType: LdType::Attribute,
             uuid: Uuid::v4(),
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),

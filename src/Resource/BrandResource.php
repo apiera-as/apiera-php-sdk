@@ -30,8 +30,9 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function find(
         RequestInterface $request,
@@ -56,9 +57,10 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
-    */
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
+     */
     public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
     {
         if (!$request instanceof BrandRequest) {
@@ -77,8 +79,9 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function get(RequestInterface $request): BrandResponse
     {
@@ -101,8 +104,9 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function create(RequestInterface $request): BrandResponse
     {
@@ -127,8 +131,9 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function update(RequestInterface $request): BrandResponse
     {
@@ -153,8 +158,8 @@ final readonly class BrandResource implements RequestResourceInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(RequestInterface $request): void
     {
