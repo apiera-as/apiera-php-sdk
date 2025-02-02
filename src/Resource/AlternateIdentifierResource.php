@@ -29,8 +29,9 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function find(
         RequestInterface $request,
@@ -51,8 +52,9 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function findOneBy(RequestInterface $request, QueryParameters $params): AlternateIdentifierResponse
     {
@@ -72,8 +74,9 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function get(RequestInterface $request): AlternateIdentifierResponse
     {
@@ -96,8 +99,9 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function create(RequestInterface $request): AlternateIdentifierResponse
     {
@@ -118,8 +122,9 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function update(RequestInterface $request): AlternateIdentifierResponse
     {
@@ -144,8 +149,8 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(RequestInterface $request): void
     {

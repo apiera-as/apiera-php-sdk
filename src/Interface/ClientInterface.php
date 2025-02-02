@@ -14,31 +14,31 @@ use Psr\Http\Message\ResponseInterface;
 interface ClientInterface
 {
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function get(string $endpoint, ?QueryParameters $params = null): ResponseInterface;
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @param array<string, mixed> $body
      */
     public function post(string $endpoint, array $body): ResponseInterface;
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @param array<string, mixed> $body
      */
     public function patch(string $endpoint, array $body): ResponseInterface;
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(string $endpoint): ResponseInterface;
 
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @return array<string, mixed>
      */

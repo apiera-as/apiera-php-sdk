@@ -17,7 +17,7 @@ interface DataMapperInterface
     /**
      * Maps raw API response data to a strongly-typed DTO.
      *
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @param array<string, mixed> $responseData
      */
@@ -26,7 +26,7 @@ interface DataMapperInterface
     /**
      * Maps raw API collection response data to an array of strongly-typed DTOs.
      *
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @param array<string, mixed> $collectionResponseData
      */
@@ -34,6 +34,8 @@ interface DataMapperInterface
 
     /**
      * Maps a request DTO to the format expected by the API.
+     *
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      *
      * @return array<string, mixed>
      */

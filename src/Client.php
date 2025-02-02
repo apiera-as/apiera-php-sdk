@@ -7,15 +7,15 @@ namespace Apiera\Sdk;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\Enum\ContentTypes;
 use Apiera\Sdk\Enum\HttpHeaders;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Factory\ApiExceptionFactory;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\Oauth2Interface;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -27,7 +27,7 @@ final readonly class Client implements ClientInterface
     private Oauth2Interface $oauth2Handler;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     public function __construct(
         Configuration $configuration,
@@ -46,7 +46,7 @@ final readonly class Client implements ClientInterface
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function get(string $endpoint, ?QueryParameters $params = null): ResponseInterface
     {
@@ -54,19 +54,18 @@ final readonly class Client implements ClientInterface
             $options = $params !== null ? [RequestOptions::QUERY => $params->toArray()] : [];
 
             return $this->client->request('GET', $endpoint, $this->mergeOptions($options));
-        } catch (GuzzleException $exception) {
-            throw new ClientException(
+        } catch (Throwable $exception) {
+            throw ApiExceptionFactory::createFromResponse(
                 message: $exception->getMessage(),
-                code: $exception->getCode(),
-                previous: $exception,
+                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null,
                 request: method_exists($exception, 'getRequest') ? $exception->getRequest() : null,
-                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null
+                previous: $exception,
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @param array<string, mixed> $body
      */
@@ -79,19 +78,18 @@ final readonly class Client implements ClientInterface
                     HttpHeaders::ContentType->value => ContentTypes::JsonLD->value,
                 ],
             ]));
-        } catch (GuzzleException $exception) {
-            throw new ClientException(
+        } catch (Throwable $exception) {
+            throw ApiExceptionFactory::createFromResponse(
                 message: $exception->getMessage(),
-                code: $exception->getCode(),
-                previous: $exception,
+                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null,
                 request: method_exists($exception, 'getRequest') ? $exception->getRequest() : null,
-                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null
+                previous: $exception,
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @param array<string, mixed> $body
      */
@@ -104,37 +102,35 @@ final readonly class Client implements ClientInterface
                     HttpHeaders::ContentType->value => ContentTypes::MergePatch->value,
                 ],
             ]));
-        } catch (GuzzleException $exception) {
-            throw new ClientException(
+        } catch (Throwable $exception) {
+            throw ApiExceptionFactory::createFromResponse(
                 message: $exception->getMessage(),
-                code: $exception->getCode(),
-                previous: $exception,
+                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null,
                 request: method_exists($exception, 'getRequest') ? $exception->getRequest() : null,
-                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null
+                previous: $exception,
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(string $endpoint): ResponseInterface
     {
         try {
             return $this->client->request('DELETE', $endpoint, $this->mergeOptions([]));
-        } catch (GuzzleException $exception) {
-            throw new ClientException(
+        } catch (Throwable $exception) {
+            throw ApiExceptionFactory::createFromResponse(
                 message: $exception->getMessage(),
-                code: $exception->getCode(),
-                previous: $exception,
+                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null,
                 request: method_exists($exception, 'getRequest') ? $exception->getRequest() : null,
-                response: method_exists($exception, 'getResponse') ? $exception->getResponse() : null
+                previous: $exception,
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      *
      * @return array<string, mixed>
      */
@@ -147,16 +143,14 @@ final readonly class Client implements ClientInterface
                 flags: JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION
             );
         } catch (JsonException $exception) {
-            throw new ClientException(
-                message: $exception->getMessage(),
-                code: $exception->getCode(),
-                previous: $exception,
-            );
+            throw ApiExceptionFactory::createFromResponse($exception->getMessage(), previous: $exception);
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\CacheException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      *
      * @return array<string, string>
      */
@@ -170,7 +164,9 @@ final readonly class Client implements ClientInterface
     /**
      * Merge default options with request-specific options
      *
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\CacheException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      *
      * @param array<string, mixed> $options
      *

@@ -13,7 +13,9 @@ use DateTimeInterface;
 interface Oauth2Interface
 {
     /**
-     * @throws ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\CacheException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     public function getAccessToken(): string;
 

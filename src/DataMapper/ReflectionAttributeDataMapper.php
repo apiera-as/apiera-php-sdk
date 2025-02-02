@@ -7,15 +7,14 @@ namespace Apiera\Sdk\DataMapper;
 use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Enum\ResponseType;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\Mapping\RequestMappingException;
+use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\JsonLDInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Apiera\Sdk\Interface\RequestFieldInterface;
 use Apiera\Sdk\Interface\ResponseFieldInterface;
-use Apiera\Sdk\Interface\TransformerInterface;
-use InvalidArgumentException;
 use ReflectionAttribute;
 use ReflectionClass;
 use Throwable;
@@ -27,7 +26,7 @@ use Throwable;
 final class ReflectionAttributeDataMapper implements DataMapperInterface
 {
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws ResponseMappingException
      *
      * @param array<string, mixed> $responseData
      */
@@ -41,15 +40,17 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
 
             return $reflectionClass->newInstanceArgs($this->mapResponseData($responseData, $reflectionClass));
         } catch (Throwable $exception) {
-            throw new ClientException(
-                message: 'Failed to map response data: ' . $exception->getMessage(),
-                previous: $exception
+            throw new ResponseMappingException(
+                'Failed to map response data to DTO',
+                $responseData,
+                $responseClass ?? 'unknown',
+                $exception
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws ResponseMappingException
      *
      * @param array<string, mixed> $collectionResponseData
      */
@@ -57,7 +58,11 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
     {
         try {
             if ($collectionResponseData['@type'] !== LdType::Collection->value) {
-                throw new ClientException('Invalid collection type');
+                throw new ResponseMappingException(
+                    'Invalid collection type',
+                    $collectionResponseData,
+                    'collection'
+                );
             }
 
             $context = $collectionResponseData['@context'];
@@ -86,15 +91,17 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
                 previousPage: $collectionResponseData['previousPage'] ?? null,
             );
         } catch (Throwable $exception) {
-            throw new ClientException(
-                message: 'Failed to map collection data: ' . $exception->getMessage(),
-                previous: $exception
+            throw new ResponseMappingException(
+                'Failed to map collection data',
+                $collectionResponseData,
+                'collection',
+                $exception
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws RequestMappingException
      *
      * @return array<string, mixed>
      */
@@ -128,11 +135,8 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
 
                 if ($apiFieldValue !== null && $requestField->getTransformerClass() !== null) {
                     $transformerClass = $requestField->getTransformerClass();
+                    /** @var \Apiera\Sdk\Interface\TransformerInterface $transformer */
                     $transformer = new $transformerClass();
-
-                    if (!$transformer instanceof TransformerInterface) {
-                        throw new InvalidArgumentException('Transformer must implement TransformerInterface');
-                    }
 
                     $apiFieldValue = $transformer->reverseTransform($apiFieldValue);
                 }
@@ -142,15 +146,16 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
 
             return $requestData;
         } catch (Throwable $exception) {
-            throw new ClientException(
-                message: 'Failed to map request data: ' . $exception->getMessage(),
-                previous: $exception
+            throw new RequestMappingException(
+                'Failed to map request DTO to API data',
+                $requestDto,
+                $exception
             );
         }
     }
 
     /**
-     * @throws \Apiera\Sdk\Exception\TransformationException
+     * @throws ResponseMappingException
      *
      * @param array<string, mixed> $responseData
      * @param ReflectionClass<ResponseInterface> $reflectionClass
@@ -159,40 +164,46 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
      */
     private function mapResponseData(array $responseData, ReflectionClass $reflectionClass): array
     {
-        $constructorArguments = [];
+        try {
+            $constructorArguments = [];
 
-        foreach ($reflectionClass->getProperties() as $property) {
-            $attributes = array_filter(
-                $property->getAttributes(),
-                fn(ReflectionAttribute $attr) => is_subclass_of(
-                    $attr->getName(),
-                    ResponseFieldInterface::class
-                )
-            );
+            foreach ($reflectionClass->getProperties() as $property) {
+                $attributes = array_filter(
+                    $property->getAttributes(),
+                    fn(ReflectionAttribute $attr) => is_subclass_of(
+                        $attr->getName(),
+                        ResponseFieldInterface::class
+                    )
+                );
 
-            if (count($attributes) === 0) {
-                continue;
-            }
-
-            /** @var ResponseFieldInterface $responseField */
-            $responseField = $attributes[0]->newInstance();
-            $apiFieldName = $responseField->getName();
-            $apiFieldValue = $responseData[$apiFieldName];
-
-            if ($apiFieldValue !== null && $responseField->getTransformerClass() !== null) {
-                $transformerClass = $responseField->getTransformerClass();
-                $transformer = new $transformerClass();
-
-                if (!$transformer instanceof TransformerInterface) {
-                    throw new InvalidArgumentException('Transformer must implement TransformerInterface');
+                if (count($attributes) === 0) {
+                    continue;
                 }
 
-                $apiFieldValue = $transformer->transform($apiFieldValue);
+                /** @var ResponseFieldInterface $responseField */
+                $responseField = $attributes[0]->newInstance();
+                $apiFieldName = $responseField->getName();
+                $apiFieldValue = $responseData[$apiFieldName];
+
+                if ($apiFieldValue !== null && $responseField->getTransformerClass() !== null) {
+                    $transformerClass = $responseField->getTransformerClass();
+                    /** @var \Apiera\Sdk\Interface\TransformerInterface $transformer */
+                    $transformer = new $transformerClass();
+
+                    $apiFieldValue = $transformer->transform($apiFieldValue);
+                }
+
+                $constructorArguments[$property->getName()] = $apiFieldValue;
             }
 
-            $constructorArguments[$property->getName()] = $apiFieldValue;
+            return $constructorArguments;
+        } catch (Throwable $exception) {
+            throw new ResponseMappingException(
+                'Failed to map response fields',
+                $responseData,
+                $reflectionClass->getName(),
+                $exception
+            );
         }
-
-        return $constructorArguments;
     }
 }

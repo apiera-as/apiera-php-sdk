@@ -23,7 +23,7 @@ final readonly class ApieraSdk
     private Client $client;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     public function __construct(
         private Configuration $configuration,
