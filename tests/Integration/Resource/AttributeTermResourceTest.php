@@ -25,8 +25,9 @@ final class AttributeTermResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindAttributeTermsFlow(): void
     {
@@ -87,8 +88,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByAttributeTermFlow(): void
     {
@@ -154,8 +156,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateAttributeTermFlow(): void
     {
@@ -208,8 +211,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateAttributeTermFlow(): void
     {
@@ -268,8 +272,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteAttributeTermFlow(): void
     {
@@ -309,7 +314,7 @@ final class AttributeTermResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

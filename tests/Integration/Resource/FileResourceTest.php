@@ -25,8 +25,9 @@ final class FileResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindFilesFlow(): void
     {
@@ -85,8 +86,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByFileFlow(): void
     {
@@ -148,8 +150,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateFileFlow(): void
     {
@@ -200,8 +203,9 @@ final class FileResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteFileFlow(): void
     {
@@ -240,7 +244,7 @@ final class FileResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

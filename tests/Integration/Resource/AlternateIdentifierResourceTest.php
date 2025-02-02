@@ -25,8 +25,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindAlternateIdentifiersFlow(): void
     {
@@ -80,8 +81,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByAlternateIdentifierFlow(): void
     {
@@ -133,8 +135,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateAlternateIdentifierFlow(): void
     {
@@ -181,8 +184,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateAlternateIdentifierFlow(): void
     {
@@ -230,8 +234,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteAlternateIdentifierFlow(): void
     {
@@ -267,7 +272,7 @@ final class AlternateIdentifierResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

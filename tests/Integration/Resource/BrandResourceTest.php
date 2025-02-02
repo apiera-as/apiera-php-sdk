@@ -25,8 +25,9 @@ final class BrandResourceTest extends TestCase
     private ApieraSdk $sdk;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindBrandsFlow(): void
     {
@@ -87,8 +88,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindOneByBrandFlow(): void
     {
@@ -153,8 +155,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateBrandFlow(): void
     {
@@ -182,9 +185,9 @@ final class BrandResourceTest extends TestCase
 
         $request = new BrandRequest(
             name: 'Test Brand',
-            store: sprintf('api/v1/stores/%s', $storeId),
             description: 'Test Brand Description',
-            image: sprintf('/api/v1/files/%s', 'abc123')
+            image: sprintf('/api/v1/files/%s', 'abc123'),
+            store: sprintf('api/v1/stores/%s', $storeId)
         );
 
         $response = $this->sdk->brand()->create($request);
@@ -210,8 +213,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateBrandFlow(): void
     {
@@ -271,8 +275,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testDeleteBrandFlow(): void
     {
@@ -311,7 +316,7 @@ final class BrandResourceTest extends TestCase
 
     /**
      * @throws \PHPUnit\Framework\MockObject\Exception
-     * @throws \Apiera\Sdk\Exception\ClientException
+     * @throws \Apiera\Sdk\Exception\ConfigurationException
      */
     protected function setUp(): void
     {

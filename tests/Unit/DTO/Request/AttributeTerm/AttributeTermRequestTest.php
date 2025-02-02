@@ -50,7 +50,6 @@ final class AttributeTermRequestTest extends TestCase
 
         $array = $request->toArray();
 
-        $this->assertIsArray($array);
         $this->assertArrayHasKey('name', $array);
         $this->assertArrayNotHasKey('attribute', $array);
         $this->assertArrayNotHasKey('iri', $array);

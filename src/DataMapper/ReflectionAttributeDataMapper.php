@@ -10,7 +10,7 @@ use Apiera\Sdk\Enum\ResponseType;
 use Apiera\Sdk\Exception\Mapping\RequestMappingException;
 use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use Apiera\Sdk\Interface\DataMapperInterface;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
+use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Apiera\Sdk\Interface\RequestFieldInterface;
@@ -54,7 +54,7 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
      *
      * @param array<string, mixed> $collectionResponseData
      */
-    public function fromCollectionResponse(array $collectionResponseData): JsonLDInterface
+    public function fromCollectionResponse(array $collectionResponseData): JsonLDCollectionInterface
     {
         try {
             if ($collectionResponseData['@type'] !== LdType::Collection->value) {

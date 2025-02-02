@@ -58,7 +58,6 @@ final class BrandRequestTest extends TestCase
 
         $array = $request->toArray();
 
-        $this->assertIsArray($array);
         $this->assertArrayHasKey('name', $array);
         $this->assertArrayHasKey('description', $array);
         $this->assertArrayHasKey('image', $array);
@@ -78,7 +77,6 @@ final class BrandRequestTest extends TestCase
 
         $array = $request->toArray();
 
-        $this->assertIsArray($array);
         $this->assertArrayHasKey('name', $array);
         $this->assertArrayHasKey('description', $array);
         $this->assertArrayHasKey('image', $array);

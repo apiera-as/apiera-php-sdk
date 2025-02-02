@@ -21,8 +21,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class BrandResourceTest extends TestCase
 {
-    private Client|MockObject $clientMock;
-    private ReflectionAttributeDataMapper|MockObject $mapperMock;
+    private MockObject $clientMock;
+    private MockObject $mapperMock;
     private BrandResource $resource;
     private BrandRequest $request;
     private BrandResponse $response;
@@ -35,7 +35,9 @@ final class BrandResourceTest extends TestCase
     private array $mockCollectionData;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindRequiresStoreIri(): void
     {
@@ -44,8 +46,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
@@ -72,8 +75,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
@@ -98,7 +102,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
@@ -133,7 +139,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testGetRequiresIri(): void
     {
@@ -142,8 +150,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsBrand(): void
@@ -175,7 +184,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateRequiresStoreIri(): void
     {
@@ -184,8 +195,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateBrand(): void
@@ -223,7 +235,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateRequiresIri(): void
     {
@@ -232,8 +246,9 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateBrand(): void
@@ -284,7 +299,8 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testDeleteRequiresIri(): void
     {
@@ -293,7 +309,7 @@ final class BrandResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
@@ -319,7 +335,9 @@ final class BrandResourceTest extends TestCase
      */
     protected function setUp(): void
     {
+        /** @phpstan-ignore-next-line */
         $this->clientMock = $this->createMock(Client::class);
+        /** @phpstan-ignore-next-line */
         $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new BrandResource($this->clientMock, $this->mapperMock);
 

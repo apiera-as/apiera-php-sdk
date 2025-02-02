@@ -21,8 +21,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class AttributeTermResourceTest extends TestCase
 {
-    private Client|MockObject $clientMock;
-    private ReflectionAttributeDataMapper|MockObject $mapperMock;
+    private MockObject $clientMock;
+    private MockObject $mapperMock;
     private AttributeTermResource $resource;
     private AttributeTermRequest $request;
     private AttributeTermResponse $response;
@@ -35,7 +35,9 @@ final class AttributeTermResourceTest extends TestCase
     private array $mockCollectionData;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testFindRequiresAttributeIri(): void
     {
@@ -44,8 +46,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
@@ -72,8 +75,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
@@ -98,7 +102,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
@@ -133,7 +139,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testGetRequiresIri(): void
     {
@@ -142,8 +150,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsAttributeTerm(): void
@@ -175,7 +184,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testCreateRequiresAttributeIri(): void
     {
@@ -184,8 +195,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateAttributeTerm(): void
@@ -221,7 +233,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateRequiresIri(): void
     {
@@ -230,8 +244,9 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateAttributeTerm(): void
@@ -281,7 +296,8 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testDeleteRequiresIri(): void
     {
@@ -290,7 +306,7 @@ final class AttributeTermResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
@@ -316,7 +332,9 @@ final class AttributeTermResourceTest extends TestCase
      */
     protected function setUp(): void
     {
+        /** @phpstan-ignore-next-line */
         $this->clientMock = $this->createMock(Client::class);
+        /** @phpstan-ignore-next-line */
         $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new AttributeTermResource($this->clientMock, $this->mapperMock);
 

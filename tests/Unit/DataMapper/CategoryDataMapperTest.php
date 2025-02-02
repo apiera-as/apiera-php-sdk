@@ -9,7 +9,7 @@ use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\Mapping\ResponseMappingException;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
@@ -26,7 +26,7 @@ final class CategoryDataMapperTest extends TestCase
     private CategoryRequest $sampleRequest;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseMapsAllFieldsCorrectly(): void
     {
@@ -46,7 +46,7 @@ final class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseHandlesNullableFieldsCorrectly(): void
     {
@@ -55,6 +55,7 @@ final class CategoryDataMapperTest extends TestCase
         $data['parent'] = null;
         $data['image'] = null;
 
+        /** @var \Apiera\Sdk\DTO\Response\Category\CategoryResponse $result */
         $result = $this->mapper->fromResponse($data);
 
         $this->assertNull($result->getDescription());
@@ -63,32 +64,32 @@ final class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromResponseThrowsExceptionForInvalidDate(): void
     {
         $data = $this->sampleResponseData;
         $data['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseThrowsExceptionForInvalidType(): void
     {
         $data = $this->sampleCollectionData;
         $data['@type'] = 'InvalidType';
 
-        $this->expectException(ClientException::class);
-        $this->expectExceptionMessage('Invalid collection type');
+        $this->expectException(ResponseMappingException::class);
+        $this->expectExceptionMessage('Failed to map collection data');
         $this->mapper->fromCollectionResponse($data);
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseMapsDataCorrectly(): void
     {
@@ -109,7 +110,7 @@ final class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseHandlesEmptyCollection(): void
     {
@@ -123,6 +124,9 @@ final class CategoryDataMapperTest extends TestCase
         $this->assertEquals(0, $result->getTotalItems());
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataIncludesRequiredFields(): void
     {
         $result = $this->mapper->toRequestData($this->sampleRequest);
@@ -137,6 +141,9 @@ final class CategoryDataMapperTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @throws \Apiera\Sdk\Exception\Mapping\RequestMappingException
+     */
     public function testToRequestDataHandlesNullFields(): void
     {
         $request = new CategoryRequest(
@@ -156,14 +163,14 @@ final class CategoryDataMapperTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Mapping\ResponseMappingException
      */
     public function testFromCollectionResponseWithInvalidMemberThrowsException(): void
     {
         $data = $this->sampleCollectionData;
         $data['member'][0]['createdAt'] = 'invalid-date';
 
-        $this->expectException(ClientException::class);
+        $this->expectException(ResponseMappingException::class);
         $this->mapper->fromCollectionResponse($data);
     }
 

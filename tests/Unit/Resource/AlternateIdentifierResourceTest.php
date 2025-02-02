@@ -21,8 +21,8 @@ use Symfony\Component\Uid\Uuid;
 
 final class AlternateIdentifierResourceTest extends TestCase
 {
-    private Client|MockObject $clientMock;
-    private ReflectionAttributeDataMapper|MockObject $mapperMock;
+    private MockObject $clientMock;
+    private MockObject $mapperMock;
     private AlternateIdentifierResource $resource;
     private AlternateIdentifierRequest $request;
     private AlternateIdentifierResponse $response;
@@ -35,7 +35,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     private array $mockCollectionData;
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindReturnsCollection(): void
@@ -62,8 +64,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByReturnsFirstResult(): void
@@ -88,7 +91,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testFindOneByThrowsExceptionWhenEmpty(): void
@@ -123,7 +128,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testGetRequiresIri(): void
     {
@@ -132,8 +139,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testGetReturnsAlternateIdentifier(): void
@@ -166,7 +174,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testCreateAlternateIdentifier(): void
@@ -203,7 +213,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
     public function testUpdateRequiresIri(): void
     {
@@ -212,8 +224,9 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function testUpdateAlternateIdentifier(): void
@@ -263,7 +276,8 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\InvalidRequestException
      */
     public function testDeleteRequiresIri(): void
     {
@@ -272,7 +286,7 @@ final class AlternateIdentifierResourceTest extends TestCase
     }
 
     /**
-     * @throws \Apiera\Sdk\Interface\ClientExceptionInterface
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      * @throws \PHPUnit\Framework\MockObject\Exception
      */
@@ -299,7 +313,9 @@ final class AlternateIdentifierResourceTest extends TestCase
      */
     protected function setUp(): void
     {
+        /** @phpstan-ignore-next-line */
         $this->clientMock = $this->createMock(Client::class);
+        /** @phpstan-ignore-next-line */
         $this->mapperMock = $this->createMock(ReflectionAttributeDataMapper::class);
         $this->resource = new AlternateIdentifierResource($this->clientMock, $this->mapperMock);
 

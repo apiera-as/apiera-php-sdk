@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\Interface;
 
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
+use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 
@@ -30,7 +30,7 @@ interface DataMapperInterface
      *
      * @param array<string, mixed> $collectionResponseData
      */
-    public function fromCollectionResponse(array $collectionResponseData): JsonLDInterface;
+    public function fromCollectionResponse(array $collectionResponseData): JsonLDCollectionInterface;
 
     /**
      * Maps a request DTO to the format expected by the API.
