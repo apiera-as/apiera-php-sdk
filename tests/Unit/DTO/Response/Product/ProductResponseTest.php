@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DTO\Response\Product;
 
-use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Enum\ProductStatus;
 use Apiera\Sdk\Enum\ProductType;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
 use Tests\Unit\DTO\Response\AbstractDTOResponse;
 
@@ -24,6 +19,9 @@ final class ProductResponseTest extends AbstractDTOResponse
         return ProductResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -49,26 +47,29 @@ final class ProductResponseTest extends AbstractDTOResponse
             'brand' => '/api/v1/stores/123/brands/123',
             'image' => '/api/v1/files/123',
             'categories' => [
-                '/api/v1/stores/123/categories/456'
+                '/api/v1/stores/123/categories/456',
             ],
             'tags' => [
-                '/api/v1/stores/123/tags/789'
+                '/api/v1/stores/123/tags/789',
             ],
             'attributes' => [
-                '/api/v1/stores/123/attributes/123'
+                '/api/v1/stores/123/attributes/123',
             ],
             'images' => [
-                '/api/v1/files/456'
+                '/api/v1/files/456',
             ],
             'alternateIdentifiers' => [
-                '/api/v1/alternate_identifiers/345'
+                '/api/v1/alternate_identifiers/345',
             ],
             'propertyTerms' => [
-                '/api/v1/stores/123/properties/456/terms/789'
-            ]
+                '/api/v1/stores/123/properties/456/terms/789',
+            ],
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [

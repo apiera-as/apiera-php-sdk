@@ -16,6 +16,9 @@ final class ProductRequestTest extends AbstractDTORequest
         return ProductRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
@@ -35,23 +38,23 @@ final class ProductRequestTest extends AbstractDTORequest
             'sku' => '/api/v1/skus/123',
             'image' => '/api/v1/files/123',
             'categories' => [
-                '/api/v1/stores/123/categories/456'
+                '/api/v1/stores/123/categories/456',
             ],
             'tags' => [
-                '/api/v1/stores/123/tags/789'
+                '/api/v1/stores/123/tags/789',
             ],
             'attributes' => [
-                '/api/v1/stores/123/attributes/123'
+                '/api/v1/stores/123/attributes/123',
             ],
             'images' => [
-                '/api/v1/files/456'
+                '/api/v1/files/456',
             ],
             'alternateIdentifiers' => [
-                '/api/v1/alternate_identifiers/345'
+                '/api/v1/alternate_identifiers/345',
             ],
             'propertyTerms' => [
-                '/api/v1/stores/123/properties/456/terms/789'
-            ]
+                '/api/v1/stores/123/properties/456/terms/789',
+            ],
         ];
     }
 }

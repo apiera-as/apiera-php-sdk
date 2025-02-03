@@ -17,6 +17,9 @@ final class FileResponseTest extends AbstractDTOResponse
         return FileResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -30,6 +33,9 @@ final class FileResponseTest extends AbstractDTOResponse
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [

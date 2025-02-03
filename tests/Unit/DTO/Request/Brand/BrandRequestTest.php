@@ -14,6 +14,9 @@ final class BrandRequestTest extends AbstractDTORequest
         return BrandRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
@@ -21,7 +24,7 @@ final class BrandRequestTest extends AbstractDTORequest
             'description' => 'SaaS company',
             'image' => '/api/v1/files/789',
             'store' => '/api/v1/stores/123',
-            'iri' => '/api/v1/stores/123/brands/321'
+            'iri' => '/api/v1/stores/123/brands/321',
         ];
     }
 }

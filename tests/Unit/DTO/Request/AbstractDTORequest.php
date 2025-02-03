@@ -11,16 +11,6 @@ use ReflectionClass;
 abstract class AbstractDTORequest extends TestCase
 {
     /**
-     * @return class-string The request DTO class being tested
-     */
-    abstract protected function getRequestClass(): string;
-
-    /**
-     * @return array<string, mixed> Full parameters for constructor testing
-     */
-    abstract protected function getConstructorParams(): array;
-
-    /**
      * @throws \ReflectionException
      */
     public function testImplementsInterface(): void
@@ -69,4 +59,14 @@ abstract class AbstractDTORequest extends TestCase
             $this->assertEquals($value, $request->$getter());
         }
     }
+
+    /**
+     * @return class-string The request DTO class being tested
+     */
+    abstract protected function getRequestClass(): string;
+
+    /**
+     * @return array<string, mixed> Full parameters for constructor testing
+     */
+    abstract protected function getConstructorParams(): array;
 }

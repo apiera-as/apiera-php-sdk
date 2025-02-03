@@ -14,12 +14,15 @@ final class AlternateIdentifierRequestTest extends AbstractDTORequest
         return AlternateIdentifierRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
             'code' => '123',
             'type' => 'ean',
-            'iri' => '/api/v1/alternate_identifiers/123'
+            'iri' => '/api/v1/alternate_identifiers/123',
         ];
     }
 }

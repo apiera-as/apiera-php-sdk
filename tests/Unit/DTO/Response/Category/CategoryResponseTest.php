@@ -17,6 +17,9 @@ final class CategoryResponseTest extends AbstractDTOResponse
         return CategoryResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -33,6 +36,9 @@ final class CategoryResponseTest extends AbstractDTOResponse
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [

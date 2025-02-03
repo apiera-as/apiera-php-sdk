@@ -14,12 +14,15 @@ final class AttributeTermRequestTest extends AbstractDTORequest
         return AttributeTermRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
             'name' => 'Green',
             'attribute' => 'ean',
-            'iri' => '/api/v1/stores/123/attributes/123/terms/123'
+            'iri' => '/api/v1/stores/123/attributes/123/terms/123',
         ];
     }
 }

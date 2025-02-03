@@ -34,7 +34,7 @@ final readonly class BrandResponse extends AbstractResponse
         #[ResponseField('name')]
         private string $name,
         #[ResponseField('store')]
-        private ?string $store,
+        private string $store,
         #[ResponseField('description')]
         private ?string $description = null,
         #[ResponseField('image')]

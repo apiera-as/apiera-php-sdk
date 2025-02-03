@@ -17,6 +17,9 @@ final class AlternateIdentifierResponseTest extends AbstractDTOResponse
         return AlternateIdentifierResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -26,10 +29,13 @@ final class AlternateIdentifierResponseTest extends AbstractDTOResponse
             'createdAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'type' => 'gtin',
-            'code' => 'ABC123'
+            'code' => 'ABC123',
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [];

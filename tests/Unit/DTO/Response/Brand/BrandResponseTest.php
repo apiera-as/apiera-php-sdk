@@ -17,6 +17,9 @@ final class BrandResponseTest extends AbstractDTOResponse
         return BrandResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -32,6 +35,9 @@ final class BrandResponseTest extends AbstractDTOResponse
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [

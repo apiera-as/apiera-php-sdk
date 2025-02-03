@@ -17,6 +17,9 @@ final class AttributeTermResponseTest extends AbstractDTOResponse
         return AttributeTermResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -31,6 +34,9 @@ final class AttributeTermResponseTest extends AbstractDTOResponse
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [];

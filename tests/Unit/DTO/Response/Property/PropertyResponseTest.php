@@ -17,6 +17,9 @@ final class PropertyResponseTest extends AbstractDTOResponse
         return PropertyResponse::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getResponseData(): array
     {
         return [
@@ -26,10 +29,13 @@ final class PropertyResponseTest extends AbstractDTOResponse
             'createdAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'name' => 'Material',
-            'store' => '/api/v1/stores/123'
+            'store' => '/api/v1/stores/123',
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getNullableFields(): array
     {
         return [];

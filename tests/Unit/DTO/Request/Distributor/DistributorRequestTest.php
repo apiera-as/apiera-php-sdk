@@ -14,12 +14,15 @@ final class DistributorRequestTest extends AbstractDTORequest
         return DistributorRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
             'name' => 'Example Distributor',
             'store' => '/api/v1/store/123',
-            'iri' => '/api/v1/stores/123/distributors/321'
+            'iri' => '/api/v1/stores/123/distributors/321',
         ];
     }
 }

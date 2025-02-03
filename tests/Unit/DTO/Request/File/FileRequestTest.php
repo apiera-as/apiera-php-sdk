@@ -14,12 +14,15 @@ final class FileRequestTest extends AbstractDTORequest
         return FileRequest::class;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getConstructorParams(): array
     {
         return [
             'url' => 'https://example.com/file.pdf',
             'name' => 'Example File',
-            'iri' => '/api/v1/files/123'
+            'iri' => '/api/v1/files/123',
         ];
     }
 }

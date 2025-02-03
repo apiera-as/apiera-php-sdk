@@ -15,29 +15,6 @@ use Symfony\Component\Uid\Uuid;
 
 abstract class AbstractDTOResponse extends TestCase
 {
-    /**
-     * Get the response class being tested
-     * @return class-string The fully qualified class name
-     */
-    abstract protected function getResponseClass(): string;
-
-    /**
-     * Get sample data for constructing a response with populated values
-     * @return array<string, mixed>
-     */
-    abstract protected function getResponseData(): array;
-
-    /**
-     * Get the expected LdType for this response
-     */
-    abstract protected function getExpectedLdType(): LdType;
-
-    /**
-     * Get a list of nullable fields and their default values
-     * @return array<string, mixed>
-     */
-    abstract protected function getNullableFields(): array;
-
     public function testInstanceOf(): void
     {
         $responseClass = $this->getResponseClass();
@@ -90,23 +67,30 @@ abstract class AbstractDTOResponse extends TestCase
 
         // Test remaining fields via reflection
         $reflection = new ReflectionClass($responseClass);
+
         foreach ($data as $property => $value) {
             if (in_array($property, ['ldId', 'ldType', 'uuid', 'createdAt', 'updatedAt'])) {
-                continue; // Skip already tested fields
+                // Skip already tested fields
+                continue;
             }
 
-            if ($reflection->hasProperty($property)) {
-                $getter = 'get' . ucfirst($property);
-                $this->assertEquals($value, $response->$getter());
+            if (!$reflection->hasProperty($property)) {
+                continue;
             }
+
+            $getter = 'get' . ucfirst($property);
+            $this->assertEquals($value, $response->$getter());
         }
     }
 
     public function testNullableFieldHandling(): void
     {
         $nullableFields = $this->getNullableFields();
-        if (empty($nullableFields)) {
-            $this->addToAssertionCount(1); // Avoid risky test
+
+        if (count($nullableFields) === 0) {
+            // Avoid risky test
+            $this->addToAssertionCount(1);
+
             return;
         }
 
@@ -126,4 +110,30 @@ abstract class AbstractDTOResponse extends TestCase
             $this->assertNull($response->$getter(), "Nullable field $field should accept null value");
         }
     }
+
+    /**
+     * The response class being tested
+     *
+     * @return class-string The fully qualified class name
+     */
+    abstract protected function getResponseClass(): string;
+
+    /**
+     * Sample data for constructing a response with populated values
+     *
+     * @return array<string, mixed>
+     */
+    abstract protected function getResponseData(): array;
+
+    /**
+     * The expected LdType for this response
+     */
+    abstract protected function getExpectedLdType(): LdType;
+
+    /**
+     * A list of nullable fields and their default values
+     *
+     * @return array<string, mixed>
+     */
+    abstract protected function getNullableFields(): array;
 }
