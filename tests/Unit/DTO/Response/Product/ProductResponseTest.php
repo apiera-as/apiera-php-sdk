@@ -15,156 +15,80 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
+use Tests\Unit\DTO\Response\AbstractDTOResponse;
 
-final class ProductResponseTest extends TestCase
+final class ProductResponseTest extends AbstractDTOResponse
 {
-    public function testInstanceOf(): void
+    protected function getResponseClass(): string
     {
-        $response = new ProductResponse(
-            ldId: '',
-            ldType: LdType::Product,
-            uuid: Uuid::v4(),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
-            type: ProductType::Simple,
-            status: ProductStatus::Active,
-            store: '',
-            sku: ''
-        );
-
-        $this->assertInstanceOf(ProductResponse::class, $response);
-        $this->assertInstanceOf(AbstractResponse::class, $response);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
-        $this->assertInstanceOf(JsonLDInterface::class, $response);
+        return ProductResponse::class;
     }
 
-    public function testClassIsCorrectlyDefined(): void
+    protected function getResponseData(): array
     {
-        $reflection = new ReflectionClass(ProductResponse::class);
-
-        $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
+        return [
+            'ldId' => '/api/v1/stores/123/products/123',
+            'ldType' => LdType::Product,
+            'uuid' => Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
+            'createdAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
+            'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
+            'type' => ProductType::Simple,
+            'status' => ProductStatus::Active,
+            'store' => '/api/v1/stores/123',
+            'sku' => '/api/v1/skus/123',
+            'name' => 'Product',
+            'price' => '100.00',
+            'salePrice' => '99.00',
+            'description' => 'Product description',
+            'shortDescription' => 'Product short description',
+            'weight' => '100.00',
+            'length' => '100.00',
+            'width' => '100.00',
+            'height' => '100.00',
+            'distributor' => '/api/v1/stores/123/distributors/123',
+            'brand' => '/api/v1/stores/123/brands/123',
+            'image' => '/api/v1/files/123',
+            'categories' => [
+                '/api/v1/stores/123/categories/456'
+            ],
+            'tags' => [
+                '/api/v1/stores/123/tags/789'
+            ],
+            'attributes' => [
+                '/api/v1/stores/123/attributes/123'
+            ],
+            'images' => [
+                '/api/v1/files/456'
+            ],
+            'alternateIdentifiers' => [
+                '/api/v1/alternate_identifiers/345'
+            ],
+            'propertyTerms' => [
+                '/api/v1/stores/123/properties/456/terms/789'
+            ]
+        ];
     }
 
-    public function testPropertiesAreReadonly(): void
+    protected function getNullableFields(): array
     {
-        $reflection = new ReflectionClass(ProductResponse::class);
-        $properties = $reflection->getProperties();
-
-        foreach ($properties as $property) {
-            $this->assertTrue($property->isReadonly(), sprintf('Property %s should be readonly', $property->getName()));
-        }
+        return [
+            'name' => null,
+            'price' => null,
+            'salePrice' => null,
+            'description' => null,
+            'shortDescription' => null,
+            'weight' => null,
+            'length' => null,
+            'width' => null,
+            'height' => null,
+            'distributor' => null,
+            'brand' => null,
+            'image' => null,
+        ];
     }
 
-    public function testConstructorAndGetters(): void
+    protected function getExpectedLdType(): LdType
     {
-        $response = new ProductResponse(
-            ldId: '/api/v1/stores/123/products/456',
-            ldType: LdType::Product,
-            uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
-            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
-            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
-            type: ProductType::Simple,
-            status: ProductStatus::Active,
-            store: '/api/v1/stores/123',
-            sku: '/api/v1/skus/789',
-            name: 'Test Product',
-            price: '99.99',
-            salePrice: '79.99',
-            description: 'Full description',
-            shortDescription: 'Short description',
-            weight: '1.50',
-            length: '10.00',
-            width: '5.00',
-            height: '2.00',
-            distributor: '/api/v1/stores/123/distributors/456',
-            brand: '/api/v1/stores/123/brands/789',
-            image: '/api/v1/files/123',
-            categories: ['/api/v1/stores/123/categories/456'],
-            tags: ['/api/v1/stores/123/tags/789'],
-            attributes: ['/api/v1/stores/123/attributes/012'],
-            images: ['/api/v1/files/456'],
-            alternateIdentifiers: ['/api/v1/alternate_identifiers/345'],
-            propertyTerms: ['/api/v1/stores/123/properties/456/terms/789']
-        );
-
-        // Test basic response fields
-        $this->assertEquals('/api/v1/stores/123/products/456', $response->getLdId());
-        $this->assertEquals(LdType::Product, $response->getLdType());
-        $this->assertTrue(Uuid::isValid($response->getUuid()->toRfc4122()));
-        $this->assertEquals('bfd2639c-7793-426a-a413-ea262e582208', $response->getUuid()->toRfc4122());
-        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getCreatedAt());
-        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getUpdatedAt());
-
-        // Test product-specific fields
-        $this->assertEquals(ProductType::Simple, $response->getType());
-        $this->assertEquals(ProductStatus::Active, $response->getStatus());
-        $this->assertEquals('/api/v1/stores/123', $response->getStore());
-        $this->assertEquals('/api/v1/skus/789', $response->getSku());
-        $this->assertEquals('Test Product', $response->getName());
-        $this->assertEquals('99.99', $response->getPrice());
-        $this->assertEquals('79.99', $response->getSalePrice());
-        $this->assertEquals('Full description', $response->getDescription());
-        $this->assertEquals('Short description', $response->getShortDescription());
-        $this->assertEquals('1.50', $response->getWeight());
-        $this->assertEquals('10.00', $response->getLength());
-        $this->assertEquals('5.00', $response->getWidth());
-        $this->assertEquals('2.00', $response->getHeight());
-        $this->assertEquals('/api/v1/stores/123/distributors/456', $response->getDistributor());
-        $this->assertEquals('/api/v1/stores/123/brands/789', $response->getBrand());
-        $this->assertEquals('/api/v1/files/123', $response->getImage());
-
-        // Test array fields
-        $this->assertEquals(['/api/v1/stores/123/categories/456'], $response->getCategories());
-        $this->assertEquals(['/api/v1/stores/123/tags/789'], $response->getTags());
-        $this->assertEquals(['/api/v1/stores/123/attributes/012'], $response->getAttributes());
-        $this->assertEquals(['/api/v1/files/456'], $response->getImages());
-        $this->assertEquals(['/api/v1/alternate_identifiers/345'], $response->getAlternateIdentifiers());
-        $this->assertEquals(['/api/v1/stores/123/properties/456/terms/789'], $response->getPropertyTerms());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $response = new ProductResponse(
-            ldId: '/api/v1/stores/123/products/456',
-            ldType: LdType::Product,
-            uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
-            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
-            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
-            type: ProductType::Simple,
-            status: ProductStatus::Active,
-            store: '/api/v1/stores/123',
-            sku: '/api/v1/skus/789'
-        );
-
-        // Test required fields
-        $this->assertEquals('/api/v1/stores/123/products/456', $response->getLdId());
-        $this->assertEquals(LdType::Product, $response->getLdType());
-        $this->assertEquals('bfd2639c-7793-426a-a413-ea262e582208', $response->getUuid()->toRfc4122());
-        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getCreatedAt());
-        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getUpdatedAt());
-        $this->assertEquals(ProductType::Simple, $response->getType());
-        $this->assertEquals(ProductStatus::Active, $response->getStatus());
-        $this->assertEquals('/api/v1/stores/123', $response->getStore());
-        $this->assertEquals('/api/v1/skus/789', $response->getSku());
-
-        // Test optional fields are null or empty
-        $this->assertNull($response->getName());
-        $this->assertNull($response->getPrice());
-        $this->assertNull($response->getSalePrice());
-        $this->assertNull($response->getDescription());
-        $this->assertNull($response->getShortDescription());
-        $this->assertNull($response->getWeight());
-        $this->assertNull($response->getLength());
-        $this->assertNull($response->getWidth());
-        $this->assertNull($response->getHeight());
-        $this->assertNull($response->getDistributor());
-        $this->assertNull($response->getBrand());
-        $this->assertNull($response->getImage());
-        $this->assertEquals([], $response->getCategories());
-        $this->assertEquals([], $response->getTags());
-        $this->assertEquals([], $response->getAttributes());
-        $this->assertEquals([], $response->getImages());
-        $this->assertEquals([], $response->getAlternateIdentifiers());
-        $this->assertEquals([], $response->getPropertyTerms());
+        return LdType::Product;
     }
 }
