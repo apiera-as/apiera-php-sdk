@@ -5,60 +5,21 @@ declare(strict_types=1);
 namespace Tests\Unit\DTO\Request\File;
 
 use Apiera\Sdk\DTO\Request\File\FileRequest;
-use Apiera\Sdk\Interface\DTO\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\DTO\Request\AbstractDTORequest;
 
-final class FileRequestTest extends TestCase
+final class FileRequestTest extends AbstractDTORequest
 {
-    public function testInstanceOf(): void
+    protected function getRequestClass(): string
     {
-        $request = new FileRequest('', '');
-
-        $this->assertInstanceOf(FileRequest::class, $request);
-        $this->assertInstanceOf(RequestInterface::class, $request);
+        return FileRequest::class;
     }
 
-    public function testConstructorAndGetters(): void
+    protected function getConstructorParams(): array
     {
-        $request = new FileRequest(
-            url: 'https://example.com/file.pdf',
-            name: 'Example File',
-            iri: '/api/v1/files/123'
-        );
-
-        $this->assertEquals('Example File', $request->getName());
-        $this->assertEquals('https://example.com/file.pdf', $request->getUrl());
-        $this->assertEquals('/api/v1/files/123', $request->getIri());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $request = new FileRequest(url: 'https://example.com/file.pdf');
-
-        $this->assertEquals('https://example.com/file.pdf', $request->getUrl());
-        $this->assertNull($request->getName());
-        $this->assertNull($request->getIri());
-    }
-
-    public function testToArray(): void
-    {
-        $request = new FileRequest(
-            url: 'https://example.com/file.pdf',
-            name: 'Example File',
-            iri: '/api/v1/files/123'
-        );
-
-        $array = $request->toArray();
-
-        $this->assertArrayHasKey('url', $array);
-        $this->assertArrayHasKey('name', $array);
-        $this->assertArrayNotHasKey('iri', $array);
-
-        $this->assertEquals('https://example.com/file.pdf', $array['url']);
-        $this->assertEquals('Example File', $array['name']);
-        $this->assertEquals(
-            ['url' => 'https://example.com/file.pdf', 'name' => 'Example File'],
-            $array
-        );
+        return [
+            'url' => 'https://example.com/file.pdf',
+            'name' => 'Example File',
+            'iri' => '/api/v1/files/123'
+        ];
     }
 }
