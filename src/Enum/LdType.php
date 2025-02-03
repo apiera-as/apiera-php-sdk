@@ -18,6 +18,8 @@ use Apiera\Sdk\DTO\Response\Distributor\DistributorCollectionResponse;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
+use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
+use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
 use Exception;
@@ -88,12 +90,15 @@ enum LdType: string
                 ResponseType::Single->value => PropertyResponse::class,
                 ResponseType::Collection->value => PropertyCollectionResponse::class,
             ],
+            self::Product => [
+                ResponseType::Single->value => ProductResponse::class,
+                ResponseType::Collection->value => ProductCollectionResponse::class,
+            ],
             self::Integration,
             self::IntegrationResourceMap,
             self::Inventory,
             self::InventoryLocation,
             self::Organization,
-            self::Product,
             self::PropertyTerm,
             self::Sku,
             self::Store,
