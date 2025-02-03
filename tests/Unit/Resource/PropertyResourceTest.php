@@ -118,11 +118,11 @@ final class PropertyResourceTest extends TestCase
         ];
 
         $emptyCollection = new PropertyCollectionResponse(
-            context: '/api/v1/contexts/Property',
-            id: '/api/v1/properties',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/v1/contexts/Property',
+            ldId: '/api/v1/properties',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -379,12 +379,12 @@ final class PropertyResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new PropertyCollectionResponse(
-            context: '/api/v1/contexts/Property',
-            id: '/api/v1/stores/123/properties',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/v1/stores/123/properties?page=1',
+            ldContext: '/api/v1/contexts/Property',
+            ldId: '/api/v1/stores/123/properties',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/v1/stores/123/properties?page=1',
             firstPage: '/api/v1/stores/123/properties?page=1',
             lastPage: '/api/v1/stores/123/properties?page=1'
         );

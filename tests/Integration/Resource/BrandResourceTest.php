@@ -81,10 +81,10 @@ final class BrandResourceTest extends TestCase
             (string)$brandRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test Brand', $response->getMembers()[0]->getName());
-        $this->assertEquals($brandId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test Brand', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($brandId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

@@ -79,10 +79,10 @@ final class ProductResourceTest extends TestCase
 
         $result = $this->resource->find($this->request);
 
-        $this->assertEquals(1, $result->getTotalItems());
-        $this->assertCount(1, $result->getMembers());
-        $this->assertEquals('Test Product', $result->getMembers()[0]->getName());
-        $this->assertEquals('99.99', $result->getMembers()[0]->getPrice());
+        $this->assertEquals(1, $result->getLdTotalItems());
+        $this->assertCount(1, $result->getLdMembers());
+        $this->assertEquals('Test Product', $result->getLdMembers()[0]->getName());
+        $this->assertEquals('99.99', $result->getLdMembers()[0]->getPrice());
     }
 
     /**
@@ -129,11 +129,11 @@ final class ProductResourceTest extends TestCase
         ];
 
         $emptyCollection = new ProductCollectionResponse(
-            context: '/api/contexts/Product',
-            id: '/api/v1/stores/123/products',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/Product',
+            ldId: '/api/v1/stores/123/products',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -454,12 +454,12 @@ final class ProductResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new ProductCollectionResponse(
-            context: '/api/contexts/Product',
-            id: '/api/v1/stores/123/products',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/v1/stores/123/products?page=1',
+            ldContext: '/api/contexts/Product',
+            ldId: '/api/v1/stores/123/products',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/v1/stores/123/products?page=1',
             firstPage: '/api/v1/stores/123/products?page=1',
             lastPage: '/api/v1/stores/123/products?page=1',
             nextPage: null,

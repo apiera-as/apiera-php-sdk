@@ -108,11 +108,11 @@ final class FileResourceTest extends TestCase
         ];
 
         $emptyCollection = new FileCollectionResponse(
-            context: '/api/v1/contexts/File',
-            id: '/api/v1/files',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/v1/contexts/File',
+            ldId: '/api/v1/files',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -305,12 +305,12 @@ final class FileResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new FileCollectionResponse(
-            context: '/api/v1/contexts/File',
-            id: '/api/files',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/v1/files?page=1',
+            ldContext: '/api/v1/contexts/File',
+            ldId: '/api/files',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/v1/files?page=1',
             firstPage: '/api/v1/files?page=1',
             lastPage: '/api/v1/files?page=1'
         );

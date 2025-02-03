@@ -15,10 +15,10 @@ final readonly class FileCollectionResponse extends AbstractCollectionResponse
     /**
      * @return array<FileResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<FileResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

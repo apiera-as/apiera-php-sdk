@@ -81,10 +81,10 @@ final class AttributeTermResourceTest extends TestCase
             (string)$attributeTermRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Example term', $response->getMembers()[0]->getName());
-        $this->assertEquals($termId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Example term', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($termId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

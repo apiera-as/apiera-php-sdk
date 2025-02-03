@@ -7,7 +7,6 @@ namespace Tests\Unit\DTO\Response\InventoryLocation;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationResponse;
 use Apiera\Sdk\Enum\LdType;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
 use Tests\Unit\DTO\Response\AbstractDTOResponse;
 

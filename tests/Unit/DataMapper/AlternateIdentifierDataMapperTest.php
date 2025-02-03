@@ -78,10 +78,10 @@ final class AlternateIdentifierDataMapperTest extends TestCase
         $this->assertEquals('/api/contexts/AlternateIdentifier', $result->getLdContext());
         $this->assertEquals('/api/alternate_identifiers', $result->getLdId());
         $this->assertEquals(LdType::Collection, $result->getLdType());
-        $this->assertEquals(1, $result->getTotalItems());
-        $this->assertCount(1, $result->getMembers());
-        $this->assertInstanceOf(AlternateIdentifierResponse::class, $result->getMembers()[0]);
-        $this->assertEquals('/api/alternate_identifiers?page=1', $result->getView());
+        $this->assertEquals(1, $result->getLdTotalItems());
+        $this->assertCount(1, $result->getLdMembers());
+        $this->assertInstanceOf(AlternateIdentifierResponse::class, $result->getLdMembers()[0]);
+        $this->assertEquals('/api/alternate_identifiers?page=1', $result->getLdView());
         $this->assertEquals('/api/alternate_identifiers?page=1', $result->getFirstPage());
         $this->assertEquals('/api/alternate_identifiers?page=1', $result->getLastPage());
         $this->assertNull($result->getNextPage());
@@ -99,8 +99,8 @@ final class AlternateIdentifierDataMapperTest extends TestCase
 
         $result = $this->mapper->fromCollectionResponse($data);
 
-        $this->assertEmpty($result->getMembers());
-        $this->assertEquals(0, $result->getTotalItems());
+        $this->assertEmpty($result->getLdMembers());
+        $this->assertEquals(0, $result->getLdTotalItems());
     }
 
     /**

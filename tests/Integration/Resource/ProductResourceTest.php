@@ -126,10 +126,10 @@ final class ProductResourceTest extends TestCase
             (string)$productRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test Product', $response->getMembers()[0]->getName());
-        $this->assertEquals('100.00', $response->getMembers()[0]->getPrice());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test Product', $response->getLdMembers()[0]->getName());
+        $this->assertEquals('100.00', $response->getLdMembers()[0]->getPrice());
     }
 
     /**

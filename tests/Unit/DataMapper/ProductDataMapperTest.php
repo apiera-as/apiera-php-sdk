@@ -128,14 +128,14 @@ final class ProductDataMapperTest extends TestCase
         $this->assertEquals('/api/v1/contexts/Product', $result->getLdContext());
         $this->assertEquals('/api/v1/stores/123/products', $result->getLdId());
         $this->assertEquals(LdType::Collection, $result->getLdType());
-        $this->assertEquals(1, $result->getTotalItems());
-        $this->assertCount(1, $result->getMembers());
-        $this->assertInstanceOf(ProductResponse::class, $result->getMembers()[0]);
-        $this->assertEquals('/api/v1/stores/123/products/123', $result->getMembers()[0]->getLdId());
-        $this->assertEquals(LdType::Product, $result->getMembers()[0]->getLdType());
+        $this->assertEquals(1, $result->getLdTotalItems());
+        $this->assertCount(1, $result->getLdMembers());
+        $this->assertInstanceOf(ProductResponse::class, $result->getLdMembers()[0]);
+        $this->assertEquals('/api/v1/stores/123/products/123', $result->getLdMembers()[0]->getLdId());
+        $this->assertEquals(LdType::Product, $result->getLdMembers()[0]->getLdType());
         $this->assertEquals(
             Uuid::fromString('123e4567-e89b-12d3-a456-426614174000'),
-            $result->getMembers()[0]->getUuid()
+            $result->getLdMembers()[0]->getUuid()
         );
     }
 
@@ -150,8 +150,8 @@ final class ProductDataMapperTest extends TestCase
 
         $result = $this->mapper->fromCollectionResponse($data);
 
-        $this->assertEmpty($result->getMembers());
-        $this->assertEquals(0, $result->getTotalItems());
+        $this->assertEmpty($result->getLdMembers());
+        $this->assertEquals(0, $result->getLdTotalItems());
     }
 
     /**

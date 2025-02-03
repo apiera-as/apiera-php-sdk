@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Apiera\Sdk\DataMapper;
 
 use Apiera\Sdk\Attribute\SkipRequest;
+use Apiera\Sdk\DTO\Response\PartialCollectionView;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Enum\ResponseType;
 use Apiera\Sdk\Exception\Mapping\RequestMappingException;
@@ -76,19 +77,21 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
             );
 
             return new $collectionClass(
-                context: $collectionResponseData['@context'],
-                id: $collectionResponseData['@id'],
-                type: LdType::from($collectionResponseData['@type']),
-                members: array_map(
+                ldContext: $collectionResponseData['@context'],
+                ldId: $collectionResponseData['@id'],
+                ldType: LdType::from($collectionResponseData['@type']),
+                ldMembers: array_map(
                     fn(array $member): ResponseInterface => $this->fromResponse($member),
                     $collectionResponseData['member']
                 ),
-                totalItems: $collectionResponseData['totalItems'],
-                view: $collectionResponseData['view'] ?? null,
-                firstPage: $collectionResponseData['firstPage'] ?? null,
-                lastPage: $collectionResponseData['lastPage'] ?? null,
-                nextPage: $collectionResponseData['nextPage'] ?? null,
-                previousPage: $collectionResponseData['previousPage'] ?? null,
+                ldTotalItems: $collectionResponseData['totalItems'],
+                ldView: isset($collectionResponseData['view']) ? new PartialCollectionView(
+                    ldId: $collectionResponseData['view']['@id'],
+                    ldFirst: $collectionResponseData['view']['first'],
+                    ldLast: $collectionResponseData['view']['last'],
+                    ldNext: $collectionResponseData['view']['next'] ?? null,
+                    ldPrevious: $collectionResponseData['view']['previous'] ?? null,
+                ) : null,
             );
         } catch (Throwable $exception) {
             throw new ResponseMappingException(

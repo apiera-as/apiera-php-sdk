@@ -118,11 +118,11 @@ final class AttributeTermResourceTest extends TestCase
         ];
 
         $emptyCollection = new AttributeTermCollectionResponse(
-            context: '/api/contexts/AttributeTerm',
-            id: '/api/v1/stores/321/attributes/123/terms',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/AttributeTerm',
+            ldId: '/api/v1/stores/321/attributes/123/terms',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -382,12 +382,12 @@ final class AttributeTermResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new AttributeTermCollectionResponse(
-            context: '/api/contexts/AttributeTerm',
-            id: '/api/v1/stores/321/attributes/123/terms',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/v1/attributes/123/terms?page=1',
+            ldContext: '/api/contexts/AttributeTerm',
+            ldId: '/api/v1/stores/321/attributes/123/terms',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/v1/attributes/123/terms?page=1',
             firstPage: '/api/v1/attributes/123/terms?page=1',
             lastPage: '/api/v1/attributes/123/terms?page=1',
         );

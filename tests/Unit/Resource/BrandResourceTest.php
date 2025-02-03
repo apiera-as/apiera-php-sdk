@@ -118,11 +118,11 @@ final class BrandResourceTest extends TestCase
         ];
 
         $emptyCollection = new BrandCollectionResponse(
-            context: '/api/contexts/Brand',
-            id: '/api/v1/stores/123/brands',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/Brand',
+            ldId: '/api/v1/stores/123/brands',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -388,12 +388,12 @@ final class BrandResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new BrandCollectionResponse(
-            context: '/api/contexts/Brand',
-            id: '/api/v1/stores/123/brands',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/v1/stores/123/brands?page=1',
+            ldContext: '/api/contexts/Brand',
+            ldId: '/api/v1/stores/123/brands',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/v1/stores/123/brands?page=1',
             firstPage: '/api/v1/stores/123/brands?page=1',
             lastPage: '/api/v1/stores/123/brands?page=1',
             nextPage: null,

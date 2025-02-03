@@ -79,10 +79,10 @@ final class AttributeResourceTest extends TestCase
             (string)$attributeRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test attribute', $response->getMembers()[0]->getName());
-        $this->assertEquals($attributeId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test attribute', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($attributeId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

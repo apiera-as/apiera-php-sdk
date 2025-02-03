@@ -107,11 +107,11 @@ final class AlternateIdentifierResourceTest extends TestCase
         ];
 
         $emptyCollection = new AlternateIdentifierCollectionResponse(
-            context: '/api/contexts/AlternateIdentifier',
-            id: '/api/alternate_identifiers',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/AlternateIdentifier',
+            ldId: '/api/alternate_identifiers',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -361,12 +361,12 @@ final class AlternateIdentifierResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new AlternateIdentifierCollectionResponse(
-            context: '/api/contexts/AlternateIdentifier',
-            id: '/api/alternate_identifiers',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/alternate_identifiers?page=1',
+            ldContext: '/api/contexts/AlternateIdentifier',
+            ldId: '/api/alternate_identifiers',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/alternate_identifiers?page=1',
             firstPage: '/api/alternate_identifiers?page=1',
             lastPage: '/api/alternate_identifiers?page=1'
         );

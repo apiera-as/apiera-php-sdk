@@ -118,11 +118,11 @@ final class CategoryResourceTest extends TestCase
         ];
 
         $emptyCollection = new CategoryCollectionResponse(
-            context: '/api/contexts/Category',
-            id: '/api/categories',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/Category',
+            ldId: '/api/categories',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -384,12 +384,12 @@ final class CategoryResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new CategoryCollectionResponse(
-            context: '/api/contexts/Category',
-            id: '/api/categories',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/categories?page=1',
+            ldContext: '/api/contexts/Category',
+            ldId: '/api/categories',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/categories?page=1',
             firstPage: '/api/categories?page=1',
             lastPage: '/api/categories?page=1'
         );

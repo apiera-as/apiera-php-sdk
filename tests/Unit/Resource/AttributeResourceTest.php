@@ -118,11 +118,11 @@ final class AttributeResourceTest extends TestCase
         ];
 
         $emptyCollection = new AttributeCollectionResponse(
-            context: '/api/contexts/Attribute',
-            id: '/api/attributes',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
+            ldContext: '/api/contexts/Attribute',
+            ldId: '/api/attributes',
+            ldType: LdType::Collection,
+            ldMembers: [],
+            ldTotalItems: 0
         );
 
         $this->clientMock->method('get')
@@ -379,12 +379,12 @@ final class AttributeResourceTest extends TestCase
         ];
 
         $this->collectionResponse = new AttributeCollectionResponse(
-            context: '/api/contexts/Attribute',
-            id: '/api/attributes',
-            type: LdType::Collection,
-            members: [$this->response],
-            totalItems: 1,
-            view: '/api/attributes?page=1',
+            ldContext: '/api/contexts/Attribute',
+            ldId: '/api/attributes',
+            ldType: LdType::Collection,
+            ldMembers: [$this->response],
+            ldTotalItems: 1,
+            ldView: '/api/attributes?page=1',
             firstPage: '/api/attributes?page=1',
             lastPage: '/api/attributes?page=1'
         );

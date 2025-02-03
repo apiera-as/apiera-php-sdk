@@ -86,10 +86,10 @@ final class CategoryResourceTest extends TestCase
         );
 
         // Verify response
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test category', $response->getMembers()[0]->getName());
-        $this->assertEquals($categoryId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test category', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($categoryId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

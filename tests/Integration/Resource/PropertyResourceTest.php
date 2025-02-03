@@ -79,10 +79,10 @@ final class PropertyResourceTest extends TestCase
             (string)$propertyRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test property', $response->getMembers()[0]->getName());
-        $this->assertEquals($propertyId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test property', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($propertyId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

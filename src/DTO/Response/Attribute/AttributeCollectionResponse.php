@@ -15,10 +15,10 @@ final readonly class AttributeCollectionResponse extends AbstractCollectionRespo
     /**
      * @return array<AttributeResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<AttributeResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }
