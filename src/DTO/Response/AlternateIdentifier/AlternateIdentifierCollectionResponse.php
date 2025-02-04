@@ -7,9 +7,7 @@ namespace Apiera\Sdk\DTO\Response\AlternateIdentifier;
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 
 /**
- * @template-extends AbstractCollectionResponse<AlternateIdentifierResponse>
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DTO\Response\AlternateIdentifier
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierCollectionResponse extends AbstractCollectionResponse
@@ -17,9 +15,11 @@ final readonly class AlternateIdentifierCollectionResponse extends AbstractColle
     /**
      * @return array<AlternateIdentifierResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
-        /** @var array<AlternateIdentifierResponse> */
-        return parent::getMembers();
+        /** @var array<AlternateIdentifierResponse> $members */
+        $members = parent::getLdMembers();
+
+        return $members;
     }
 }

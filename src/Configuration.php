@@ -9,7 +9,6 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk
  * @since 0.1.0
  */
 final readonly class Configuration implements ConfigurationInterface
@@ -26,7 +25,6 @@ final readonly class Configuration implements ConfigurationInterface
      * @param string $oauthAudience Oauth2 audience
      * @param string $oauthOrganizationId OAuth2 organization ID.
      * @param array<string, mixed> $options
-     * @param CacheItemPoolInterface $cache
      */
     public function __construct(
         private string $baseUrl,
@@ -44,65 +42,41 @@ final readonly class Configuration implements ConfigurationInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getTimeout(): int
     {
         return $this->timeout;
     }
 
-    /**
-     * @return string
-     */
     public function getUserAgent(): string
     {
         return $this->userAgent;
     }
 
-    /**
-     * @return bool
-     */
     public function getDebugMode(): bool
     {
         return $this->debugMode;
     }
 
-    /**
-     * @return string
-     */
     public function getOauthDomain(): string
     {
         return $this->oauthDomain;
     }
 
-    /**
-     * @return string
-     */
     public function getOauthClientId(): string
     {
         return $this->oauthClientId;
     }
 
-    /**
-     * @return string
-     */
     public function getOauthClientSecret(): string
     {
         return $this->oauthClientSecret;
     }
 
-    /**
-     * @return string
-     */
     public function getOauthCookieSecret(): string
     {
         return $this->oauthCookieSecret;
@@ -113,9 +87,6 @@ final readonly class Configuration implements ConfigurationInterface
         return $this->oauthAudience;
     }
 
-    /**
-     * @return string
-     */
     public function getOauthOrganizationId(): string
     {
         return $this->oauthOrganizationId;
@@ -129,9 +100,6 @@ final readonly class Configuration implements ConfigurationInterface
         return $this->options;
     }
 
-    /**
-     * @return CacheItemPoolInterface
-     */
     public function getCache(): CacheItemPoolInterface
     {
         return $this->cache;

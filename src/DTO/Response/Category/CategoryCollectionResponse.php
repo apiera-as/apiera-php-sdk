@@ -7,9 +7,7 @@ namespace Apiera\Sdk\DTO\Response\Category;
 use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 
 /**
- * @template-extends AbstractCollectionResponse<CategoryResponse>
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Response\Category
  * @since 0.1.0
  */
 final readonly class CategoryCollectionResponse extends AbstractCollectionResponse
@@ -17,9 +15,11 @@ final readonly class CategoryCollectionResponse extends AbstractCollectionRespon
     /**
      * @return array<CategoryResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
-        /** @var array<CategoryResponse> */
-        return parent::getMembers();
+        /** @var array<CategoryResponse> $members */
+        $members = parent::getLdMembers();
+
+        return $members;
     }
 }

@@ -6,120 +6,56 @@ namespace Apiera\Sdk\DTO\Response;
 
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 
 /**
- * @template T of ResponseInterface
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO\Response
  * @since 0.1.0
  */
 readonly abstract class AbstractCollectionResponse implements JsonLDCollectionInterface
 {
     /**
-     * @param string $context
-     * @param string $id
-     * @param LdType $type
-     * @param array<T> $members
-     * @param int $totalItems
-     * @param string|null $view
-     * @param string|null $firstPage
-     * @param string|null $lastPage
-     * @param string|null $nextPage
-     * @param string|null $previousPage
+     * @param array<\Apiera\Sdk\Interface\DTO\ResponseInterface> $ldMembers
      */
     public function __construct(
-        private string $context,
-        private string $id,
-        private LdType $type,
-        private array $members = [],
-        private int $totalItems = 0,
-        private ?string $view = null,
-        private ?string $firstPage = null,
-        private ?string $lastPage = null,
-        private ?string $nextPage = null,
-        private ?string $previousPage = null,
+        private string $ldContext,
+        private string $ldId,
+        private LdType $ldType,
+        private array $ldMembers = [],
+        private int $ldTotalItems = 0,
+        private ?PartialCollectionView $ldView = null,
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getLdContext(): string
     {
-        return $this->context;
+        return $this->ldContext;
     }
 
-    /**
-     * @return string
-     */
     public function getLdId(): string
     {
-        return $this->id;
+        return $this->ldId;
     }
 
-    /**
-     * @return LdType
-     */
     public function getLdType(): LdType
     {
-        return $this->type;
+        return $this->ldType;
     }
 
     /**
-     * @return array<T>
+     * @return array<\Apiera\Sdk\Interface\DTO\ResponseInterface>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
-        return $this->members;
+        return $this->ldMembers;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalItems(): int
+    public function getLdTotalItems(): int
     {
-        return $this->totalItems;
+        return $this->ldTotalItems;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getView(): ?string
+    public function getLdView(): ?PartialCollectionView
     {
-        return $this->view;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFirstPage(): ?string
-    {
-        return $this->firstPage;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLastPage(): ?string
-    {
-        return $this->lastPage;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNextPage(): ?string
-    {
-        return $this->nextPage;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPreviousPage(): ?string
-    {
-        return $this->previousPage;
+        return $this->ldView;
     }
 }

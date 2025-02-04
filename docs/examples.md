@@ -6,6 +6,11 @@
     - [Setup and Configuration](#setup-and-configuration)
     - [Attributes](#attributes)
     - [Categories](#categories)
+    - [Distributors](#distributors)
+    - [Files](#files)
+    - [Brands](#brands)
+    - [Properties](#properties)
+    - [Attribute Terms](#attribute-terms)
 
 ---
 
@@ -215,4 +220,456 @@ $requestObject = new \Apiera\Sdk\DTO\Request\Category\CategoryRequest(
 );
 
 $responseObject = $sdk->category()->update($requestObject);
+```
+
+# Distributors
+
+### Find Distributors
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->distributor()->find($requestObject);
+```
+
+---
+
+### Find Distributors with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some distributor name'] // Add filters as needed
+);
+
+$responseObject = $sdk->distributor()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some distributor name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->distributor()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the distributor is not found
+}
+```
+
+---
+
+### Find a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/distributors/520413a8-509a-4048-96e6-81751e315c5d2' // Use the distributor IRI
+);
+
+$responseObject = $sdk->distributor()->get($requestObject);
+```
+
+---
+
+### Create a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    name: 'Some distributor name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->distributor()->create($requestObject);
+```
+
+---
+
+### Update a Distributor
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Distributor\DistributorRequest(
+    name: 'Some new distributor name',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/distributors/520413a8-509a-4048-96e6-81751e315c5d2' // Use the distributor IRI
+);
+
+$responseObject = $sdk->distributor()->update($requestObject);
+```
+
+## Files
+
+### Find Files
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$responseObject = $sdk->file()->find($requestObject);
+```
+
+---
+
+### Find Files with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'product.jpg'] // Add filters as needed
+);
+
+$responseObject = $sdk->file()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'product.jpg'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->file()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the file is not found
+}
+```
+
+---
+
+### Find a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    iri: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d' // Use the file IRI
+);
+
+$responseObject = $sdk->file()->get($requestObject);
+```
+
+---
+
+### Create a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    name: 'product.jpg'
+);
+
+$responseObject = $sdk->file()->create($requestObject);
+```
+
+---
+
+### Delete a File
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\File\FileRequest(
+    url: 'https://example.com/images/product.jpg',
+    iri: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d' // Use the file IRI
+);
+
+$sdk->file()->delete($requestObject);
+```
+
+## Brands
+
+### Find Brands
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->brand()->find($requestObject);
+```
+
+---
+
+### Find Brands with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some brand name'] // Add filters as needed
+);
+
+$responseObject = $sdk->brand()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some brand name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->brand()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the brand is not found
+}
+```
+
+---
+
+### Find a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/brands/520413a8-509a-4048-96e6-81751e315c5d2' // Use the brand IRI
+);
+
+$responseObject = $sdk->brand()->get($requestObject);
+```
+
+---
+
+### Create a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    name: 'Some brand name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d', // Pass the store IRI
+    description: 'Some brand description',
+    image: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d'
+);
+
+$responseObject = $sdk->brand()->create($requestObject);
+```
+
+---
+
+### Update a Brand
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Brand\BrandRequest(
+    name: 'Some new brand name',
+    description: 'Updated brand description',
+    image: '/api/v1/files/520413a8-509a-4048-96e6-81751e315c5d',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/brands/520413a8-509a-4048-96e6-81751e315c5d2' // Use the brand IRI
+);
+
+$responseObject = $sdk->brand()->update($requestObject);
+```
+
+## Properties
+
+### Find Properties
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->property()->find($requestObject);
+```
+
+---
+
+### Find Properties with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'some property name'] // Add filters as needed
+);
+
+$responseObject = $sdk->property()->find($requestObject, $queryParamObject);
+```
+
+---
+
+### Search a Single Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => 'Some property name'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->property()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the property is not found
+}
+```
+
+---
+
+### Find a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$responseObject = $sdk->property()->get($requestObject);
+```
+
+---
+
+### Create a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    name: 'Some property name',
+    store: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d' // Pass the store IRI
+);
+
+$responseObject = $sdk->property()->create($requestObject);
+```
+
+---
+
+### Update a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    name: 'Some new property name',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$responseObject = $sdk->property()->update($requestObject);
+```
+
+---
+
+### Delete a Property
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\Property\PropertyRequest(
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/properties/520413a8-509a-4048-96e6-81751e315c5d2' // Use the property IRI
+);
+
+$sdk->property()->delete($requestObject);
+```
+
+## Attribute Terms
+
+### Find Attribute Terms
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$responseObject = $sdk->attributeTerm()->find($requestObject);
+```
+
+### Find Attribute Terms with Filter and Pagination
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => '32GB'] // Add filters as needed
+);
+
+$responseObject = $sdk->attributeTerm()->find($requestObject, $queryParamObject);
+```
+
+### Search a Single Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$queryParamObject = new \Apiera\Sdk\DTO\QueryParameters(
+    filters: ['name' => '32GB'] // Define search criteria
+);
+
+try {
+    $responseObject = $sdk->attributeTerm()->findOneBy($requestObject, $queryParamObject);
+} catch (\Apiera\Sdk\Exception\InvalidRequestException) {
+    // Handle the case when the attribute term is not found
+}
+```
+
+### Find an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$responseObject = $sdk->attributeTerm()->get($requestObject);
+```
+
+### Create an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    attribute: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2'
+);
+
+$responseObject = $sdk->attributeTerm()->create($requestObject);
+```
+
+### Update an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '64GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$responseObject = $sdk->attributeTerm()->update($requestObject);
+```
+
+### Delete an Attribute Term
+
+```php
+$requestObject = new \Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest(
+    name: '32GB',
+    iri: '/api/v1/stores/520413a8-509a-4048-96e6-81751e315c5d/attributes/520413a8-509a-4048-96e6-81751e315c5d2/terms/520413a8-509a-4048-96e6-81751e315c5d3'
+);
+
+$sdk->attributeTerm()->delete($requestObject);
 ```

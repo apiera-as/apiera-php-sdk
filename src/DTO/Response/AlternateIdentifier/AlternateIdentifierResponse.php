@@ -4,57 +4,52 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Response\AlternateIdentifier;
 
+use Apiera\Sdk\Attribute\JsonLdResponseField;
+use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
+use Apiera\Sdk\Transformer\DateTimeTransformer;
+use Apiera\Sdk\Transformer\LdTypeTransformer;
+use Apiera\Sdk\Transformer\UuidTransformer;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DTO\Response\AlternateIdentifier
  * @since 0.2.0
  */
-final readonly class AlternateIdentifierResponse extends AbstractResponse implements ResponseInterface
+final readonly class AlternateIdentifierResponse extends AbstractResponse
 {
-    /**
-     * @param string $id
-     * @param LdType $type
-     * @param Uuid $uuid
-     * @param DateTimeInterface $createdAt
-     * @param DateTimeInterface $updatedAt
-     * @param string $identifierType Using "identifierType" instead of "type" to avoid conflicts with the parent class.
-     * @param string $code
-     */
     public function __construct(
-        string $id,
-        LdType $type,
-        Uuid $uuid,
-        DateTimeInterface $createdAt,
-        DateTimeInterface $updatedAt,
-        private string $identifierType,
+        #[JsonLdResponseField('@id')]
+        private string $ldId,
+        #[JsonLdResponseField('@type', LdTypeTransformer::class)]
+        private LdType $ldType,
+        #[ResponseField('uuid', UuidTransformer::class)]
+        private Uuid $uuid,
+        #[ResponseField('createdAt', DateTimeTransformer::class)]
+        private DateTimeInterface $createdAt,
+        #[ResponseField('updatedAt', DateTimeTransformer::class)]
+        private DateTimeInterface $updatedAt,
+        #[ResponseField('type')]
+        private string $type,
+        #[ResponseField('code')]
         private string $code
     ) {
         parent::__construct(
-            $id,
-            $type,
-            $uuid,
-            $createdAt,
-            $updatedAt
+            $this->ldId,
+            $this->ldType,
+            $this->uuid,
+            $this->createdAt,
+            $this->updatedAt
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getIdentifierType(): string
+    public function getType(): string
     {
-        return $this->identifierType;
+        return $this->type;
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): string
     {
         return $this->code;

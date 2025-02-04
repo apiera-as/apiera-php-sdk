@@ -11,15 +11,13 @@ namespace Apiera\Sdk\DTO;
  * and general parameters. All parameters are immutable after construction.
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\DTO
  * @since 0.1.0
  */
-readonly class QueryParameters
+final readonly class QueryParameters
 {
     /**
      * @param array<string, scalar|array<scalar>> $params
      * @param array<string, string> $filters
-     * @param int|null $page
      */
     public function __construct(
         private array $params = [],

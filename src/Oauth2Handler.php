@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk;
 
-use Apiera\Sdk\Exception\ClientException;
+use Apiera\Sdk\Exception\CacheException;
+use Apiera\Sdk\Exception\ConfigurationException;
+use Apiera\Sdk\Factory\ApiExceptionFactory;
+use Apiera\Sdk\Interface\Oauth2Interface;
 use Auth0\SDK\Auth0;
 use Auth0\SDK\Configuration\SdkConfiguration;
-use Auth0\SDK\Exception\ConfigurationException;
 use Auth0\SDK\Exception\NetworkException;
 use DateMalformedStringException;
 use DateTimeImmutable;
@@ -19,10 +21,9 @@ use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk
  * @since 0.1.0
  */
-readonly final class Oauth2Handler implements Interface\Oauth2Interface
+final readonly class Oauth2Handler implements Oauth2Interface
 {
     private const string CACHE_PREFIX = 'oauth2_token_';
     private const int EXPIRATION_BUFFER_SECONDS = 30;
@@ -30,30 +31,24 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     private Auth0 $auth0;
 
     /**
-     * @param Configuration $configuration
-     * @throws ClientException
+     * @throws ConfigurationException
      */
     public function __construct(
         private Configuration $configuration,
     ) {
-        try {
-            $this->auth0 = new Auth0($this->createSdkConfiguration());
-        } catch (ConfigurationException $e) {
-            throw new ClientException(
-                message: 'Failed to initialize Auth0 client: ' . $e->getMessage(),
-                previous: $e
-            );
-        }
+        $this->auth0 = new Auth0($this->createSdkConfiguration());
     }
 
     /**
-     * @return string
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws CacheException
+     * @throws ConfigurationException
      */
     public function getAccessToken(): string
     {
         $cache = $this->configuration->getCache();
         $token = $this->getTokenFromCache($cache);
+
         if ($token !== null) {
             return $token;
         }
@@ -67,7 +62,7 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             );
 
             if (!isset($data['access_token'])) {
-                throw new ClientException('No access token found in response');
+                throw ApiExceptionFactory::createFromResponse('No access token found in response');
             }
 
             if (isset($data['expires_in'])) {
@@ -75,23 +70,21 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             }
 
             return $data['access_token'];
-        } catch (JsonException $e) {
-            throw new ClientException(
-                message: 'Failed to decode auth response: ' . $e->getMessage(),
-                previous: $e
-            );
+        } catch (JsonException $exception) {
+            throw ApiExceptionFactory::createFromResponse($exception->getMessage(), previous: $exception);
         }
     }
 
     /**
-     * @param string $token
-     * @return DateTimeInterface
-     * @throws ClientException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws CacheException
+     * @throws ConfigurationException
      */
     public function getTokenExpiration(string $token): DateTimeInterface
     {
         $cache = $this->configuration->getCache();
         $expiration = $this->getExpirationFromCache($cache);
+
         if ($expiration !== null) {
             return $expiration;
         }
@@ -115,10 +108,6 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
         }
     }
 
-    /**
-     * @param string $suffix
-     * @return string
-     */
     private function getCacheKey(string $suffix): string
     {
         return sprintf(
@@ -130,53 +119,49 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @return string|null
-     * @throws ClientException
+     * @throws CacheException
      */
     private function getTokenFromCache(CacheItemPoolInterface $cache): ?string
     {
         try {
             $item = $cache->getItem($this->getCacheKey('token'));
+
             if ($item->isHit()) {
                 return $item->get();
             }
+
             return null;
-        } catch (InvalidArgumentException $e) {
-            throw new ClientException(
-                message: 'Failed to retrieve token from cache: ' . $e->getMessage(),
-                previous: $e
+        } catch (InvalidArgumentException $exception) {
+            throw new CacheException(
+                message: 'Failed to retrieve token from cache: ' . $exception->getMessage(),
+                previous: $exception
             );
         }
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @return DateTimeInterface|null
-     * @throws ClientException
+     * @throws CacheException
      */
     private function getExpirationFromCache(CacheItemPoolInterface $cache): ?DateTimeInterface
     {
         try {
             $item = $cache->getItem($this->getCacheKey('expiration'));
+
             if ($item->isHit()) {
                 return $item->get();
             }
+
             return null;
-        } catch (InvalidArgumentException $e) {
-            throw new ClientException(
-                message: 'Failed to retrieve token expiration from cache: ' . $e->getMessage(),
-                previous: $e
+        } catch (InvalidArgumentException $exception) {
+            throw new CacheException(
+                message: 'Failed to retrieve token expiration from cache: ' . $exception->getMessage(),
+                previous: $exception
             );
         }
     }
 
     /**
-     * @param CacheItemPoolInterface $cache
-     * @param string $token
-     * @param int $expiresIn
-     * @return void
-     * @throws ClientException
+     * @throws CacheException
      */
     private function cacheToken(CacheItemPoolInterface $cache, string $token, int $expiresIn): void
     {
@@ -185,20 +170,21 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             $item->set($token);
             // Subtract buffer from expiration time
             $item->expiresAfter($expiresIn - self::EXPIRATION_BUFFER_SECONDS);
+
             if (!$cache->save($item)) {
-                throw new ClientException('Failed to save token to cache');
+                throw new CacheException('Failed to save token to cache');
             }
-        } catch (InvalidArgumentException $e) {
-            throw new ClientException(
-                message: 'Failed to cache token: ' . $e->getMessage(),
-                previous: $e
+        } catch (InvalidArgumentException $exception) {
+            throw new CacheException(
+                message: 'Failed to cache token: ' . $exception->getMessage(),
+                previous: $exception
             );
         }
     }
 
     /**
-     * @return ResponseInterface
-     * @throws ClientException
+     * @throws ConfigurationException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     private function getClientCredentials(): ResponseInterface
     {
@@ -207,16 +193,20 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
                 'audience' => $this->configuration->getOauthAudience(),
                 'organization' => $this->configuration->getOauthOrganizationId(),
             ]);
-        } catch (NetworkException | ConfigurationException $e) {
-            throw new ClientException(
-                message: 'Failed to obtain client credentials: ' . $e->getMessage(),
-                previous: $e
+        } catch (\Auth0\SDK\Exception\ConfigurationException $exception) {
+            throw new ConfigurationException(
+                message: 'Failed to obtain client credentials: ' . $exception->getMessage(),
+                previous: $exception
+            );
+        } catch (NetworkException $exception) {
+            throw ApiExceptionFactory::createFromResponse(
+                message: $exception->getMessage(),
+                previous: $exception,
             );
         }
     }
 
     /**
-     * @return SdkConfiguration
      * @throws ConfigurationException
      */
     private function createSdkConfiguration(): SdkConfiguration
@@ -228,12 +218,19 @@ readonly final class Oauth2Handler implements Interface\Oauth2Interface
             ? new \GuzzleHttp\Client($options)
             : null;
 
-        return new SdkConfiguration(
-            domain: $this->configuration->getOauthDomain(),
-            clientId: $this->configuration->getOauthClientId(),
-            clientSecret: $this->configuration->getOauthClientSecret(),
-            httpClient: $httpClient,
-            cookieSecret: $this->configuration->getOauthCookieSecret()
-        );
+        try {
+            return new SdkConfiguration(
+                domain: $this->configuration->getOauthDomain(),
+                clientId: $this->configuration->getOauthClientId(),
+                clientSecret: $this->configuration->getOauthClientSecret(),
+                httpClient: $httpClient,
+                cookieSecret: $this->configuration->getOauthCookieSecret()
+            );
+        } catch (\Auth0\SDK\Exception\ConfigurationException $exception) {
+            throw new ConfigurationException(
+                message: 'Failed to initialize Auth0 client: ' . $exception->getMessage(),
+                previous: $exception
+            );
+        }
     }
 }

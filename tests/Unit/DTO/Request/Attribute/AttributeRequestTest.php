@@ -1,59 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\DTO\Request\Attribute;
 
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
-use Apiera\Sdk\Interface\DTO\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\DTO\Request\AbstractDTORequest;
 
-class AttributeRequestTest extends TestCase
+final class AttributeRequestTest extends AbstractDTORequest
 {
-    public function testInstanceOf(): void
+    protected function getRequestClass(): string
     {
-        $request = new AttributeRequest('', '');
-
-        $this->assertInstanceOf(AttributeRequest::class, $request);
-        $this->assertInstanceOf(RequestInterface::class, $request);
+        return AttributeRequest::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getConstructorParams(): array
     {
-        $request = new AttributeRequest(
-            name: 'Color',
-            store: '/api/v1/store/123',
-            iri: '/api/v1/stores/123/attribute/321'
-        );
-
-        $this->assertEquals('Color', $request->getName());
-        $this->assertEquals('/api/v1/store/123', $request->getStore());
-        $this->assertEquals('/api/v1/stores/123/attribute/321', $request->getIri());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $request = new AttributeRequest('Color');
-
-        $this->assertEquals('Color', $request->getName());
-        $this->assertNull($request->getStore());
-        $this->assertNull($request->getIri());
-    }
-    
-    public function testToArray(): void
-    {
-        $request = new AttributeRequest(
-            name: 'Color',
-            store: '/api/v1/store/123',
-            iri: '/api/v1/stores/123/attribute/321'
-        );
-        
-        $array = $request->toArray();
-
-        $this->assertIsArray($array);
-        $this->assertArrayHasKey('name', $array);
-        $this->assertArrayNotHasKey('store', $array);
-        $this->assertArrayNotHasKey('iri', $array);
-
-        $this->assertEquals('Color', $array['name']);
-        $this->assertEquals(['name' => 'Color'], $array);
+        return [
+            'name' => 'Color',
+            'store' => '/api/v1/stores/123',
+            'iri' => '/api/v1/stores/123/attributes/321',
+        ];
     }
 }
