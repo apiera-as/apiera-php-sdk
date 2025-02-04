@@ -13,38 +13,26 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class InventoryRequest implements RequestInterface
 {
     public function __construct(
-        private string $id,
-        private string $type,
-        private ?string $quantity = null,
+        private int $quantity,
+        private string $sku,
         private ?string $inventoryLocation = null,
-        private ?string $sku = null,
         private ?string $iri = null,
     ) {
     }
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    public function getQuantity(): ?string
+    public function getQuantity(): int
     {
         return $this->quantity;
+    }
+
+    public function getSku(): string
+    {
+        return $this->sku;
     }
 
     public function getInventoryLocation(): ?string
     {
         return $this->inventoryLocation;
-    }
-
-    public function getSku(): ?string
-    {
-        return $this->sku;
     }
 
     public function getIri(): ?string
@@ -58,10 +46,7 @@ final readonly class InventoryRequest implements RequestInterface
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'type' => $this->type,
             'quantity' => $this->quantity,
-            'inventoryLocation' => $this->inventoryLocation,
             'sku' => $this->sku,
         ];
     }

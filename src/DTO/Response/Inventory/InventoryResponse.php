@@ -21,9 +21,9 @@ final readonly class InventoryResponse extends AbstractResponse
         Uuid $uuid,
         DateTimeInterface $createdAt,
         DateTimeInterface $updatedAt,
-        private ?string $quantity = null,
-        private ?string $inventoryLocation = null,
-        private ?string $sku = null,
+        private int $quantity,
+        private string $sku,
+        private string $inventoryLocation,
     ) {
         parent::__construct(
             $id,
@@ -34,18 +34,18 @@ final readonly class InventoryResponse extends AbstractResponse
         );
     }
 
-    public function getQuantity(): ?string
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
 
-    public function getInventoryLocation(): ?string
-    {
-        return $this->inventoryLocation;
-    }
-
-    public function getSku(): ?string
+    public function getSku(): string
     {
         return $this->sku;
+    }
+
+    public function getInventoryLocation(): string
+    {
+        return $this->inventoryLocation;
     }
 }

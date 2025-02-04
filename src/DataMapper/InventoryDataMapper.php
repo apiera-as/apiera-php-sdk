@@ -39,9 +39,9 @@ final readonly class InventoryDataMapper implements DataMapperInterface
                 uuid: Uuid::fromString($responseData['uuid']),
                 createdAt: new DateTimeImmutable($responseData['createdAt']),
                 updatedAt: new DateTimeImmutable($responseData['updatedAt']),
-                quantity: $responseData['quantity'] ?? null,
-                inventoryLocation: $responseData['inventoryLocation'] ?? null,
-                sku: $responseData['sku'] ?? null,
+                quantity: $responseData['quantity'],
+                sku: $responseData['sku'],
+                inventoryLocation: $responseData['inventoryLocation'],
             );
         } catch (Throwable $exception) {
             throw new ClientException(

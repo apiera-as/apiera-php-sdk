@@ -9,6 +9,7 @@ use Apiera\Sdk\DTO\Response\Inventory\InventoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Inventory\InventoryResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Symfony\Component\Uid\Uuid;

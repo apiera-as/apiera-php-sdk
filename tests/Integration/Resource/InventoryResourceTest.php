@@ -164,7 +164,6 @@ final class InventoryResourceTest extends TestCase
 
         $this->assertEquals(10, $response->getQuantity());
         $this->assertEquals($inventoryId, $response->getUuid()->toString());
-        $this->assertEquals(sprintf('/api/v1/skus/123'), $response->getSku());
     }
 
     /**

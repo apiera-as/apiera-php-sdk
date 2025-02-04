@@ -20,7 +20,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class InventoryResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/categories';
+    private const string ENDPOINT = '/inventories';
 
     public function __construct(
         private ClientInterface $client,
@@ -42,9 +42,13 @@ final readonly class InventoryResource implements RequestResourceInterface
             );
         }
 
+        if (!$request->getInventoryLocation()) {
+            throw new InvalidRequestException('Inventory location IRI is required for this operation');
+        }
+
         /** @var InventoryCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get(self::ENDPOINT, $params)
+            $this->client->get($request->getInventoryLocation() . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -107,11 +111,15 @@ final readonly class InventoryResource implements RequestResourceInterface
             );
         }
 
+        if (!$request->getInventoryLocation()) {
+            throw new InvalidRequestException('Inventory location IRI is required for this operation');
+        }
+
         $requestData = $this->mapper->toRequestData($request);
 
         /** @var InventoryResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post(self::ENDPOINT, $requestData)
+            $this->client->post($request->getInventoryLocation() . self::ENDPOINT, $requestData)
         ));
 
         return $response;

@@ -33,16 +33,6 @@ final class InventoryRequestTest extends TestCase
         $this->assertEquals('/api/v1/inventory_locations/123/inventories/456', $request->getIri());
     }
 
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $request = new InventoryRequest(quantity: 1, sku: '/api/v1/skus/123');
-
-        $this->assertEquals(1, $request->getQuantity());
-        $this->assertNull($request->getSku());
-        $this->assertNull($request->getInventoryLocation());
-        $this->assertNull($request->getIri());
-    }
-
     public function testToArray(): void
     {
         $request = new InventoryRequest(

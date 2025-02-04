@@ -25,7 +25,8 @@ final class InventoryResponseTest extends TestCase
             createdAt: new DateTimeImmutable(),
             updatedAt: new DateTimeImmutable(),
             quantity: 0,
-            sku: ''
+            sku: '',
+            inventoryLocation: ''
         );
 
         $this->assertInstanceOf(InventoryResponse::class, $response);
@@ -57,8 +58,8 @@ final class InventoryResponseTest extends TestCase
             id: '/api/v1/inventory_locations/123/inventories/456',
             type: LdType::Inventory,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             quantity: 3,
             sku: '/api/v1/skus/123',
             inventoryLocation: '/api/v1/inventory_locations/123'
@@ -68,8 +69,8 @@ final class InventoryResponseTest extends TestCase
         $this->assertEquals(LdType::Inventory, $response->getLdType());
         $this->assertTrue(Uuid::isValid($response->getUuid()->toRfc4122()));
         $this->assertEquals('bfd2639c-7793-426a-a413-ea262e582208', $response->getUuid()->toRfc4122());
-        $this->assertEquals(new DateTimeImmutable(), $response->getCreatedAt());
-        $this->assertEquals(new DateTimeImmutable(), $response->getUpdatedAt());
+        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getCreatedAt());
+        $this->assertEquals(new DateTimeImmutable('2021-01-01 00:00:00'), $response->getUpdatedAt());
         $this->assertEquals(3, $response->getQuantity());
         $this->assertEquals('/api/v1/skus/123', $response->getSku());
         $this->assertEquals('/api/v1/inventory_locations/123', $response->getInventoryLocation());
