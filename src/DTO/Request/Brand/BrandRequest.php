@@ -14,9 +14,14 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
  */
 final readonly class BrandRequest implements RequestInterface
 {
+    /**
+     * @param string|null $image File IRI reference
+     * @param string|null $store Store IRI reference (required for get collection and create operations)
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
+     */
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('image')]
@@ -28,7 +33,7 @@ final readonly class BrandRequest implements RequestInterface
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -59,9 +64,9 @@ final readonly class BrandRequest implements RequestInterface
     public function toArray(): array
     {
         return [
-          'name' => $this->name,
-          'description' => $this->description,
-          'image' => $this->image,
+            'name' => $this->name,
+            'description' => $this->description,
+            'image' => $this->image,
         ];
     }
 }

@@ -15,26 +15,26 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class AlternateIdentifierRequest implements RequestInterface
 {
     /**
-     * @param string $code The alternate identifier code
-     * @param string $type The alternate identifier type
-     * @param string|null $iri The alternate identifier iri
+     * @param string|null $code The alternate identifier code
+     * @param string|null $type The alternate identifier type
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
         #[RequestField('code')]
-        private string $code,
+        private ?string $code = null,
         #[RequestField('type')]
-        private string $type,
+        private ?string $type = null,
         #[SkipRequest]
         private ?string $iri = null,
     ) {
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

@@ -15,13 +15,11 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class FileRequest implements RequestInterface
 {
     /**
-     * @param string $url The file url
-     * @param string|null $name The file name
-     * @param string|null $iri The file iri
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
         #[RequestField('url')]
-        private string $url,
+        private ?string $url = null,
         #[RequestField('name')]
         private ?string $name = null,
         #[SkipRequest]
@@ -29,7 +27,7 @@ final readonly class FileRequest implements RequestInterface
     ) {
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
