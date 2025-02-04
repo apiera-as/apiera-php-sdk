@@ -45,7 +45,7 @@ final readonly class AttributeRequest implements RequestInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {

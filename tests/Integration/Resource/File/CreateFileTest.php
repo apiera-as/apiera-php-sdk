@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Integration\Resource\File;
 
 use Apiera\Sdk\DTO\Request\File\FileRequest;
@@ -8,7 +10,7 @@ use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Tests\Integration\Resource\AbstractTestCreateOperation;
 
-class CreateFileTest extends AbstractTestCreateOperation
+final class CreateFileTest extends AbstractTestCreateOperation
 {
     protected function getResourcePath(): string
     {

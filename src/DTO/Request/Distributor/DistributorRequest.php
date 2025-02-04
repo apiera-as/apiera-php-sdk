@@ -28,7 +28,7 @@ final readonly class DistributorRequest implements RequestInterface
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

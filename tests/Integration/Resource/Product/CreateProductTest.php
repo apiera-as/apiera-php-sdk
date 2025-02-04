@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Integration\Resource\Product;
 
 use Apiera\Sdk\DTO\Request\Product\ProductRequest;
@@ -10,7 +12,7 @@ use Apiera\Sdk\Enum\ProductType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
 
-class CreateProductTest extends AbstractTestStoreScopedCreateOperation
+final class CreateProductTest extends AbstractTestStoreScopedCreateOperation
 {
     protected function getStoreScopedResourcePath(): string
     {
@@ -56,7 +58,6 @@ class CreateProductTest extends AbstractTestStoreScopedCreateOperation
 
         return $this->sdk->product()->create($request);
     }
-
 
     /**
      * @return array<string, mixed>
@@ -127,7 +128,13 @@ class CreateProductTest extends AbstractTestStoreScopedCreateOperation
         $this->assertEquals([$this->buildStoreUri('tags', $this->resourceId)], $response->getTags());
         $this->assertEquals([$this->buildStoreUri('attributes', $this->resourceId)], $response->getAttributes());
         $this->assertEquals([$this->buildUri('files', $this->resourceId)], $response->getImages());
-        $this->assertEquals([$this->buildUri('alternate_identifiers', $this->resourceId)], $response->getAlternateIdentifiers());
-        $this->assertEquals([$this->buildStoreUri('properties', $this->resourceId, 'terms', $this->resourceId)], $response->getPropertyTerms());
+        $this->assertEquals(
+            [$this->buildUri('alternate_identifiers', $this->resourceId)],
+            $response->getAlternateIdentifiers()
+        );
+        $this->assertEquals(
+            [$this->buildStoreUri('properties', $this->resourceId, 'terms', $this->resourceId)],
+            $response->getPropertyTerms()
+        );
     }
 }

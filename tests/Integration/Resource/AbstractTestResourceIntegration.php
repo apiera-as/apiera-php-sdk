@@ -80,6 +80,7 @@ abstract class AbstractTestResourceIntegration extends TestCase
         $path = implode('/', array_filter($segments));
         // Remove multiple consecutive slashes
         $path = preg_replace('#/+#', '/', $path);
+
         // Ensure leading slash
         return '/' . ltrim($path, '/');
     }
