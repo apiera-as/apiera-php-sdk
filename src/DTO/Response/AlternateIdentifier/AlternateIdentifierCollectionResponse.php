@@ -15,10 +15,10 @@ final readonly class AlternateIdentifierCollectionResponse extends AbstractColle
     /**
      * @return array<AlternateIdentifierResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<AlternateIdentifierResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

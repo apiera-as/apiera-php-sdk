@@ -15,10 +15,10 @@ final readonly class PropertyCollectionResponse extends AbstractCollectionRespon
     /**
      * @return array<PropertyResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<PropertyResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

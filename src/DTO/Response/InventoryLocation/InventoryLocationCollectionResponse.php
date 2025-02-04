@@ -15,10 +15,10 @@ final readonly class InventoryLocationCollectionResponse extends AbstractCollect
     /**
      * @return array<InventoryLocationResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<InventoryLocationResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

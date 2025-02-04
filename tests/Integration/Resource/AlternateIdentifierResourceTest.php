@@ -74,10 +74,10 @@ final class AlternateIdentifierResourceTest extends TestCase
             (string)$alternateIdentifierRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('ABC123', $response->getMembers()[0]->getCode());
-        $this->assertEquals('gtin', $response->getMembers()[0]->getType());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('ABC123', $response->getLdMembers()[0]->getCode());
+        $this->assertEquals('gtin', $response->getLdMembers()[0]->getType());
     }
 
     /**

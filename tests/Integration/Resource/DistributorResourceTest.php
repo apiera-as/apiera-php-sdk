@@ -81,10 +81,10 @@ final class DistributorResourceTest extends TestCase
             (string)$distributorRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('Test distributor', $response->getMembers()[0]->getName());
-        $this->assertEquals($distributorId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('Test distributor', $response->getLdMembers()[0]->getName());
+        $this->assertEquals($distributorId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

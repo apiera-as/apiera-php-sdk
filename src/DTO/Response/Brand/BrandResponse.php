@@ -33,12 +33,12 @@ final readonly class BrandResponse extends AbstractResponse
         private DateTimeInterface $updatedAt,
         #[ResponseField('name')]
         private string $name,
+        #[ResponseField('store')]
+        private string $store,
         #[ResponseField('description')]
         private ?string $description = null,
         #[ResponseField('image')]
         private ?string $image = null,
-        #[ResponseField('store')]
-        private ?string $store = null,
     ) {
         parent::__construct(
             $this->ldId,
@@ -54,14 +54,14 @@ final readonly class BrandResponse extends AbstractResponse
         return $this->name;
     }
 
+    public function getStore(): string
+    {
+        return $this->store;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    public function getStore(): ?string
-    {
-        return $this->store;
     }
 
     public function getImage(): ?string

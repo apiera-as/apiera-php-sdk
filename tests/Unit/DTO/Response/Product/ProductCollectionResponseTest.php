@@ -4,46 +4,35 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DTO\Response\Product;
 
-use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
+use Apiera\Sdk\DTO\Response\PartialCollectionView;
 use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Enum\ProductStatus;
 use Apiera\Sdk\Enum\ProductType;
-use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
+use Tests\Unit\DTO\Response\AbstractDTOCollectionResponse;
 
-final class ProductCollectionResponseTest extends TestCase
+final class ProductCollectionResponseTest extends AbstractDTOCollectionResponse
 {
-    public function testInstanceOf(): void
+    protected function getCollectionClass(): string
     {
-        $response = new ProductCollectionResponse(
-            context: '',
-            id: '',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertInstanceOf(ProductCollectionResponse::class, $response);
-        $this->assertInstanceOf(AbstractCollectionResponse::class, $response);
-        $this->assertInstanceOf(JsonLDCollectionInterface::class, $response);
+        return ProductCollectionResponse::class;
     }
 
-    public function testClassIsCorrectlyDefined(): void
+    protected function getMemberClass(): string
     {
-        $reflection = new ReflectionClass(ProductCollectionResponse::class);
-
-        $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
+        return ProductResponse::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getCollectionData(): array
     {
         $productResponse = new ProductResponse(
-            ldId: '/api/v1/stores/123/products/456',
+            ldId: '/api/v1/stores/123/products/123',
             ldType: LdType::Product,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
@@ -51,56 +40,52 @@ final class ProductCollectionResponseTest extends TestCase
             type: ProductType::Simple,
             status: ProductStatus::Active,
             store: '/api/v1/stores/123',
-            sku: '/api/v1/skus/789',
-            name: 'Test Product',
-            price: '99.99'
+            sku: '/api/v1/skus/123',
+            name: 'Product',
+            price: '100.00',
+            salePrice: '99.00',
+            description: 'Product description',
+            shortDescription: 'Product short description',
+            weight: '100.00',
+            length: '100.00',
+            width: '100.00',
+            height: '100.00',
+            distributor: '/api/v1/stores/123/distributors/123',
+            brand: '/api/v1/stores/123/brands/123',
+            image: '/api/v1/files/123',
+            categories: [
+                '/api/v1/stores/123/categories/456',
+            ],
+            tags: [
+                '/api/v1/stores/123/tags/789',
+            ],
+            attributes: [
+                '/api/v1/stores/123/attributes/123',
+            ],
+            images: [
+                '/api/v1/files/456',
+            ],
+            alternateIdentifiers: [
+                '/api/v1/alternate_identifiers/345',
+            ],
+            propertyTerms: [
+                '/api/v1/stores/123/properties/456/terms/789',
+            ],
         );
 
-        $response = new ProductCollectionResponse(
-            context: '/api/v1/contexts/Product',
-            id: '/api/v1/stores/123/products',
-            type: LdType::Collection,
-            members: [$productResponse],
-            totalItems: 1,
-            view: '/api/v1/stores/123/products?page=1',
-            firstPage: '/api/v1/stores/123/products?page=1',
-            lastPage: '/api/v1/stores/123/products?page=1',
-            nextPage: null,
-            previousPage: null
-        );
-
-        $this->assertEquals('/api/v1/contexts/Product', $response->getLdContext());
-        $this->assertEquals('/api/v1/stores/123/products', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertInstanceOf(ProductResponse::class, $response->getMembers()[0]);
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertEquals('/api/v1/stores/123/products?page=1', $response->getView());
-        $this->assertEquals('/api/v1/stores/123/products?page=1', $response->getFirstPage());
-        $this->assertEquals('/api/v1/stores/123/products?page=1', $response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $response = new ProductCollectionResponse(
-            context: '/api/v1/contexts/Product',
-            id: '/api/v1/stores/123/products',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertEquals('/api/v1/contexts/Product', $response->getLdContext());
-        $this->assertEquals('/api/v1/stores/123/products', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertEmpty($response->getMembers());
-        $this->assertEquals(0, $response->getTotalItems());
-        $this->assertNull($response->getView());
-        $this->assertNull($response->getFirstPage());
-        $this->assertNull($response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
+        return [
+            'ldContext' => '/api/v1/contexts/Product',
+            'ldId' => '/api/v1/stores/123/products',
+            'ldType' => LdType::Collection,
+            'ldMembers' => [$productResponse],
+            'ldTotalItems' => 1,
+            'ldView' => new PartialCollectionView(
+                ldId: '/api/v1/stores/123/products?page=1',
+                ldFirst: '/api/v1/stores/123/products?page=1',
+                ldLast: '/api/v1/stores/123/products?page=1',
+                ldNext: null,
+                ldPrevious: null
+            ),
+        ];
     }
 }

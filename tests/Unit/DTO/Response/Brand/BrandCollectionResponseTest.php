@@ -4,97 +4,56 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DTO\Response\Brand;
 
-use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 use Apiera\Sdk\DTO\Response\Brand\BrandCollectionResponse;
 use Apiera\Sdk\DTO\Response\Brand\BrandResponse;
+use Apiera\Sdk\DTO\Response\PartialCollectionView;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
+use Tests\Unit\DTO\Response\AbstractDTOCollectionResponse;
 
-final class BrandCollectionResponseTest extends TestCase
+final class BrandCollectionResponseTest extends AbstractDTOCollectionResponse
 {
-    public function testInstanceOf(): void
+    protected function getCollectionClass(): string
     {
-        $response = new BrandCollectionResponse(
-            context: '',
-            id: '',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertInstanceOf(BrandCollectionResponse::class, $response);
-        $this->assertInstanceOf(AbstractCollectionResponse::class, $response);
-        $this->assertInstanceOf(JsonLDCollectionInterface::class, $response);
+        return BrandCollectionResponse::class;
     }
 
-    public function testClassIsCorrectlyDefined(): void
+    protected function getMemberClass(): string
     {
-        $reflection = new ReflectionClass(BrandCollectionResponse::class);
-
-        $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
+        return BrandResponse::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getCollectionData(): array
     {
         $brandResponse = new BrandResponse(
-            ldId: '/api/v1/stores/123/brands/321',
+            ldId: '/api/v1/stores/123/brands/123',
             ldType: LdType::Brand,
-            uuid: Uuid::v4(),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
-            name: 'Apiera',
-            store: '/api/v1/stores/123'
+            uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
+            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            name: 'Brand',
+            store: '/api/v1/stores/123',
+            description: 'Brand description',
+            image: '/api/v1/files/123',
         );
 
-        $response = new BrandCollectionResponse(
-            context: '/api/v1/contexts/Brand',
-            id: '/api/v1/stores/123/brands',
-            type: LdType::Collection,
-            members: [$brandResponse],
-            totalItems: 1,
-            view: '/api/v1/stores/123/brands?page=1',
-            firstPage: '/api/v1/stores/123/brands?page=1',
-            lastPage: '/api/v1/stores/123/brands?page=1',
-            nextPage: null,
-            previousPage: null
-        );
-
-        $this->assertEquals('/api/v1/contexts/Brand', $response->getLdContext());
-        $this->assertEquals('/api/v1/stores/123/brands', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertInstanceOf(BrandResponse::class, $response->getMembers()[0]);
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertEquals('/api/v1/stores/123/brands?page=1', $response->getView());
-        $this->assertEquals('/api/v1/stores/123/brands?page=1', $response->getFirstPage());
-        $this->assertEquals('/api/v1/stores/123/brands?page=1', $response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $response = new BrandCollectionResponse(
-            context: '/api/v1/contexts/Brand',
-            id: '/api/v1/brands',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertEquals('/api/v1/contexts/Brand', $response->getLdContext());
-        $this->assertEquals('/api/v1/brands', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertEmpty($response->getMembers());
-        $this->assertEquals(0, $response->getTotalItems());
-        $this->assertNull($response->getView());
-        $this->assertNull($response->getFirstPage());
-        $this->assertNull($response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
+        return [
+            'ldContext' => '/api/v1/contexts/Brand',
+            'ldId' => '/api/v1/stores/123/brands',
+            'ldType' => LdType::Collection,
+            'ldMembers' => [$brandResponse],
+            'ldTotalItems' => 1,
+            'ldView' => new PartialCollectionView(
+                ldId: '/api/v1/stores/123/brands?page=1',
+                ldFirst: '/api/v1/stores/123/brands?page=1',
+                ldLast: '/api/v1/stores/123/brands?page=1',
+                ldNext: null,
+                ldPrevious: null
+            ),
+        ];
     }
 }

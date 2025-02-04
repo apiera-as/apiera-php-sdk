@@ -15,10 +15,10 @@ final readonly class AttributeTermCollectionResponse extends AbstractCollectionR
     /**
      * @return array<AttributeTermResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<AttributeTermResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }
