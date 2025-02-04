@@ -14,72 +14,48 @@ use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 readonly abstract class AbstractCollectionResponse implements JsonLDCollectionInterface
 {
     /**
-     * @param array<\Apiera\Sdk\Interface\DTO\ResponseInterface> $members
+     * @param array<\Apiera\Sdk\Interface\DTO\ResponseInterface> $ldMembers
      */
     public function __construct(
-        private string $context,
-        private string $id,
-        private LdType $type,
-        private array $members = [],
-        private int $totalItems = 0,
-        private ?string $view = null,
-        private ?string $firstPage = null,
-        private ?string $lastPage = null,
-        private ?string $nextPage = null,
-        private ?string $previousPage = null,
+        private string $ldContext,
+        private string $ldId,
+        private LdType $ldType,
+        private array $ldMembers = [],
+        private int $ldTotalItems = 0,
+        private ?PartialCollectionView $ldView = null,
     ) {
     }
 
     public function getLdContext(): string
     {
-        return $this->context;
+        return $this->ldContext;
     }
 
     public function getLdId(): string
     {
-        return $this->id;
+        return $this->ldId;
     }
 
     public function getLdType(): LdType
     {
-        return $this->type;
+        return $this->ldType;
     }
 
     /**
      * @return array<\Apiera\Sdk\Interface\DTO\ResponseInterface>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
-        return $this->members;
+        return $this->ldMembers;
     }
 
-    public function getTotalItems(): int
+    public function getLdTotalItems(): int
     {
-        return $this->totalItems;
+        return $this->ldTotalItems;
     }
 
-    public function getView(): ?string
+    public function getLdView(): ?PartialCollectionView
     {
-        return $this->view;
-    }
-
-    public function getFirstPage(): ?string
-    {
-        return $this->firstPage;
-    }
-
-    public function getLastPage(): ?string
-    {
-        return $this->lastPage;
-    }
-
-    public function getNextPage(): ?string
-    {
-        return $this->nextPage;
-    }
-
-    public function getPreviousPage(): ?string
-    {
-        return $this->previousPage;
+        return $this->ldView;
     }
 }

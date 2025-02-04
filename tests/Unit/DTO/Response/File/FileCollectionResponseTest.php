@@ -4,97 +4,54 @@ declare(strict_types=1);
 
 namespace Tests\Unit\DTO\Response\File;
 
-use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
+use Apiera\Sdk\DTO\Response\PartialCollectionView;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
+use Tests\Unit\DTO\Response\AbstractDTOCollectionResponse;
 
-final class FileCollectionResponseTest extends TestCase
+final class FileCollectionResponseTest extends AbstractDTOCollectionResponse
 {
-    public function testInstanceOf(): void
+    protected function getCollectionClass(): string
     {
-        $response = new FileCollectionResponse(
-            context: '',
-            id: '',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertInstanceOf(FileCollectionResponse::class, $response);
-        $this->assertInstanceOf(AbstractCollectionResponse::class, $response);
-        $this->assertInstanceOf(JsonLDCollectionInterface::class, $response);
+        return FileCollectionResponse::class;
     }
 
-    public function testClassIsCorrectlyDefined(): void
+    protected function getMemberClass(): string
     {
-        $reflection = new ReflectionClass(FileCollectionResponse::class);
-
-        $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
+        return FileResponse::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getCollectionData(): array
     {
         $fileResponse = new FileResponse(
             ldId: '/api/v1/files/123',
             ldType: LdType::File,
-            uuid: Uuid::v4(),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
-            url: 'https://example.com/file.pdf',
-            name: 'test-file.pdf'
+            uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
+            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            url: 'https://example.com/file.jpg',
+            name: 'file.jpg',
         );
 
-        $response = new FileCollectionResponse(
-            context: '/api/v1/contexts/File',
-            id: '/api/v1/files',
-            type: LdType::Collection,
-            members: [$fileResponse],
-            totalItems: 1,
-            view: '/api/v1/files?page=1',
-            firstPage: '/api/v1/files?page=1',
-            lastPage: '/api/v1/files?page=1',
-            nextPage: null,
-            previousPage: null
-        );
-
-        $this->assertEquals('/api/v1/contexts/File', $response->getLdContext());
-        $this->assertEquals('/api/v1/files', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertInstanceOf(FileResponse::class, $response->getMembers()[0]);
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertEquals('/api/v1/files?page=1', $response->getView());
-        $this->assertEquals('/api/v1/files?page=1', $response->getFirstPage());
-        $this->assertEquals('/api/v1/files?page=1', $response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $response = new FileCollectionResponse(
-            context: '/api/v1/contexts/File',
-            id: '/api/v1/files',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertEquals('/api/v1/contexts/File', $response->getLdContext());
-        $this->assertEquals('/api/v1/files', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertEmpty($response->getMembers());
-        $this->assertEquals(0, $response->getTotalItems());
-        $this->assertNull($response->getView());
-        $this->assertNull($response->getFirstPage());
-        $this->assertNull($response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
+        return [
+            'ldContext' => '/api/v1/contexts/File',
+            'ldId' => '/api/v1/files',
+            'ldType' => LdType::Collection,
+            'ldMembers' => [$fileResponse],
+            'ldTotalItems' => 1,
+            'ldView' => new PartialCollectionView(
+                ldId: '/api/v1/files?page=1',
+                ldFirst: '/api/v1/files?page=1',
+                ldLast: '/api/v1/files?page=1',
+                ldNext: null,
+                ldPrevious: null
+            ),
+        ];
     }
 }

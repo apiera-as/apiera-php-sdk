@@ -15,10 +15,10 @@ final readonly class DistributorCollectionResponse extends AbstractCollectionRes
     /**
      * @return array<DistributorResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<DistributorResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

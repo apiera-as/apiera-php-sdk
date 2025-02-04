@@ -15,10 +15,10 @@ final readonly class ProductCollectionResponse extends AbstractCollectionRespons
     /**
      * @return array<ProductResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<ProductResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

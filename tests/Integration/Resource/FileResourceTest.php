@@ -78,11 +78,11 @@ final class FileResourceTest extends TestCase
             (string)$fileRequest->getUri()
         );
 
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertEquals('test.jpg', $response->getMembers()[0]->getName());
-        $this->assertEquals('https://example.com/test.jpg', $response->getMembers()[0]->getUrl());
-        $this->assertEquals($fileId, $response->getMembers()[0]->getUuid()->toString());
+        $this->assertEquals(1, $response->getLdTotalItems());
+        $this->assertCount(1, $response->getLdMembers());
+        $this->assertEquals('test.jpg', $response->getLdMembers()[0]->getName());
+        $this->assertEquals('https://example.com/test.jpg', $response->getLdMembers()[0]->getUrl());
+        $this->assertEquals($fileId, $response->getLdMembers()[0]->getUuid()->toString());
     }
 
     /**

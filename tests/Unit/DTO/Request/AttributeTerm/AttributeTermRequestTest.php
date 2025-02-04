@@ -5,54 +5,24 @@ declare(strict_types=1);
 namespace Tests\Unit\DTO\Request\AttributeTerm;
 
 use Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest;
-use Apiera\Sdk\Interface\DTO\RequestInterface;
-use PHPUnit\Framework\TestCase;
+use Tests\Unit\DTO\Request\AbstractDTORequest;
 
-final class AttributeTermRequestTest extends TestCase
+final class AttributeTermRequestTest extends AbstractDTORequest
 {
-    public function testInstanceOf(): void
+    protected function getRequestClass(): string
     {
-        $request = new AttributeTermRequest(name: '');
-
-        $this->assertInstanceOf(AttributeTermRequest::class, $request);
-        $this->assertInstanceOf(RequestInterface::class, $request);
+        return AttributeTermRequest::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getConstructorParams(): array
     {
-        $request = new AttributeTermRequest(
-            name: '32gb',
-            attribute: '/api/v1/stores/123/attributes/321',
-            iri: '/api/v1/stores/123/attributes/456/terms/789'
-        );
-
-        $this->assertEquals('32gb', $request->getName());
-        $this->assertEquals('/api/v1/stores/123/attributes/321', $request->getAttribute());
-        $this->assertEquals('/api/v1/stores/123/attributes/456/terms/789', $request->getIri());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $request = new AttributeTermRequest(name: '32gb');
-
-        $this->assertEquals('32gb', $request->getName());
-        $this->assertNull($request->getAttribute());
-        $this->assertNull($request->getIri());
-    }
-
-    public function testToArray(): void
-    {
-        $request = new AttributeTermRequest(
-            name: '32gb',
-            attribute: '/api/v1/stores/123/attributes/321',
-            iri: '/api/v1/stores/123/attributes/456/terms/789'
-        );
-
-        $array = $request->toArray();
-
-        $this->assertArrayHasKey('name', $array);
-        $this->assertArrayNotHasKey('attribute', $array);
-        $this->assertArrayNotHasKey('iri', $array);
-        $this->assertEquals(['name' => '32gb'], $array);
+        return [
+            'name' => 'Green',
+            'attribute' => 'ean',
+            'iri' => '/api/v1/stores/123/attributes/123/terms/123',
+        ];
     }
 }

@@ -15,10 +15,10 @@ final readonly class CategoryCollectionResponse extends AbstractCollectionRespon
     /**
      * @return array<CategoryResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<CategoryResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

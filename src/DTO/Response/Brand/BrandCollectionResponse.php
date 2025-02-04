@@ -15,10 +15,10 @@ final readonly class BrandCollectionResponse extends AbstractCollectionResponse
     /**
      * @return array<BrandResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<BrandResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }
