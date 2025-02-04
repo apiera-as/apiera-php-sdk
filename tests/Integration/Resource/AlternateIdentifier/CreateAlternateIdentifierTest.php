@@ -9,9 +9,12 @@ use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\ResourceOperationTrait;
 
 final class CreateAlternateIdentifierTest extends AbstractTestCreateOperation
 {
+    use ResourceOperationTrait;
+
     protected function getResourcePath(): string
     {
         return '/alternate_identifiers';

@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\Property\PropertyRequest;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreatePropertyTest extends AbstractTestStoreScopedCreateOperation
+final class CreatePropertyTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/properties';

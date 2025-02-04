@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\DTO\Response\Brand\BrandResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateBrandTest extends AbstractTestStoreScopedCreateOperation
+final class CreateBrandTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/brands';

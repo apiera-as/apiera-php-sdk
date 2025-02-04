@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\Distributor\DistributorRequest;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateDistributorTest extends AbstractTestStoreScopedCreateOperation
+final class CreateDistributorTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/distributors';

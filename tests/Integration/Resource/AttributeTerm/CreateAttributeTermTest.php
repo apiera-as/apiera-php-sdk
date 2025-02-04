@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest;
 use Apiera\Sdk\DTO\Response\AttributeTerm\AttributeTermResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateAttributeTermTest extends AbstractTestStoreScopedCreateOperation
+final class CreateAttributeTermTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return sprintf('/attributes/%s/terms', $this->resourceId);

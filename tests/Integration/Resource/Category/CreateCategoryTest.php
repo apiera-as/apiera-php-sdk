@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateCategoryTest extends AbstractTestStoreScopedCreateOperation
+final class CreateCategoryTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/categories';

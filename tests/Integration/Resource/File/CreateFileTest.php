@@ -9,9 +9,12 @@ use Apiera\Sdk\DTO\Response\File\FileResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\ResourceOperationTrait;
 
 final class CreateFileTest extends AbstractTestCreateOperation
 {
+    use ResourceOperationTrait;
+
     protected function getResourcePath(): string
     {
         return '/files';

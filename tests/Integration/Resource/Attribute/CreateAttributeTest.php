@@ -8,10 +8,13 @@ use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateAttributeTest extends AbstractTestStoreScopedCreateOperation
+final class CreateAttributeTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/attributes';

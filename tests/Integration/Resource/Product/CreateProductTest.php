@@ -10,10 +10,13 @@ use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Enum\ProductStatus;
 use Apiera\Sdk\Enum\ProductType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestStoreScopedCreateOperation;
+use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateProductTest extends AbstractTestStoreScopedCreateOperation
+final class CreateProductTest extends AbstractTestCreateOperation
 {
+    use StoreScopedOperationTrait;
+
     protected function getStoreScopedResourcePath(): string
     {
         return '/products';

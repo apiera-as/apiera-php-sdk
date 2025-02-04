@@ -74,19 +74,4 @@ abstract class AbstractTestResourceIntegration extends TestCase
         $this->assertEquals('POST', $authRequest->getMethod());
         $this->assertEquals('https://auth.test/oauth/token', (string)$authRequest->getUri());
     }
-
-    protected function normalizePath(string ...$segments): string
-    {
-        $path = implode('/', array_filter($segments));
-        // Remove multiple consecutive slashes
-        $path = preg_replace('#/+#', '/', $path);
-
-        // Ensure leading slash
-        return '/' . ltrim($path, '/');
-    }
-
-    protected function buildUri(string ...$segments): string
-    {
-        return $this->normalizePath('api/v1', ...$segments);
-    }
 }
