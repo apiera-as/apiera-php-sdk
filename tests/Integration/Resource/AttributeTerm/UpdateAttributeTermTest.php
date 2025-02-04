@@ -8,10 +8,10 @@ use Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest;
 use Apiera\Sdk\DTO\Response\AttributeTerm\AttributeTermResponse;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Tests\Integration\Resource\AbstractTestCreateOperation;
+use Tests\Integration\Resource\AbstractTestUpdateOperation;
 use Tests\Integration\Resource\StoreScopedOperationTrait;
 
-final class CreateAttributeTermTest extends AbstractTestCreateOperation
+final class UpdateAttributeTermTest extends AbstractTestUpdateOperation
 {
     use StoreScopedOperationTrait;
 
@@ -30,14 +30,14 @@ final class CreateAttributeTermTest extends AbstractTestCreateOperation
      * @throws \Apiera\Sdk\Exception\InvalidRequestException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
-    protected function executeCreateOperation(): AttributeTermResponse
+    protected function executeUpdateOperation(): AttributeTermResponse
     {
         $request = new AttributeTermRequest(
             name: 'Test term',
-            attribute: $this->buildStoreUri('attributes', $this->resourceId),
+            iri: $this->buildStoreUri('attributes', $this->resourceId, 'terms', $this->resourceId),
         );
 
-        return $this->sdk->attributeTerm()->create($request);
+        return $this->sdk->attributeTerm()->update($request);
     }
 
     /**
