@@ -15,16 +15,14 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class CategoryRequest implements RequestInterface
 {
     /**
-     * @param string $name The category name
-     * @param string|null $description The category description
-     * @param string|null $parent The category parent iri
-     * @param string|null $image The category image iri
-     * @param string|null $store The category store iri
-     * @param string|null $iri The category iri
+     * @param string|null $parent Category IRI reference
+     * @param string|null $image File IRI reference
+     * @param string|null $store Store IRI reference (required for get collection and create operations)
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('parent')]
@@ -38,7 +36,7 @@ final readonly class CategoryRequest implements RequestInterface
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
