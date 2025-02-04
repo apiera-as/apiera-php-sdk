@@ -14,9 +14,13 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
  */
 final readonly class AttributeTermRequest implements RequestInterface
 {
+    /**
+     * @param string|null $attribute IRI reference (required for get collection and create operations)
+     * @param string|null $iri IRI reference (required for get, update and delete operations)
+     */
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[SkipRequest]
         private ?string $attribute = null,
         #[SkipRequest]
@@ -24,7 +28,7 @@ final readonly class AttributeTermRequest implements RequestInterface
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

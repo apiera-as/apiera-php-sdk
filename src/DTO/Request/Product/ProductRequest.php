@@ -44,7 +44,7 @@ final readonly class ProductRequest implements RequestInterface
      * @param string[] $alternateIdentifiers Array of alternate identifier IRI references
      * @param string[] $propertyTerms Array of property term IRI references
      * @param string|null $store Store IRI reference (required for get collection and create operations)
-     * @param string|null $iri Product IRI reference (required for get, update and delete operations)
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
         #[RequestField('name')]

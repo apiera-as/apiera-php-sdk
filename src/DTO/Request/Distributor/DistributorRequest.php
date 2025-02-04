@@ -15,13 +15,12 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class DistributorRequest implements RequestInterface
 {
     /**
-     * @param string $name The distributor name
-     * @param string|null $store The distributor store iri
-     * @param string|null $iri The distributor iri
+     * @param string|null $store Store IRI reference (required for get collection and create operations)
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[SkipRequest]
         private ?string $store = null,
         #[SkipRequest]
@@ -29,7 +28,7 @@ final readonly class DistributorRequest implements RequestInterface
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
