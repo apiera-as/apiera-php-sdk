@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Brand;
+namespace Tests\Integration\Resource\Brand;
 
 use Apiera\Sdk\DTO\Request\Brand\BrandRequest;
 use Apiera\Sdk\Enum\LdType;

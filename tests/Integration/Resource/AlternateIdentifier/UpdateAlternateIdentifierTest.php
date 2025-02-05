@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\AlternateIdentifier;
+namespace Tests\Integration\Resource\AlternateIdentifier;
 
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
