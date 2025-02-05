@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Distributor;
+namespace Tests\Integration\Resource\Distributor;
 
 use Apiera\Sdk\DTO\Request\Distributor\DistributorRequest;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Attribute;
+namespace Tests\Integration\Resource\Attribute;
 
 use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\Enum\LdType;

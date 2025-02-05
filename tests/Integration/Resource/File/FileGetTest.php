@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\File;
+namespace Tests\Integration\Resource\File;
 
 use Apiera\Sdk\DTO\Request\File\FileRequest;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
