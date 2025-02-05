@@ -8,9 +8,11 @@ use Apiera\Sdk\Attribute\JsonLdResponseField;
 use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
+use Apiera\Sdk\Enum\VariantStatus;
 use Apiera\Sdk\Transformer\DateTimeTransformer;
 use Apiera\Sdk\Transformer\LdTypeTransformer;
 use Apiera\Sdk\Transformer\UuidTransformer;
+use Apiera\Sdk\Transformer\VariantStatusTransformer;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -20,29 +22,29 @@ use Symfony\Component\Uid\Uuid;
  */
 final readonly class VariantResponse extends AbstractResponse
 {
+    /**
+     * @param string [] $attributeTerms
+     * @param string [] $images
+     */
     public function __construct(
         #[JsonLdResponseField('@id')]
-        private string $id,
+        private string $ldId,
         #[JsonLdResponseField('@type', LdTypeTransformer::class)]
-        private LdType $type,
+        private LdType $ldType,
         #[ResponseField('uuid', UuidTransformer::class)]
         private Uuid $uuid,
         #[ResponseField('createdAt', DateTimeTransformer::class)]
         private DateTimeInterface $createdAt,
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
-        #[ResponseField('status')]
-        private string $status,
+        #[ResponseField('status', VariantStatusTransformer::class)]
+        private VariantStatus $status,
         #[ResponseField('store')]
         private string $store,
         #[ResponseField('product')]
         private string $product,
         #[ResponseField('sku')]
         private string $sku,
-        #[ResponseField('attributeTerms')]
-        private string $attributeTerms,
-        #[ResponseField('images')]
-        private string $images,
         #[ResponseField('price', null)]
         private ?string $price = null,
         #[ResponseField('salePrice', null)]
@@ -56,11 +58,15 @@ final readonly class VariantResponse extends AbstractResponse
         #[ResponseField('width', null)]
         private ?string $width = null,
         #[ResponseField('height', null)]
-        private ?string $height = null
+        private ?string $height = null,
+        #[ResponseField('attributeTerms')]
+        private array $attributeTerms = [],
+        #[ResponseField('images')]
+        private array $images = [],
     ) {
         parent::__construct(
-            $this->id,
-            $this->type,
+            $this->ldId,
+            $this->ldType,
             $this->uuid,
             $this->createdAt,
             $this->updatedAt
@@ -69,12 +75,12 @@ final readonly class VariantResponse extends AbstractResponse
 
     public function getId(): string
     {
-        return $this->id;
+        return $this->ldId;
     }
 
     public function getType(): LdType
     {
-        return $this->type;
+        return $this->ldType;
     }
 
     public function getUuid(): Uuid
@@ -92,7 +98,7 @@ final readonly class VariantResponse extends AbstractResponse
         return $this->updatedAt;
     }
 
-    public function getStatus(): string
+    public function getStatus(): VariantStatus
     {
         return $this->status;
     }
@@ -110,16 +116,6 @@ final readonly class VariantResponse extends AbstractResponse
     public function getSku(): string
     {
         return $this->sku;
-    }
-
-    public function getAttributeTerms(): string
-    {
-        return $this->attributeTerms;
-    }
-
-    public function getImages(): string
-    {
-        return $this->images;
     }
 
     public function getPrice(): ?string
@@ -155,5 +151,21 @@ final readonly class VariantResponse extends AbstractResponse
     public function getHeight(): ?string
     {
         return $this->height;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAttributeTerms(): array
+    {
+        return $this->attributeTerms;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getImages(): array
+    {
+        return $this->images;
     }
 }

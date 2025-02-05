@@ -15,10 +15,10 @@ final readonly class VariantCollectionResponse extends AbstractCollectionRespons
     /**
      * @return array<VariantResponse>
      */
-    public function getMembers(): array
+    public function getLdMembers(): array
     {
         /** @var array<VariantResponse> $members */
-        $members = parent::getMembers();
+        $members = parent::getLdMembers();
 
         return $members;
     }

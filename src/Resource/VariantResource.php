@@ -68,11 +68,11 @@ final readonly class VariantResource implements RequestResourceInterface
 
         $collection = $this->find($request, $params);
 
-        if ($collection->getTotalItems() < 1) {
+        if ($collection->getLdTotalItems() < 1) {
             throw new InvalidRequestException('No variant found matching the given criteria');
         }
 
-        return $collection->getMembers()[0];
+        return $collection->getLdMembers()[0];
     }
 
         /**

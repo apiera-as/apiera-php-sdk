@@ -6,7 +6,9 @@ namespace Apiera\Sdk\DTO\Request\Variant;
 
 use Apiera\Sdk\Attribute\RequestField;
 use Apiera\Sdk\Attribute\SkipRequest;
+use Apiera\Sdk\Enum\VariantStatus;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
+use Apiera\Sdk\Transformer\VariantStatusTransformer;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
@@ -15,12 +17,10 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
 final readonly class VariantRequest implements RequestInterface
 {
     /**
-     * @param string $status The variant status
-     * @param string $store The variant store
-     * @param string $product The variant product
-     * @param string $sku The variant sku
-     * @param string $attributeTerms The variant attributeTerms
-     * @param string $images The variant images
+     * @param VariantStatus|null $status The variant status
+     * @param string|null $store The variant store
+     * @param string|null $product The variant product
+     * @param string|null $sku The variant sku
      * @param string|null $price The variant price
      * @param string|null $salePrice The variant salePrice
      * @param string|null $description The variant description
@@ -28,21 +28,19 @@ final readonly class VariantRequest implements RequestInterface
      * @param string|null $length The variant length
      * @param string|null $width The variant width
      * @param string|null $height The variant height
+     * @param string [] $attributeTerms
+     * @param string [] $images
      * @param string|null $iri The variant iri
      */
     public function __construct(
-        #[RequestField('status')]
-        private string $status,
+        #[RequestField('status', VariantStatusTransformer::class)]
+        private ?VariantStatus $status = null,
         #[RequestField('store')]
-        private string $store,
+        private ?string $store = null,
         #[RequestField('product')]
-        private string $product,
+        private ?string $product = null,
         #[RequestField('sku')]
-        private string $sku,
-        #[RequestField('attributeTerms')]
-        private string $attributeTerms,
-        #[RequestField('images')]
-        private string $images,
+        private ?string $sku = null,
         #[RequestField('price')]
         private ?string $price = null,
         #[RequestField('salePrice')]
@@ -57,39 +55,33 @@ final readonly class VariantRequest implements RequestInterface
         private ?string $width = null,
         #[RequestField('height')]
         private ?string $height = null,
+        #[RequestField('attributeTerms')]
+        private array $attributeTerms = [],
+        #[RequestField('images')]
+        private array $images = [],
         #[SkipRequest]
-        private ?string $iri = null
+        private ?string $iri = null,
     ) {
     }
 
-    public function getStatus(): string
+    public function getStatus(): ?VariantStatus
     {
         return $this->status;
     }
 
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->store;
     }
 
-    public function getProduct(): string
+    public function getProduct(): ?string
     {
         return $this->product;
     }
 
-    public function getSku(): string
+    public function getSku(): ?string
     {
         return $this->sku;
-    }
-
-    public function getAttributeTerms(): string
-    {
-        return $this->attributeTerms;
-    }
-
-    public function getImages(): string
-    {
-        return $this->images;
     }
 
     public function getPrice(): ?string
@@ -125,6 +117,22 @@ final readonly class VariantRequest implements RequestInterface
     public function getHeight(): ?string
     {
         return $this->height;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAttributeTerms(): array
+    {
+        return $this->attributeTerms;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getImages(): array
+    {
+        return $this->images;
     }
 
     public function getIri(): ?string
