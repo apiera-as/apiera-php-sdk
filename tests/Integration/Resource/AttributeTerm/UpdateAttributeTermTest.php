@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\AttributeTerm;
+namespace Tests\Integration\Resource\AttributeTerm;
 
 use Apiera\Sdk\DTO\Request\AttributeTerm\AttributeTermRequest;
 use Apiera\Sdk\DTO\Response\AttributeTerm\AttributeTermResponse;

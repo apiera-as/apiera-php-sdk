@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Product;
+namespace Tests\Integration\Resource\Product;
 
 use Apiera\Sdk\DTO\Request\Product\ProductRequest;
 use Apiera\Sdk\Enum\LdType;

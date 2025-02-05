@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Category;
+namespace Tests\Integration\Resource\Category;
 
 use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Integration\Resource\Property;
+namespace Tests\Integration\Resource\Property;
 
 use Apiera\Sdk\DTO\Request\Property\PropertyRequest;
 use Apiera\Sdk\Enum\LdType;
