@@ -24,7 +24,8 @@ use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
-use Exception;
+use Apiera\Sdk\DTO\Response\Variant\VariantCollectionResponse;
+use Apiera\Sdk\DTO\Response\Variant\VariantResponse;
 use InvalidArgumentException;
 
 /**
@@ -55,7 +56,7 @@ enum LdType: string
     case Collection = 'Collection';
 
     /**
-     * @throws Exception
+     * @throws \InvalidArgumentException
      */
     public static function getResponseClassForType(self $ldType, ResponseType $responseType): string
     {
@@ -100,6 +101,10 @@ enum LdType: string
                 ResponseType::Single->value => InventoryLocationResponse::class,
                 ResponseType::Collection->value => InventoryLocationCollectionResponse::class,
             ],
+            self::Variant => [
+                ResponseType::Single->value => VariantResponse::class,
+                ResponseType::Collection->value => VariantCollectionResponse::class,
+            ],
             self::Integration,
             self::IntegrationResourceMap,
             self::Inventory,
@@ -108,7 +113,6 @@ enum LdType: string
             self::Sku,
             self::Store,
             self::Tag,
-            self::Variant => throw new Exception('To be implemented'),
             self::Collection => throw new InvalidArgumentException(
                 'Collection type cannot be mapped directly'
             ),

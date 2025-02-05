@@ -15,6 +15,7 @@ use Apiera\Sdk\Resource\FileResource;
 use Apiera\Sdk\Resource\InventoryLocationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
+use Apiera\Sdk\Resource\VariantResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -101,5 +102,12 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new InventoryLocationResource($this->client, $dataMapper);
+    }
+
+    public function variant(): VariantResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new VariantResource($this->client, $dataMapper);
     }
 }

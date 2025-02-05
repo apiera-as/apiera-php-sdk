@@ -41,13 +41,13 @@ final readonly class VariantResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
-            throw new InvalidRequestException('Store IRI is required for this operation');
+        if (!$request->getProduct()) {
+            throw new InvalidRequestException('Product IRI is required for this operation');
         }
 
         /** @var VariantCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getStore() . self::ENDPOINT, $params)
+            $this->client->get($request->getProduct() . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -113,15 +113,15 @@ final readonly class VariantResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
-            throw new InvalidRequestException('Store IRI is required for this operation');
+        if (!$request->getProduct()) {
+            throw new InvalidRequestException('Product IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
 
         /** @var VariantResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
+            $this->client->post($request->getProduct() . self::ENDPOINT, $requestData)
         ));
 
         return $response;

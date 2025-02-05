@@ -29,7 +29,6 @@ final class VariantRequestTest extends AbstractDTORequest
             'width' => '100.00',
             'height' => '100.00',
             'status' => VariantStatus::Active,
-            'store' => '/api/v1/stores/123',
             'product' => '/api/v1/stores/123/products/123',
             'sku' => '/api/v1/skus/123',
             'attributeTerms' => [
