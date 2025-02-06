@@ -9,6 +9,10 @@ use Apiera\Sdk\Exception\TransformationException;
 use Apiera\Sdk\Interface\TransformerInterface;
 use Throwable;
 
+/**
+ * @author Marie Rinden <marie@shoppingnorge.no>
+ * @since 0.3.0
+ */
 final class VariantStatusTransformer implements TransformerInterface
 {
     /**

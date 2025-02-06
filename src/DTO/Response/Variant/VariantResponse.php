@@ -23,8 +23,8 @@ use Symfony\Component\Uid\Uuid;
 final readonly class VariantResponse extends AbstractResponse
 {
     /**
-     * @param string [] $attributeTerms
-     * @param string [] $images
+     * @param string[] $attributeTerms
+     * @param string[] $images
      */
     public function __construct(
         #[JsonLdResponseField('@id')]
