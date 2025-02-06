@@ -38,8 +38,6 @@ final readonly class StoreResponse extends AbstractResponse
         private DateTimeInterface $updatedAt,
         #[RequestField('name')]
         private string $name,
-        #[RequestField('organization')]
-        private string $organization,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('image')]
@@ -61,11 +59,6 @@ final readonly class StoreResponse extends AbstractResponse
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getOrganization(): string
-    {
-        return $this->organization;
     }
 
     public function getDescription(): ?string
