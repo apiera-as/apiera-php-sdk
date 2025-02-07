@@ -21,6 +21,11 @@ use Symfony\Component\Uid\Uuid;
  */
 final readonly class SkuResponse extends AbstractResponse
 {
+    /**
+     * @param string[] $products
+     * @param string[] $variants
+     * @param string[] $inventories
+     */
     public function __construct(
         #[JsonLdResponseField('@id')]
         private string $ldId,
@@ -34,10 +39,12 @@ final readonly class SkuResponse extends AbstractResponse
         private DateTimeInterface $updatedAt,
         #[RequestField('code')]
         private string $code,
+        #[RequestField('products')]
+        private array $products = [],
         #[RequestField('variants')]
-        private string $variants,
+        private array $variants = [],
         #[RequestField('inventories')]
-        private string $inventories,
+        private array $inventories = [],
     ) {
         parent::__construct(
             $this->ldId,
@@ -53,12 +60,26 @@ final readonly class SkuResponse extends AbstractResponse
         return $this->code;
     }
 
-    public function getVariants(): string
+    /**
+     * @return string[]
+     */
+    public function getProducts(): array
+    {
+        return $this->products;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getVariants(): array
     {
         return $this->variants;
     }
 
-    public function getInventories(): string
+    /**
+     * @return string[]
+     */
+    public function getInventories(): array
     {
         return $this->inventories;
     }
