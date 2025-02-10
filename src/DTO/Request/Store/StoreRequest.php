@@ -16,34 +16,24 @@ final readonly class StoreRequest implements RequestInterface
 {
     /**
      * @param string[] $properties
-     * @param string[] $propertyTerms
      */
     public function __construct(
         #[RequestField('name')]
-        private string $name,
-        #[RequestField('organization')]
-        private string $organization,
+        private ?string $name = null,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('image')]
         private ?string $image = null,
         #[RequestField('properties')]
         private array $properties = [],
-        #[RequestField('propertyTerms')]
-        private array $propertyTerms = [],
         #[SkipRequest]
         private ?string $iri = null,
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
-    }
-
-    public function getOrganization(): string
-    {
-        return $this->organization;
     }
 
     public function getDescription(): ?string
@@ -64,14 +54,6 @@ final readonly class StoreRequest implements RequestInterface
         return $this->properties;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getPropertyTerms(): array
-    {
-        return $this->propertyTerms;
-    }
-
     public function getIri(): ?string
     {
         return $this->iri;
@@ -84,11 +66,9 @@ final readonly class StoreRequest implements RequestInterface
     {
         return [
             'name' => $this->name,
-            'organization' => $this->organization,
             'description' => $this->description,
             'image' => $this->image,
             'properties' => $this->properties,
-            'propertyTerms' => $this->propertyTerms,
         ];
     }
 }

@@ -22,13 +22,9 @@ final class StoreRequestTest extends AbstractDTORequest
         return [
             'name' => 'Store',
             'description' => 'Description',
-            'organization' => 'string',
             'image' => '/api/v1/files/123',
             'properties' => [
                 '/api/v1/stores/123/properties/456',
-            ],
-            'propertyTerms' => [
-                '/api/v1/stores/123/properties/456/terms/789',
             ],
         ];
     }

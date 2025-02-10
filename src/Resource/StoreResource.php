@@ -20,7 +20,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class StoreResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/stores';
+    private const string ENDPOINT = '/api/v1/stores';
 
     public function __construct(
         private ClientInterface $client,
