@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Apiera\Sdk\DTO\Response\Store;
 
 use Apiera\Sdk\Attribute\JsonLdResponseField;
-use Apiera\Sdk\Attribute\RequestField;
 use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
@@ -32,11 +31,11 @@ final readonly class StoreResponse extends AbstractResponse
         private DateTimeInterface $createdAt,
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
-        #[RequestField('name')]
-        private ?string $name,
-        #[RequestField('description')]
+        #[ResponseField('name')]
+        private string $name,
+        #[ResponseField('description')]
         private ?string $description = null,
-        #[RequestField('image')]
+        #[ResponseField('image')]
         private ?string $image = null,
     ) {
         parent::__construct(
