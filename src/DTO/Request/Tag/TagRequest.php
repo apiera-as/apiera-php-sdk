@@ -46,7 +46,6 @@ final readonly class TagRequest implements RequestInterface
     {
         return [
             'name' => $this->name,
-            'store' => $this->store,
         ];
     }
 }

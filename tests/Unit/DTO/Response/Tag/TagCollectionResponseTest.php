@@ -30,7 +30,7 @@ final class TagCollectionResponseTest extends AbstractDTOCollectionResponse
     protected function getCollectionData(): array
     {
         $tagResponse = new TagResponse(
-            ldId: '/api/v1/tags/123/tags/123',
+            ldId: '/api/v1/stores/123/tags/123',
             ldType: LdType::Tag,
             uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
@@ -46,9 +46,9 @@ final class TagCollectionResponseTest extends AbstractDTOCollectionResponse
             'ldMembers' => [$tagResponse],
             'ldTotalItems' => 1,
             'ldView' => new PartialCollectionView(
-                ldId: '/api/v1/stores/123/products?page=1',
-                ldFirst: '/api/v1/stores/123/products?page=1',
-                ldLast: '/api/v1/stores/123/products?page=1',
+                ldId: '/api/v1/stores/123/tags?page=1',
+                ldFirst: '/api/v1/stores/123/tags?page=1',
+                ldLast: '/api/v1/stores/123/tags?page=1',
                 ldNext: null,
                 ldPrevious: null
             ),
