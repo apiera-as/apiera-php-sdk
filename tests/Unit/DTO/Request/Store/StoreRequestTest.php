@@ -23,9 +23,6 @@ final class StoreRequestTest extends AbstractDTORequest
             'name' => 'Store',
             'description' => 'Description',
             'image' => '/api/v1/files/123',
-            'properties' => [
-                '/api/v1/stores/123/properties/456',
-            ],
         ];
     }
 }

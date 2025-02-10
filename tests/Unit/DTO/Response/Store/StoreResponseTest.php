@@ -31,12 +31,6 @@ final class StoreResponseTest extends AbstractDTOResponse
             'name' => 'Store',
             'description' => 'Description',
             'image' => '/api/v1/files/123',
-            'properties' => [
-                '/api/v1/stores/123/properties/456',
-            ],
-            'propertyTerms' => [
-                '/api/v1/stores/123/properties/456/terms/789',
-            ],
         ];
     }
 
@@ -46,6 +40,7 @@ final class StoreResponseTest extends AbstractDTOResponse
     protected function getNullableFields(): array
     {
         return [
+            'name' => null,
             'description' => null,
             'image' => null,
         ];

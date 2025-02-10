@@ -38,12 +38,6 @@ final class StoreCollectionResponseTest extends AbstractDTOCollectionResponse
             name: 'Store',
             description: 'Description',
             image: '/api/v1/files/123',
-            properties: [
-                '/api/v1/stores/123/properties/456',
-            ],
-            propertyTerms: [
-                '/api/v1/stores/123/properties/456/terms/789',
-            ],
         );
 
         return [

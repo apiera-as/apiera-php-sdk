@@ -21,10 +21,6 @@ use Symfony\Component\Uid\Uuid;
  */
 final readonly class StoreResponse extends AbstractResponse
 {
-    /**
-     * @param string[] $properties
-     * @param string[] $propertyTerms
-     */
     public function __construct(
         #[JsonLdResponseField('@id')]
         private string $ldId,
@@ -37,15 +33,11 @@ final readonly class StoreResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('image')]
         private ?string $image = null,
-        #[RequestField('properties')]
-        private array $properties = [],
-        #[RequestField('propertyTerms')]
-        private array $propertyTerms = [],
     ) {
         parent::__construct(
             $this->ldId,
@@ -56,7 +48,7 @@ final readonly class StoreResponse extends AbstractResponse
         );
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -69,21 +61,5 @@ final readonly class StoreResponse extends AbstractResponse
     public function getImage(): ?string
     {
         return $this->image;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getProperties(): array
-    {
-        return $this->properties;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPropertyTerms(): array
-    {
-        return $this->propertyTerms;
     }
 }

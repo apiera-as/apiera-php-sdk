@@ -14,9 +14,6 @@ use Apiera\Sdk\Interface\DTO\RequestInterface;
  */
 final readonly class StoreRequest implements RequestInterface
 {
-    /**
-     * @param string[] $properties
-     */
     public function __construct(
         #[RequestField('name')]
         private ?string $name = null,
@@ -24,8 +21,6 @@ final readonly class StoreRequest implements RequestInterface
         private ?string $description = null,
         #[RequestField('image')]
         private ?string $image = null,
-        #[RequestField('properties')]
-        private array $properties = [],
         #[SkipRequest]
         private ?string $iri = null,
     ) {
@@ -46,14 +41,6 @@ final readonly class StoreRequest implements RequestInterface
         return $this->image;
     }
 
-    /**
-     * @return string[]
-     */
-    public function getProperties(): array
-    {
-        return $this->properties;
-    }
-
     public function getIri(): ?string
     {
         return $this->iri;
@@ -68,7 +55,6 @@ final readonly class StoreRequest implements RequestInterface
             'name' => $this->name,
             'description' => $this->description,
             'image' => $this->image,
-            'properties' => $this->properties,
         ];
     }
 }
