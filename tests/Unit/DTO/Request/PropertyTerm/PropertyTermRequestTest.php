@@ -22,7 +22,6 @@ final class PropertyTermRequestTest extends AbstractDTORequest
         return [
             'name' => 'PropertyTerm',
             'property' => 'string',
-            'store' => 'string',
         ];
     }
 }

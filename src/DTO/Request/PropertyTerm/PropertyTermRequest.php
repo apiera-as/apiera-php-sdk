@@ -19,8 +19,6 @@ final readonly class PropertyTermRequest implements RequestInterface
         private string $name,
         #[RequestField('property')]
         private string $property,
-        #[RequestField('store')]
-        private string $store,
         #[SkipRequest]
         private ?string $iri = null
     ) {
@@ -36,11 +34,6 @@ final readonly class PropertyTermRequest implements RequestInterface
         return $this->property;
     }
 
-    public function getStore(): string
-    {
-        return $this->store;
-    }
-
     public function getIri(): ?string
     {
         return $this->iri;
@@ -54,7 +47,6 @@ final readonly class PropertyTermRequest implements RequestInterface
         return [
             'name' => $this->name,
             'property' => $this->property,
-            'store' => $this->store,
         ];
     }
 }

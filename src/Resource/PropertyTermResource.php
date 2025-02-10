@@ -20,7 +20,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class PropertyTermResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/propertyTerms';
+    private const string ENDPOINT = '/terms';
 
     public function __construct(
         private ClientInterface $client,
@@ -41,13 +41,13 @@ final readonly class PropertyTermResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        if (!$request->getProperty()) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         /** @var PropertyTermCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getStore() . self::ENDPOINT, $params)
+            $this->client->get($request->getProperty() . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -113,7 +113,7 @@ final readonly class PropertyTermResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        if (!$request->getProperty()) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
@@ -121,7 +121,7 @@ final readonly class PropertyTermResource implements RequestResourceInterface
 
         /** @var PropertyTermResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
+            $this->client->post($request->getProperty() . self::ENDPOINT, $requestData)
         ));
 
         return $response;
