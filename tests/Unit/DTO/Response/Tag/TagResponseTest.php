@@ -38,7 +38,10 @@ final class TagResponseTest extends AbstractDTOResponse
      */
     protected function getNullableFields(): array
     {
-        return [];
+        return [
+            'name' => null,
+            'store' => null,
+        ];
     }
 
     protected function getExpectedLdType(): LdType

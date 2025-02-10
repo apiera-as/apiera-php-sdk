@@ -32,9 +32,9 @@ final readonly class TagResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[ResponseField('name')]
-        private string $name,
+        private ?string $name = null,
         #[ResponseField('store')]
-        private string $store,
+        private ?string $store = null,
     ) {
         parent::__construct(
             $this->ldId,
@@ -45,12 +45,12 @@ final readonly class TagResponse extends AbstractResponse
         );
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->store;
     }
