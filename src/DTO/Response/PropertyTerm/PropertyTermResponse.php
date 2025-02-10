@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Apiera\Sdk\DTO\Response\PropertyTerm;
 
 use Apiera\Sdk\Attribute\JsonLdResponseField;
-use Apiera\Sdk\Attribute\RequestField;
 use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
@@ -32,10 +31,12 @@ final readonly class PropertyTermResponse extends AbstractResponse
         private DateTimeInterface $createdAt,
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
-        #[RequestField('name')]
+        #[ResponseField('name')]
         private string $name,
-        #[RequestField('property')]
+        #[ResponseField('property')]
         private string $property,
+        #[ResponseField('store')]
+        private string $store,
     ) {
         parent::__construct(
             $this->ldId,
@@ -54,5 +55,10 @@ final readonly class PropertyTermResponse extends AbstractResponse
     public function getProperty(): string
     {
         return $this->property;
+    }
+
+    public function getStore(): string
+    {
+        return $this->store;
     }
 }

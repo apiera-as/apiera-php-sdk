@@ -36,6 +36,7 @@ final class PropertyTermCollectionResponse extends AbstractDTOCollectionResponse
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             name: 'PropertyTerm',
             property: 'string',
+            store: '/api/v1/stores/123',
         );
 
         return [
