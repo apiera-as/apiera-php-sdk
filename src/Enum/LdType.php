@@ -24,6 +24,8 @@ use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
+use Apiera\Sdk\DTO\Response\Sku\SkuCollectionResponse;
+use Apiera\Sdk\DTO\Response\Sku\SkuResponse;
 use Exception;
 use InvalidArgumentException;
 
@@ -100,12 +102,15 @@ enum LdType: string
                 ResponseType::Single->value => InventoryLocationResponse::class,
                 ResponseType::Collection->value => InventoryLocationCollectionResponse::class,
             ],
+            self::Sku => [
+                ResponseType::Single->value => SkuResponse::class,
+                ResponseType::Collection->value => SkuCollectionResponse::class,
+            ],
             self::Integration,
             self::IntegrationResourceMap,
             self::Inventory,
             self::Organization,
             self::PropertyTerm,
-            self::Sku,
             self::Store,
             self::Tag,
             self::Variant => throw new Exception('To be implemented'),

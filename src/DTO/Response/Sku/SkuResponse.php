@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Apiera\Sdk\DTO\Response\Sku;
 
 use Apiera\Sdk\Attribute\JsonLdResponseField;
-use Apiera\Sdk\Attribute\RequestField;
 use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
 use Apiera\Sdk\Enum\LdType;
@@ -37,13 +36,13 @@ final readonly class SkuResponse extends AbstractResponse
         private DateTimeInterface $createdAt,
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
-        #[RequestField('code')]
-        private ?string $code = null,
-        #[RequestField('products')]
+        #[ResponseField('code')]
+        private string $code,
+        #[ResponseField('products')]
         private array $products = [],
-        #[RequestField('variants')]
+        #[ResponseField('variants')]
         private array $variants = [],
-        #[RequestField('inventories')]
+        #[ResponseField('inventories')]
         private array $inventories = [],
     ) {
         parent::__construct(
@@ -55,7 +54,7 @@ final readonly class SkuResponse extends AbstractResponse
         );
     }
 
-    public function getCode(): ?string
+    public function getCode(): string
     {
         return $this->code;
     }
