@@ -36,8 +36,6 @@ final readonly class PropertyTermResponse extends AbstractResponse
         private string $name,
         #[RequestField('property')]
         private string $property,
-        #[RequestField('store')]
-        private string $store,
     ) {
         parent::__construct(
             $this->ldId,
@@ -56,10 +54,5 @@ final readonly class PropertyTermResponse extends AbstractResponse
     public function getProperty(): string
     {
         return $this->property;
-    }
-
-    public function getStore(): string
-    {
-        return $this->store;
     }
 }

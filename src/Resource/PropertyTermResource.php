@@ -42,7 +42,7 @@ final readonly class PropertyTermResource implements RequestResourceInterface
         }
 
         if (!$request->getProperty()) {
-            throw new InvalidRequestException('Store IRI is required for this operation');
+            throw new InvalidRequestException('Property IRI is required for this operation');
         }
 
         /** @var PropertyTermCollectionResponse $collectionResponse */
@@ -114,7 +114,7 @@ final readonly class PropertyTermResource implements RequestResourceInterface
         }
 
         if (!$request->getProperty()) {
-            throw new InvalidRequestException('Store IRI is required for this operation');
+            throw new InvalidRequestException('Property IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
