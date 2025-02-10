@@ -51,6 +51,8 @@ final class SkuResponseTest extends AbstractDTOResponse
      */
     protected function getNullableFields(): array
     {
-        return [];
+        return [
+            'code' => null,
+        ];
     }
 }

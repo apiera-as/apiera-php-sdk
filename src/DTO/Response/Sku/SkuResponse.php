@@ -38,7 +38,7 @@ final readonly class SkuResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[RequestField('code')]
-        private string $code,
+        private ?string $code = null,
         #[RequestField('products')]
         private array $products = [],
         #[RequestField('variants')]
@@ -55,7 +55,7 @@ final readonly class SkuResponse extends AbstractResponse
         );
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
