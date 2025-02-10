@@ -24,18 +24,18 @@ final class OrganizationResponseTest extends AbstractDTOResponse
     {
         return [
             'ldId' => '/api/v1/stores/123/products/123',
-            'ldType' => LdType::Product,
+            'ldType' =>  LdType::Organization,
             'uuid' => Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             'createdAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
-            'name' => 'Product',
+            'name' => 'string',
             'extId' => 'string',
         ];
     }
 
     protected function getExpectedLdType(): LdType
     {
-        return LdType::Product;
+        return LdType::Organization;
     }
 
     /**
