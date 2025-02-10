@@ -17,6 +17,7 @@ use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
 use Apiera\Sdk\Resource\SkuResource;
+use Apiera\Sdk\Resource\VariantResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -117,5 +118,12 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new SkuResource($this->client, $dataMapper);
+    }
+
+    public function variant(): VariantResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new VariantResource($this->client, $dataMapper);
     }
 }
