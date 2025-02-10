@@ -33,7 +33,7 @@ final readonly class StoreResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[RequestField('name')]
-        private ?string $name = null,
+        private ?string $name,
         #[RequestField('description')]
         private ?string $description = null,
         #[RequestField('image')]
@@ -48,7 +48,7 @@ final readonly class StoreResponse extends AbstractResponse
         );
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }

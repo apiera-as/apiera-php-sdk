@@ -23,8 +23,8 @@ final class StoreResponseTest extends AbstractDTOResponse
     protected function getResponseData(): array
     {
         return [
-            'ldId' => '/api/v1/stores/123/products/123',
-            'ldType' => LdType::Product,
+            'ldId' => '/api/v1/stores/123',
+            'ldType' => LdType::Store,
             'uuid' => Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
             'createdAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
@@ -40,7 +40,6 @@ final class StoreResponseTest extends AbstractDTOResponse
     protected function getNullableFields(): array
     {
         return [
-            'name' => null,
             'description' => null,
             'image' => null,
         ];
@@ -48,6 +47,6 @@ final class StoreResponseTest extends AbstractDTOResponse
 
     protected function getExpectedLdType(): LdType
     {
-        return LdType::Product;
+        return LdType::Store;
     }
 }
