@@ -162,5 +162,7 @@ final readonly class OrganizationResource implements RequestResourceInterface
         if (!$request->getIri()) {
             throw new InvalidRequestException('Organization IRI is required for this operation');
         }
+
+        $this->client->delete($request->getIri());
     }
 }
