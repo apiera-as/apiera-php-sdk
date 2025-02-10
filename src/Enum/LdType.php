@@ -20,12 +20,20 @@ use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationCollectionResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationResponse;
+use Apiera\Sdk\DTO\Response\Organization\OrganizationCollectionResponse;
+use Apiera\Sdk\DTO\Response\Organization\OrganizationResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
+use Apiera\Sdk\DTO\Response\Sku\SkuCollectionResponse;
+use Apiera\Sdk\DTO\Response\Sku\SkuResponse;
 use Apiera\Sdk\DTO\Response\Store\StoreCollectionResponse;
 use Apiera\Sdk\DTO\Response\Store\StoreResponse;
+use Apiera\Sdk\DTO\Response\Tag\TagCollectionResponse;
+use Apiera\Sdk\DTO\Response\Tag\TagResponse;
+use Apiera\Sdk\DTO\Response\Variant\VariantCollectionResponse;
+use Apiera\Sdk\DTO\Response\Variant\VariantResponse;
 use Exception;
 use InvalidArgumentException;
 
@@ -102,6 +110,22 @@ enum LdType: string
                 ResponseType::Single->value => InventoryLocationResponse::class,
                 ResponseType::Collection->value => InventoryLocationCollectionResponse::class,
             ],
+            self::Tag => [
+                ResponseType::Single->value => TagResponse::class,
+                ResponseType::Collection->value => TagCollectionResponse::class,
+            ],
+            self::Organization => [
+                ResponseType::Single->value => OrganizationResponse::class,
+                ResponseType::Collection->value => OrganizationCollectionResponse::class,
+            ],
+            self::Sku => [
+                ResponseType::Single->value => SkuResponse::class,
+                ResponseType::Collection->value => SkuCollectionResponse::class,
+            ],
+            self::Variant => [
+                ResponseType::Single->value => VariantResponse::class,
+                ResponseType::Collection->value => VariantCollectionResponse::class,
+            ],
             self::Store => [
                 ResponseType::Single->value => StoreResponse::class,
                 ResponseType::Collection->value => StoreCollectionResponse::class,
@@ -109,11 +133,7 @@ enum LdType: string
             self::Integration,
             self::IntegrationResourceMap,
             self::Inventory,
-            self::Organization,
-            self::PropertyTerm,
-            self::Sku,
-            self::Tag,
-            self::Variant => throw new Exception('To be implemented'),
+            self::PropertyTerm => throw new Exception('To be implemented'),
             self::Collection => throw new InvalidArgumentException(
                 'Collection type cannot be mapped directly'
             ),
