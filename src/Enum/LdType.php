@@ -26,6 +26,8 @@ use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyResponse;
+use Apiera\Sdk\DTO\Response\PropertyTerm\PropertyTermCollectionResponse;
+use Apiera\Sdk\DTO\Response\PropertyTerm\PropertyTermResponse;
 use Apiera\Sdk\DTO\Response\Sku\SkuCollectionResponse;
 use Apiera\Sdk\DTO\Response\Sku\SkuResponse;
 use Apiera\Sdk\DTO\Response\Store\StoreCollectionResponse;
@@ -130,10 +132,13 @@ enum LdType: string
                 ResponseType::Single->value => StoreResponse::class,
                 ResponseType::Collection->value => StoreCollectionResponse::class,
             ],
+            self::PropertyTerm => [
+                ResponseType::Single->value => PropertyTermResponse::class,
+                ResponseType::Collection->value => PropertyTermCollectionResponse::class,
+            ],
             self::Integration,
             self::IntegrationResourceMap,
-            self::Inventory,
-            self::PropertyTerm => throw new Exception('To be implemented'),
+            self::Inventory => throw new Exception('To be implemented'),
             self::Collection => throw new InvalidArgumentException(
                 'Collection type cannot be mapped directly'
             ),
