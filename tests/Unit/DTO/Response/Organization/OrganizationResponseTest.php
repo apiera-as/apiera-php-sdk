@@ -30,9 +30,6 @@ final class OrganizationResponseTest extends AbstractDTOResponse
             'updatedAt' => new DateTimeImmutable('2021-01-01 00:00:00'),
             'name' => 'Product',
             'extId' => 'string',
-            'alternateIdentifiers' => [
-                '/api/v1/alternate_identifiers/345',
-            ],
         ];
     }
 
@@ -46,6 +43,9 @@ final class OrganizationResponseTest extends AbstractDTOResponse
      */
     protected function getNullableFields(): array
     {
-        return [];
+        return [
+            'name' => null,
+            'extId' => null,
+        ];
     }
 }

@@ -20,9 +20,6 @@ use Symfony\Component\Uid\Uuid;
  */
 final readonly class OrganizationResponse extends AbstractResponse
 {
-    /**
-     * @param string[] $alternateIdentifiers
-     */
     public function __construct(
         #[JsonLdResponseField('@id')]
         private string $ldId,
@@ -35,11 +32,9 @@ final readonly class OrganizationResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[ResponseField('name')]
-        private string $name,
+        private ?string $name = null,
         #[ResponseField('extId')]
-        private string $extId,
-        #[ResponseField('alternateIdentifiers')]
-        private array $alternateIdentifiers = [],
+        private ?string $extId = null,
     ) {
         parent::__construct(
             $this->ldId,
@@ -75,21 +70,13 @@ final readonly class OrganizationResponse extends AbstractResponse
         return $this->updatedAt;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getExtId(): string
+    public function getExtId(): ?string
     {
         return $this->extId;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAlternateIdentifiers(): array
-    {
-        return $this->alternateIdentifiers;
     }
 }

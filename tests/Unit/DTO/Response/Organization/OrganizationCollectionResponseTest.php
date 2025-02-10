@@ -37,9 +37,6 @@ final class OrganizationCollectionResponseTest extends AbstractDTOCollectionResp
             updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             name: 'Product',
             extId: 'string',
-            alternateIdentifiers: [
-                '/api/v1/alternate_identifiers/345',
-            ],
         );
 
         return [
