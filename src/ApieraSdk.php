@@ -16,6 +16,7 @@ use Apiera\Sdk\Resource\InventoryLocationResource;
 use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
+use Apiera\Sdk\Resource\SkuResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -109,5 +110,12 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new OrganizationResource($this->client, $dataMapper);
+    }
+
+    public function sku(): SkuResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new SkuResource($this->client, $dataMapper);
     }
 }
