@@ -16,20 +16,20 @@ final readonly class PropertyTermRequest implements RequestInterface
 {
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[RequestField('property')]
-        private string $property,
+        private ?string $property = null,
         #[SkipRequest]
         private ?string $iri = null
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getProperty(): string
+    public function getProperty(): ?string
     {
         return $this->property;
     }
@@ -45,7 +45,6 @@ final readonly class PropertyTermRequest implements RequestInterface
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
             'property' => $this->property,
         ];
     }
