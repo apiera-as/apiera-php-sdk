@@ -32,9 +32,9 @@ final readonly class OrganizationResponse extends AbstractResponse
         #[ResponseField('updatedAt', DateTimeTransformer::class)]
         private DateTimeInterface $updatedAt,
         #[ResponseField('name')]
-        private ?string $name = null,
+        private string $name,
         #[ResponseField('extId')]
-        private ?string $extId = null,
+        private string $extId,
     ) {
         parent::__construct(
             $this->ldId,
@@ -70,12 +70,12 @@ final readonly class OrganizationResponse extends AbstractResponse
         return $this->updatedAt;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getExtId(): ?string
+    public function getExtId(): string
     {
         return $this->extId;
     }

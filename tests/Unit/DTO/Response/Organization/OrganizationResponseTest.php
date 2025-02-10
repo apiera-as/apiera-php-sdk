@@ -43,9 +43,6 @@ final class OrganizationResponseTest extends AbstractDTOResponse
      */
     protected function getNullableFields(): array
     {
-        return [
-            'name' => null,
-            'extId' => null,
-        ];
+        return [];
     }
 }
