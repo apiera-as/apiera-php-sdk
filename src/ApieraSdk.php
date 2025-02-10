@@ -111,7 +111,7 @@ final readonly class ApieraSdk
 
         return new OrganizationResource($this->client, $dataMapper);
     }
-  
+
     public function sku(): SkuResource
     {
         $dataMapper = new ReflectionAttributeDataMapper();
