@@ -16,20 +16,20 @@ final readonly class TagRequest implements RequestInterface
 {
     public function __construct(
         #[RequestField('name')]
-        private string $name,
+        private ?string $name = null,
         #[RequestField('store')]
-        private string $store,
+        private ?string $store = null,
         #[SkipRequest]
         private ?string $iri = null
     ) {
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getStore(): string
+    public function getStore(): ?string
     {
         return $this->store;
     }
