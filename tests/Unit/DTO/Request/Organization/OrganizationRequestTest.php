@@ -22,9 +22,6 @@ final class OrganizationRequestTest extends AbstractDTORequest
         return [
             'name' => 'Organization',
             'extId' => 'string',
-            'alternateIdentifiers' => [
-                '/api/v1/alternate_identifiers/345',
-            ],
         ];
     }
 }

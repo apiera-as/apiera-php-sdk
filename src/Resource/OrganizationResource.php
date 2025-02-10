@@ -21,7 +21,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class OrganizationResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/organizations';
+    private const string ENDPOINT = '/api/v1/organizations';
 
     public function __construct(
         private ClientInterface $client,
@@ -66,7 +66,7 @@ final readonly class OrganizationResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No Organization found matching the given criteria');
+            throw new InvalidRequestException('No organization found matching the given criteria');
         }
 
         return $collection->getLdMembers()[0];
