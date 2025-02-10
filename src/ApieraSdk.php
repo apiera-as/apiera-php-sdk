@@ -13,9 +13,12 @@ use Apiera\Sdk\Resource\CategoryResource;
 use Apiera\Sdk\Resource\DistributorResource;
 use Apiera\Sdk\Resource\FileResource;
 use Apiera\Sdk\Resource\InventoryLocationResource;
+use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
+use Apiera\Sdk\Resource\SkuResource;
 use Apiera\Sdk\Resource\TagResource;
+use Apiera\Sdk\Resource\VariantResource;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
@@ -102,6 +105,27 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new InventoryLocationResource($this->client, $dataMapper);
+    }
+
+    public function organization(): OrganizationResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new OrganizationResource($this->client, $dataMapper);
+    }
+
+    public function sku(): SkuResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new SkuResource($this->client, $dataMapper);
+    }
+
+    public function variant(): VariantResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new VariantResource($this->client, $dataMapper);
     }
 
     public function tag(): TagResource
