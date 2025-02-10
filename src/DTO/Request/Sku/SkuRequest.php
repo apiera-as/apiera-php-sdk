@@ -16,22 +16,15 @@ final readonly class SkuRequest implements RequestInterface
 {
     public function __construct(
         #[RequestField('code')]
-        private string $code,
-        #[RequestField('organization')]
-        private string $organization,
+        private ?string $code = null,
         #[SkipRequest]
         private ?string $iri = null
     ) {
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
-    }
-
-    public function getOrganization(): string
-    {
-        return $this->organization;
     }
 
     public function getIri(): ?string
@@ -46,7 +39,6 @@ final readonly class SkuRequest implements RequestInterface
     {
         return [
             'code' => $this->code,
-            'organization' => $this->organization,
         ];
     }
 }

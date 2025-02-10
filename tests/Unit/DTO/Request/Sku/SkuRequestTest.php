@@ -21,7 +21,6 @@ final class SkuRequestTest extends AbstractDTORequest
     {
         return [
             'code' => 'string',
-            'organization' => 'Product',
         ];
     }
 }

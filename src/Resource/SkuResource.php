@@ -20,7 +20,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
  */
 final readonly class SkuResource implements RequestResourceInterface
 {
-    private const string ENDPOINT = '/skus';
+    private const string ENDPOINT = '/api/v1/skus';
 
     public function __construct(
         private ClientInterface $client,
