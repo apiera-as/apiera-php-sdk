@@ -17,6 +17,7 @@ use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
 use Apiera\Sdk\Resource\SkuResource;
+use Apiera\Sdk\Resource\StoreResource;
 use Apiera\Sdk\Resource\TagResource;
 use Apiera\Sdk\Resource\VariantResource;
 
@@ -133,5 +134,12 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new TagResource($this->client, $dataMapper);
+    }
+
+    public function store(): StoreResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new StoreResource($this->client, $dataMapper);
     }
 }
