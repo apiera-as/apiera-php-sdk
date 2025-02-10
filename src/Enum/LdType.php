@@ -20,6 +20,8 @@ use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationCollectionResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationResponse;
+use Apiera\Sdk\DTO\Response\Organization\OrganizationCollectionResponse;
+use Apiera\Sdk\DTO\Response\Organization\OrganizationResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductCollectionResponse;
 use Apiera\Sdk\DTO\Response\Product\ProductResponse;
 use Apiera\Sdk\DTO\Response\Property\PropertyCollectionResponse;
@@ -100,10 +102,13 @@ enum LdType: string
                 ResponseType::Single->value => InventoryLocationResponse::class,
                 ResponseType::Collection->value => InventoryLocationCollectionResponse::class,
             ],
+            self::Organization => [
+                ResponseType::Single->value => OrganizationResponse::class,
+                ResponseType::Collection->value => OrganizationCollectionResponse::class,
+            ],
             self::Integration,
             self::IntegrationResourceMap,
             self::Inventory,
-            self::Organization,
             self::PropertyTerm,
             self::Sku,
             self::Store,
