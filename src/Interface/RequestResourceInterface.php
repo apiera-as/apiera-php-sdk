@@ -15,6 +15,8 @@ use Apiera\Sdk\Interface\DTO\ResponseInterface;
  */
 interface RequestResourceInterface
 {
+    public function __construct(ClientInterface $client, DataMapperInterface $dataMapper);
+
     public function find(RequestInterface $request, ?QueryParameters $params = null): JsonLDInterface;
 
     public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface;
