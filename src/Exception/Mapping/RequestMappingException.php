@@ -11,7 +11,7 @@ use Throwable;
  * Thrown when unable to map request DTO to API data
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final class RequestMappingException extends MappingException
 {

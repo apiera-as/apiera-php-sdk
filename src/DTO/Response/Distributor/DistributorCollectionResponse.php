@@ -8,7 +8,7 @@ use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final readonly class DistributorCollectionResponse extends AbstractCollectionResponse
 {

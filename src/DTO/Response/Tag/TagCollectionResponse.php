@@ -8,7 +8,7 @@ use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final readonly class TagCollectionResponse extends AbstractCollectionResponse
 {

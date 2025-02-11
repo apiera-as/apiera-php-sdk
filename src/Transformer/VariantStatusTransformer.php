@@ -11,7 +11,7 @@ use Throwable;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final class VariantStatusTransformer implements TransformerInterface
 {

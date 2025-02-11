@@ -12,7 +12,7 @@ use Throwable;
  * Used for HTTP errors that don't fit into other specific categories
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final class GenericHttpException extends ApiException
 {

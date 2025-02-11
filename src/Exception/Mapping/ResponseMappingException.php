@@ -10,7 +10,7 @@ use Throwable;
  * Thrown when unable to map response data to DTO
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final class ResponseMappingException extends MappingException
 {

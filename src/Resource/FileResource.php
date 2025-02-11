@@ -17,7 +17,7 @@ use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final readonly class FileResource implements RequestResourceInterface
 {

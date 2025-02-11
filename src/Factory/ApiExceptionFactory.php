@@ -17,7 +17,7 @@ use Throwable;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final class ApiExceptionFactory
 {
