@@ -13,7 +13,7 @@ use Throwable;
  * Base exception for all HTTP/API related errors
  *
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 abstract class ApiException extends Exception
 {

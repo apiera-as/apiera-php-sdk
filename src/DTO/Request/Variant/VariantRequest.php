@@ -12,7 +12,7 @@ use Apiera\Sdk\Transformer\VariantStatusTransformer;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @since 0.3.0
+ * @since 1.0.0
  */
 final readonly class VariantRequest implements RequestInterface
 {

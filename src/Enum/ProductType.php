@@ -6,7 +6,7 @@ namespace Apiera\Sdk\Enum;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @since 0.3.0
+ * @since 1.0.0
  */
 enum ProductType: string
 {
