@@ -13,6 +13,7 @@ use Apiera\Sdk\Resource\CategoryResource;
 use Apiera\Sdk\Resource\DistributorResource;
 use Apiera\Sdk\Resource\FileResource;
 use Apiera\Sdk\Resource\InventoryLocationResource;
+use Apiera\Sdk\Resource\InventoryResource;
 use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
@@ -150,6 +151,13 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new PropertyTermResource($this->client, $dataMapper);
+    }
+
+    public function inventory(): InventoryResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new InventoryResource($this->client, $dataMapper);
     }
 
     public function resourceMap(): ResourceMapResource
