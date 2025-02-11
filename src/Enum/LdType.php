@@ -18,6 +18,8 @@ use Apiera\Sdk\DTO\Response\Distributor\DistributorCollectionResponse;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
+use Apiera\Sdk\DTO\Response\Inventory\InventoryCollectionResponse;
+use Apiera\Sdk\DTO\Response\Inventory\InventoryResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationCollectionResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationResponse;
 use Apiera\Sdk\DTO\Response\Organization\OrganizationCollectionResponse;
@@ -138,12 +140,15 @@ enum LdType: string
                 ResponseType::Single->value => PropertyTermResponse::class,
                 ResponseType::Collection->value => PropertyTermCollectionResponse::class,
             ],
+            self::Inventory => [
+                ResponseType::Single->value => InventoryResponse::class,
+                ResponseType::Collection->value => InventoryCollectionResponse::class,
+            ],
             self::IntegrationResourceMap => [
                 ResponseType::Single->value => ResourceMapResponse::class,
                 ResponseType::Collection->value => ResourceMapCollectionResponse::class,
             ],
-            self::Integration,
-            self::Inventory => throw new Exception('To be implemented'),
+            self::Integration => throw new Exception('To be implemented'),
             self::Collection => throw new InvalidArgumentException(
                 'Collection type cannot be mapped directly'
             ),
