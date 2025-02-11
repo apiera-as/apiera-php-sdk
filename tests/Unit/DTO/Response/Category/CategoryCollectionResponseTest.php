@@ -1,98 +1,60 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit\DTO\Response\Category;
 
-use Apiera\Sdk\DTO\Response\AbstractCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
+use Apiera\Sdk\DTO\Response\PartialCollectionView;
 use Apiera\Sdk\Enum\LdType;
-use Apiera\Sdk\Interface\DTO\JsonLDCollectionInterface;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use Symfony\Component\Uid\Uuid;
+use Tests\Unit\DTO\Response\AbstractDTOCollectionResponse;
 
-class CategoryCollectionResponseTest extends TestCase
+final class CategoryCollectionResponseTest extends AbstractDTOCollectionResponse
 {
-    public function testInstanceOf(): void
+    protected function getCollectionClass(): string
     {
-        $response = new CategoryCollectionResponse(
-            context: '',
-            id: '',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertInstanceOf(CategoryCollectionResponse::class, $response);
-        $this->assertInstanceOf(AbstractCollectionResponse::class, $response);
-        $this->assertInstanceOf(JsonLDCollectionInterface::class, $response);
+        return CategoryCollectionResponse::class;
     }
 
-    public function testClassIsCorrectlyDefined(): void
+    protected function getMemberClass(): string
     {
-        $reflection = new ReflectionClass(CategoryCollectionResponse::class);
-
-        $this->assertTrue($reflection->isReadonly(), 'Class should be readonly');
+        return CategoryResponse::class;
     }
 
-    public function testConstructorAndGetters(): void
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getCollectionData(): array
     {
         $categoryResponse = new CategoryResponse(
-            id: '/api/v1/categories/123',
-            type: LdType::Category,
-            uuid: Uuid::v4(),
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            ldId: '/api/v1/stores/123/categories/123',
+            ldType: LdType::Category,
+            uuid: Uuid::fromString('bfd2639c-7793-426a-a413-ea262e582208'),
+            createdAt: new DateTimeImmutable('2021-01-01 00:00:00'),
+            updatedAt: new DateTimeImmutable('2021-01-01 00:00:00'),
             name: 'Electronics',
-            store: '/api/v1/stores/321'
+            store: '/api/v1/stores/123',
+            description: 'Electronics description',
+            parent: '/api/v1/stores/123/categories/456',
+            image: '/api/v1/files/123',
         );
 
-        $response = new CategoryCollectionResponse(
-            context: '/api/v1/contexts/Category',
-            id: '/api/v1/categories',
-            type: LdType::Collection,
-            members: [$categoryResponse],
-            totalItems: 1,
-            view: '/api/v1/categories?page=1',
-            firstPage: '/api/v1/categories?page=1',
-            lastPage: '/api/v1/categories?page=1',
-            nextPage: null,
-            previousPage: null
-        );
-
-        $this->assertEquals('/api/v1/contexts/Category', $response->getLdContext());
-        $this->assertEquals('/api/v1/categories', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertCount(1, $response->getMembers());
-        $this->assertInstanceOf(CategoryResponse::class, $response->getMembers()[0]);
-        $this->assertEquals(1, $response->getTotalItems());
-        $this->assertEquals('/api/v1/categories?page=1', $response->getView());
-        $this->assertEquals('/api/v1/categories?page=1', $response->getFirstPage());
-        $this->assertEquals('/api/v1/categories?page=1', $response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
-    }
-
-    public function testConstructorWithMinimalParameters(): void
-    {
-        $response = new CategoryCollectionResponse(
-            context: '/api/v1/contexts/Category',
-            id: '/api/v1/categories',
-            type: LdType::Collection,
-            members: [],
-            totalItems: 0
-        );
-
-        $this->assertEquals('/api/v1/contexts/Category', $response->getLdContext());
-        $this->assertEquals('/api/v1/categories', $response->getLdId());
-        $this->assertEquals(LdType::Collection, $response->getLdType());
-        $this->assertEmpty($response->getMembers());
-        $this->assertEquals(0, $response->getTotalItems());
-        $this->assertNull($response->getView());
-        $this->assertNull($response->getFirstPage());
-        $this->assertNull($response->getLastPage());
-        $this->assertNull($response->getNextPage());
-        $this->assertNull($response->getPreviousPage());
+        return [
+            'ldContext' => '/api/v1/contexts/Category',
+            'ldId' => '/api/v1/stores/123/categories',
+            'ldType' => LdType::Collection,
+            'ldMembers' => [$categoryResponse],
+            'ldTotalItems' => 1,
+            'ldView' => new PartialCollectionView(
+                ldId: '/api/v1/stores/123/categories?page=1',
+                ldFirst: '/api/v1/stores/123/categories?page=1',
+                ldLast: '/api/v1/stores/123/categories?page=1',
+                ldNext: null,
+                ldPrevious: null
+            ),
+        ];
     }
 }

@@ -4,34 +4,24 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\Resource;
 
-use Apiera\Sdk\Client;
-use Apiera\Sdk\DataMapper\AlternateIdentifierDataMapper;
 use Apiera\Sdk\DTO\QueryParameters;
 use Apiera\Sdk\DTO\Request\AlternateIdentifier\AlternateIdentifierRequest;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierCollectionResponse;
 use Apiera\Sdk\DTO\Response\AlternateIdentifier\AlternateIdentifierResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
-use Apiera\Sdk\Interface\ClientExceptionInterface;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
-use Apiera\Sdk\Interface\DTO\JsonLDInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\DTO\ResponseInterface;
 use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\Resource
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierResource implements RequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/alternate_identifiers';
 
-    /**
-     * @param Client $client
-     * @param AlternateIdentifierDataMapper $mapper
-     */
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
@@ -39,94 +29,137 @@ final readonly class AlternateIdentifierResource implements RequestResourceInter
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @param QueryParameters|null $params
-     * @return AlternateIdentifierCollectionResponse
-     * @throws ClientExceptionInterface
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function find(RequestInterface $request, ?QueryParameters $params = null): JsonLDInterface
-    {
-        return $this->mapper->fromCollectionResponse($this->client->decodeResponse(
+    public function find(
+        RequestInterface $request,
+        ?QueryParameters $params = null
+    ): AlternateIdentifierCollectionResponse {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
+        /** @var AlternateIdentifierCollectionResponse $collectionResponse */
+        $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
             $this->client->get(self::ENDPOINT, $params)
         ));
+
+        return $collectionResponse;
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @param QueryParameters $params
-     * @return AlternateIdentifierResponse
-     * @throws ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function findOneBy(RequestInterface $request, QueryParameters $params): ResponseInterface
+    public function findOneBy(RequestInterface $request, QueryParameters $params): AlternateIdentifierResponse
     {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
         $collection = $this->find($request, $params);
 
-        if ($collection->getTotalItems() < 1) {
+        if ($collection->getLdTotalItems() < 1) {
             throw new InvalidRequestException('No alternate identifier found matching the given criteria');
         }
 
-        return $collection->getMembers()[0];
+        return $collection->getLdMembers()[0];
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @return AlternateIdentifierResponse
-     * @throws ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function get(RequestInterface $request): ResponseInterface
+    public function get(RequestInterface $request): AlternateIdentifierResponse
     {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Alternate identifier IRI is required for this operation');
         }
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AlternateIdentifierResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->get($request->getIri())
         ));
+
+        return $response;
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @return AlternateIdentifierResponse
-     * @throws ClientExceptionInterface
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function create(RequestInterface $request): ResponseInterface
+    public function create(RequestInterface $request): AlternateIdentifierResponse
     {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
         $requestData = $this->mapper->toRequestData($request);
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AlternateIdentifierResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->post(self::ENDPOINT, $requestData)
         ));
+
+        return $response;
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @return AlternateIdentifierResponse
-     * @throws ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function update(RequestInterface $request): ResponseInterface
+    public function update(RequestInterface $request): AlternateIdentifierResponse
     {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Alternate identifier IRI is required for this operation');
         }
 
         $requestData = $this->mapper->toRequestData($request);
 
-        return $this->mapper->fromResponse($this->client->decodeResponse(
+        /** @var AlternateIdentifierResponse $response */
+        $response = $this->mapper->fromResponse($this->client->decodeResponse(
             $this->client->patch($request->getIri(), $requestData)
         ));
+
+        return $response;
     }
 
     /**
-     * @param AlternateIdentifierRequest $request
-     * @return void
-     * @throws ClientExceptionInterface
      * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
      */
     public function delete(RequestInterface $request): void
     {
+        if (!$request instanceof AlternateIdentifierRequest) {
+            throw new InvalidRequestException(
+                sprintf('Request must be an instance of %s', AlternateIdentifierRequest::class)
+            );
+        }
+
         if (!$request->getIri()) {
             throw new InvalidRequestException('Alternate identifier IRI is required for this operation');
         }

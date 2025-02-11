@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
-<ruleset name="Apiera">
-    <description>Apiera SDK Coding Standard</description>
+<ruleset name="Project">
+    <description>Project Coding Standards</description>
 
-    <!-- Base PSR-12 standard -->
-    <rule ref="PSR12"/>
+    <!-- Extend Apiera standards -->
+    <rule ref="vendor/apiera/php-standards/phpcs/ruleset.xml"/>
 
-    <!-- Paths to check -->
-    <file>src</file>
+    <!-- Define source paths -->
+    <file>src/</file>
+    <file>tests/</file>
 
-    <!-- Base configuration -->
-    <arg name="tab-width" value="4"/>
-    <arg name="encoding" value="utf-8"/>
+    <!-- Exclude paths if needed -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/cache/*</exclude-pattern>
 </ruleset>

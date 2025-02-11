@@ -4,46 +4,41 @@ declare(strict_types=1);
 
 namespace Apiera\Sdk\DTO\Request\AlternateIdentifier;
 
+use Apiera\Sdk\Attribute\RequestField;
+use Apiera\Sdk\Attribute\SkipRequest;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
- * @package Apiera\Sdk\DTO\Request\AlternateIdentifier
  * @since 0.2.0
  */
 final readonly class AlternateIdentifierRequest implements RequestInterface
 {
     /**
-     * @param string $code The alternate identifier code
-     * @param string $type The alternate identifier type
-     * @param string|null $iri The alternate identifier iri
+     * @param string|null $code The alternate identifier code
+     * @param string|null $type The alternate identifier type
+     * @param string|null $iri Resource IRI reference (required for get, update and delete operations)
      */
     public function __construct(
-        private string $code,
-        private string $type,
+        #[RequestField('code')]
+        private ?string $code = null,
+        #[RequestField('type')]
+        private ?string $type = null,
+        #[SkipRequest]
         private ?string $iri = null,
     ) {
     }
 
-    /**
-     * @return string
-     */
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
 
-    /**
-     * @return string
-     */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function getIri(): ?string
     {
         return $this->iri;

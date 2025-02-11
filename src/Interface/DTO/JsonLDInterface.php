@@ -8,18 +8,11 @@ use Apiera\Sdk\Enum\LdType;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
- * @package Apiera\Sdk\Interface\DTO
  * @since 0.1.0
  */
 interface JsonLDInterface
 {
-    /**
-     * @return string
-     */
     public function getLdId(): string;
 
-    /**
-     * @return LdType
-     */
     public function getLdType(): LdType;
 }
