@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Apiera\Sdk;
 
 use Apiera\Sdk\DataMapper\ReflectionAttributeDataMapper;
+use Apiera\Sdk\Factory\ResourceFactory;
+use Apiera\Sdk\Interface\RequestResourceInterface;
 use Apiera\Sdk\Resource\AlternateIdentifierResource;
 use Apiera\Sdk\Resource\AttributeResource;
 use Apiera\Sdk\Resource\AttributeTermResource;
@@ -22,14 +24,54 @@ use Apiera\Sdk\Resource\SkuResource;
 use Apiera\Sdk\Resource\StoreResource;
 use Apiera\Sdk\Resource\TagResource;
 use Apiera\Sdk\Resource\VariantResource;
+use BadMethodCallException;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 0.1.0
+ *
+ * @method CategoryResource category()
+ * @method AttributeResource attribute()
+ * @method AlternateIdentifierResource alternateIdentifier()
+ * @method BrandResource brand()
+ * @method DistributorResource distributor()
+ * @method FileResource file()
+ * @method AttributeTermResource attributeTerm()
+ * @method PropertyResource property()
+ * @method ProductResource product()
+ * @method InventoryLocationResource inventoryLocation()
+ * @method OrganizationResource organization()
+ * @method SkuResource sku()
+ * @method VariantResource variant()
+ * @method TagResource tag()
+ * @method StoreResource store()
+ * @method PropertyTermResource propertyTerm()
+ * @method ResourceMapResource resourceMap()
  */
 final readonly class ApieraSdk
 {
-    private Client $client;
+    /** @var array<string, class-string<RequestResourceInterface>> */
+    private const array REQUEST_RESOURCE_MAP = [
+        'category' => CategoryResource::class,
+        'attribute' => AttributeResource::class,
+        'alternateIdentifier' => AlternateIdentifierResource::class,
+        'brand' => BrandResource::class,
+        'distributor' => DistributorResource::class,
+        'file' => FileResource::class,
+        'attributeTerm' => AttributeTermResource::class,
+        'property' => PropertyResource::class,
+        'product' => ProductResource::class,
+        'inventoryLocation' => InventoryLocationResource::class,
+        'organization' => OrganizationResource::class,
+        'sku' => SkuResource::class,
+        'variant' => VariantResource::class,
+        'tag' => TagResource::class,
+        'store' => StoreResource::class,
+        'propertyTerm' => PropertyTermResource::class,
+        'resourceMap' => ResourceMapResource::class,
+    ];
+
+    private ResourceFactory $resourceFactory;
 
     /**
      * @throws \Apiera\Sdk\Exception\ConfigurationException
@@ -37,125 +79,33 @@ final readonly class ApieraSdk
     public function __construct(
         private Configuration $configuration,
     ) {
-        $this->client = new Client($this->configuration);
+        $this->resourceFactory = new ResourceFactory(
+            new Client($this->configuration),
+            new ReflectionAttributeDataMapper(),
+        );
     }
 
-    public function category(): CategoryResource
+    /**
+     * @param class-string<T> $resourceClass
+     *
+     * @return T
+     *
+     * @template T of RequestResourceInterface
+     */
+    public function resource(string $resourceClass): RequestResourceInterface
     {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new CategoryResource($this->client, $dataMapper);
+        return $this->resourceFactory->create($resourceClass);
     }
 
-    public function attribute(): AttributeResource
+    /**
+     * @param array<array-key, mixed> $arguments
+     */
+    public function __call(string $name, array $arguments): RequestResourceInterface
     {
-        $dataMapper = new ReflectionAttributeDataMapper();
+        if (!isset(self::REQUEST_RESOURCE_MAP[$name])) {
+            throw new BadMethodCallException(sprintf('Method "%s" does not exist', $name));
+        }
 
-        return new AttributeResource($this->client, $dataMapper);
-    }
-
-    public function alternateIdentifier(): AlternateIdentifierResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new AlternateIdentifierResource($this->client, $dataMapper);
-    }
-
-    public function brand(): BrandResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new BrandResource($this->client, $dataMapper);
-    }
-
-    public function distributor(): DistributorResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new DistributorResource($this->client, $dataMapper);
-    }
-
-    public function file(): FileResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new FileResource($this->client, $dataMapper);
-    }
-
-    public function attributeTerm(): AttributeTermResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new AttributeTermResource($this->client, $dataMapper);
-    }
-
-    public function property(): PropertyResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new PropertyResource($this->client, $dataMapper);
-    }
-
-    public function product(): ProductResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new ProductResource($this->client, $dataMapper);
-    }
-
-    public function inventoryLocation(): InventoryLocationResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new InventoryLocationResource($this->client, $dataMapper);
-    }
-
-    public function organization(): OrganizationResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new OrganizationResource($this->client, $dataMapper);
-    }
-
-    public function sku(): SkuResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new SkuResource($this->client, $dataMapper);
-    }
-
-    public function variant(): VariantResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new VariantResource($this->client, $dataMapper);
-    }
-
-    public function tag(): TagResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new TagResource($this->client, $dataMapper);
-    }
-
-    public function store(): StoreResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new StoreResource($this->client, $dataMapper);
-    }
-
-    public function propertyTerm(): PropertyTermResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new PropertyTermResource($this->client, $dataMapper);
-    }
-
-    public function resourceMap(): ResourceMapResource
-    {
-        $dataMapper = new ReflectionAttributeDataMapper();
-
-        return new ResourceMapResource($this->client, $dataMapper);
+        return $this->resource(self::REQUEST_RESOURCE_MAP[$name]);
     }
 }
