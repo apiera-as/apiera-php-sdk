@@ -17,6 +17,7 @@ use Apiera\Sdk\Resource\OrganizationResource;
 use Apiera\Sdk\Resource\ProductResource;
 use Apiera\Sdk\Resource\PropertyResource;
 use Apiera\Sdk\Resource\PropertyTermResource;
+use Apiera\Sdk\Resource\ResourceMapResource;
 use Apiera\Sdk\Resource\SkuResource;
 use Apiera\Sdk\Resource\StoreResource;
 use Apiera\Sdk\Resource\TagResource;
@@ -149,5 +150,12 @@ final readonly class ApieraSdk
         $dataMapper = new ReflectionAttributeDataMapper();
 
         return new PropertyTermResource($this->client, $dataMapper);
+    }
+
+    public function resourceMap(): ResourceMapResource
+    {
+        $dataMapper = new ReflectionAttributeDataMapper();
+
+        return new ResourceMapResource($this->client, $dataMapper);
     }
 }
