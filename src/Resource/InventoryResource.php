@@ -33,10 +33,8 @@ final readonly class InventoryResource implements RequestResourceInterface
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
-    public function find(
-        RequestInterface $request,
-        ?QueryParameters $params = null
-    ): InventoryCollectionResponse {
+    public function find(RequestInterface $request, ?QueryParameters $params = null): InventoryCollectionResponse
+    {
         if (!$request instanceof InventoryRequest) {
             throw new InvalidRequestException(
                 sprintf('Request must be an instance of %s', InventoryRequest::class)
