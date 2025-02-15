@@ -12,22 +12,24 @@ use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Exception\MultipleResourcesFoundException;
 use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
+use Apiera\Sdk\Interface\ConfigurationInterface;
+use Apiera\Sdk\Interface\ContextRequestResourceInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 1.0.0
  */
-final readonly class BrandResource implements RequestResourceInterface
+final readonly class BrandResource implements ContextRequestResourceInterface
 {
     private const string ENDPOINT = '/brands';
 
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
+        private ConfigurationInterface $configuration,
     ) {
     }
 
@@ -46,13 +48,15 @@ final readonly class BrandResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         /** @var BrandCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getStore() . self::ENDPOINT, $params)
+            $this->client->get($store . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -128,7 +132,9 @@ final readonly class BrandResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
@@ -136,7 +142,7 @@ final readonly class BrandResource implements RequestResourceInterface
 
         /** @var BrandResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
+            $this->client->post($store . self::ENDPOINT, $requestData)
         ));
 
         return $response;

@@ -85,6 +85,7 @@ final readonly class ApieraSdk
         $this->resourceFactory = new ResourceFactory(
             new Client($this->configuration),
             new ReflectionAttributeDataMapper(),
+            $this->configuration,
         );
     }
 

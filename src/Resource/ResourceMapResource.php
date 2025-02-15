@@ -12,21 +12,23 @@ use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Exception\MultipleResourcesFoundException;
 use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
+use Apiera\Sdk\Interface\ConfigurationInterface;
+use Apiera\Sdk\Interface\ContextRequestResourceInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 1.0.0
  */
-final readonly class ResourceMapResource implements RequestResourceInterface
+final readonly class ResourceMapResource implements ContextRequestResourceInterface
 {
     private const string ENDPOINT = '/mappings';
 
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
+        private ConfigurationInterface $configuration,
     ) {
     }
 
@@ -43,13 +45,15 @@ final readonly class ResourceMapResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getIntegration()) {
+        $integration = $request->getIntegration() ?? $this->configuration->getDefaultIntegration();
+
+        if ($integration === null) {
             throw new InvalidRequestException('Integration IRI is required for this operation');
         }
 
         /** @var ResourceMapCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getIntegration() . self::ENDPOINT, $params)
+            $this->client->get($integration . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -125,7 +129,9 @@ final readonly class ResourceMapResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getIntegration()) {
+        $integration = $request->getIntegration() ?? $this->configuration->getDefaultIntegration();
+
+        if ($integration === null) {
             throw new InvalidRequestException('Integration IRI is required for this operation');
         }
 
@@ -133,7 +139,7 @@ final readonly class ResourceMapResource implements RequestResourceInterface
 
         /** @var ResourceMapResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getIntegration() . self::ENDPOINT, $requestData)
+            $this->client->post($integration . self::ENDPOINT, $requestData)
         ));
 
         return $response;

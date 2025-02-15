@@ -12,21 +12,23 @@ use Apiera\Sdk\Exception\InvalidRequestException;
 use Apiera\Sdk\Exception\MultipleResourcesFoundException;
 use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
+use Apiera\Sdk\Interface\ConfigurationInterface;
+use Apiera\Sdk\Interface\ContextRequestResourceInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 1.0.0
  */
-final readonly class ProductResource implements RequestResourceInterface
+final readonly class ProductResource implements ContextRequestResourceInterface
 {
     private const string ENDPOINT = '/products';
 
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
+        private ConfigurationInterface $configuration,
     ) {
     }
 
@@ -43,13 +45,15 @@ final readonly class ProductResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         /** @var ProductCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getStore() . self::ENDPOINT, $params)
+            $this->client->get($store . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -125,7 +129,9 @@ final readonly class ProductResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
@@ -133,7 +139,7 @@ final readonly class ProductResource implements RequestResourceInterface
 
         /** @var ProductResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
+            $this->client->post($store . self::ENDPOINT, $requestData)
         ));
 
         return $response;
