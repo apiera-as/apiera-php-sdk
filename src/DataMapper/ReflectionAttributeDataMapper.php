@@ -87,8 +87,8 @@ final class ReflectionAttributeDataMapper implements DataMapperInterface
                 ldTotalItems: $collectionResponseData['totalItems'],
                 ldView: isset($collectionResponseData['view']) ? new PartialCollectionView(
                     ldId: $collectionResponseData['view']['@id'],
-                    ldFirst: $collectionResponseData['view']['first'],
-                    ldLast: $collectionResponseData['view']['last'],
+                    ldFirst: $collectionResponseData['view']['first'] ?? null,
+                    ldLast: $collectionResponseData['view']['last'] ?? null,
                     ldNext: $collectionResponseData['view']['next'] ?? null,
                     ldPrevious: $collectionResponseData['view']['previous'] ?? null,
                 ) : null,

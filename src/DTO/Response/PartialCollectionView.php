@@ -8,8 +8,8 @@ final readonly class PartialCollectionView
 {
     public function __construct(
         private string $ldId,
-        private string $ldFirst,
-        private string $ldLast,
+        private ?string $ldFirst = null,
+        private ?string $ldLast = null,
         private ?string $ldNext = null,
         private ?string $ldPrevious = null,
     ) {
@@ -20,12 +20,12 @@ final readonly class PartialCollectionView
         return $this->ldId;
     }
 
-    public function getLdFirst(): string
+    public function getLdFirst(): ?string
     {
         return $this->ldFirst;
     }
 
-    public function getLdLast(): string
+    public function getLdLast(): ?string
     {
         return $this->ldLast;
     }
