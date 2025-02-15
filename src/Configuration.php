@@ -25,6 +25,9 @@ final readonly class Configuration implements ConfigurationInterface
      * @param string $oauthAudience Oauth2 audience
      * @param string $oauthOrganizationId OAuth2 organization ID.
      * @param array<string, mixed> $options
+     * @param string|null $defaultIntegration IRI reference
+     * @param string|null $defaultInventoryLocation IRI reference
+     * @param string|null $defaultStore IRI reference
      */
     public function __construct(
         private string $baseUrl,
@@ -39,6 +42,9 @@ final readonly class Configuration implements ConfigurationInterface
         private int $timeout = 10,
         private bool $debugMode = false,
         private array $options = [],
+        private ?string $defaultIntegration = null,
+        private ?string $defaultInventoryLocation = null,
+        private ?string $defaultStore = null,
     ) {
     }
 
@@ -103,5 +109,20 @@ final readonly class Configuration implements ConfigurationInterface
     public function getCache(): CacheItemPoolInterface
     {
         return $this->cache;
+    }
+
+    public function getDefaultIntegration(): ?string
+    {
+        return $this->defaultIntegration;
+    }
+
+    public function getDefaultInventoryLocation(): ?string
+    {
+        return $this->defaultInventoryLocation;
+    }
+
+    public function getDefaultStore(): ?string
+    {
+        return $this->defaultStore;
     }
 }

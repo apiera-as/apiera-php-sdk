@@ -15,13 +15,13 @@ use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 1.0.0
  */
-final readonly class FileResource implements RequestResourceInterface
+final readonly class FileResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/files';
 

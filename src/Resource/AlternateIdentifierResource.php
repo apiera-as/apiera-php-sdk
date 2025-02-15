@@ -14,13 +14,13 @@ use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 0.2.0
  */
-final readonly class AlternateIdentifierResource implements RequestResourceInterface
+final readonly class AlternateIdentifierResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/alternate_identifiers';
 

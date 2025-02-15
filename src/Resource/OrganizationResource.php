@@ -15,13 +15,13 @@ use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
 use Apiera\Sdk\Interface\DTO\ResponseInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 1.0.0
  */
-final readonly class OrganizationResource implements RequestResourceInterface
+final readonly class OrganizationResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/organizations';
 
