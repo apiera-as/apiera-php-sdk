@@ -9,6 +9,8 @@ use Apiera\Sdk\DTO\Request\Store\StoreRequest;
 use Apiera\Sdk\DTO\Response\Store\StoreCollectionResponse;
 use Apiera\Sdk\DTO\Response\Store\StoreResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -51,6 +53,8 @@ final readonly class StoreResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -65,7 +69,15 @@ final readonly class StoreResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No store found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No store found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple stores found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];
