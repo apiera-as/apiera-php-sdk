@@ -9,6 +9,8 @@ use Apiera\Sdk\DTO\Request\Attribute\AttributeRequest;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeCollectionResponse;
 use Apiera\Sdk\DTO\Response\Attribute\AttributeResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -55,6 +57,8 @@ final readonly class AttributeResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,7 +73,15 @@ final readonly class AttributeResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No attribute found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No attribute found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple attributes found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

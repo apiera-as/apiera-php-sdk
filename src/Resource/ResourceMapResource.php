@@ -9,6 +9,8 @@ use Apiera\Sdk\DTO\Request\ResourceMap\ResourceMapRequest;
 use Apiera\Sdk\DTO\Response\ResourceMap\ResourceMapCollectionResponse;
 use Apiera\Sdk\DTO\Response\ResourceMap\ResourceMapResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -55,6 +57,8 @@ final readonly class ResourceMapResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,7 +73,15 @@ final readonly class ResourceMapResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No resource map found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No resource map found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple resource maps found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

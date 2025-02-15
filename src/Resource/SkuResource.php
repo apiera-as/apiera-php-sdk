@@ -9,6 +9,8 @@ use Apiera\Sdk\DTO\Request\Sku\SkuRequest;
 use Apiera\Sdk\DTO\Response\Sku\SkuCollectionResponse;
 use Apiera\Sdk\DTO\Response\Sku\SkuResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -51,6 +53,8 @@ final readonly class SkuResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -65,7 +69,15 @@ final readonly class SkuResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No sku found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No sku found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple skus found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

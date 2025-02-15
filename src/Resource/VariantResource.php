@@ -9,6 +9,8 @@ use Apiera\Sdk\DTO\Request\Variant\VariantRequest;
 use Apiera\Sdk\DTO\Response\Variant\VariantCollectionResponse;
 use Apiera\Sdk\DTO\Response\Variant\VariantResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
@@ -55,6 +57,8 @@ final readonly class VariantResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,17 +73,25 @@ final readonly class VariantResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No variant found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No variant found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple variants found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];
     }
 
-        /**
-         * @throws InvalidRequestException
-         * @throws \Apiera\Sdk\Exception\Http\ApiException
-         * @throws \Apiera\Sdk\Exception\Mapping\MappingException
-         */
+    /**
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
+     */
     public function get(RequestInterface $request): VariantResponse
     {
         if (!$request instanceof VariantRequest) {
@@ -100,11 +112,11 @@ final readonly class VariantResource implements RequestResourceInterface
         return $response;
     }
 
-        /**
-         * @throws InvalidRequestException
-         * @throws \Apiera\Sdk\Exception\Http\ApiException
-         * @throws \Apiera\Sdk\Exception\Mapping\MappingException
-         */
+    /**
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
+     */
     public function create(RequestInterface $request): VariantResponse
     {
         if (!$request instanceof VariantRequest) {
@@ -127,11 +139,11 @@ final readonly class VariantResource implements RequestResourceInterface
         return $response;
     }
 
-        /**
-         * @throws InvalidRequestException
-         * @throws \Apiera\Sdk\Exception\Http\ApiException
-         * @throws \Apiera\Sdk\Exception\Mapping\MappingException
-         */
+    /**
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     * @throws \Apiera\Sdk\Exception\Mapping\MappingException
+     */
     public function update(RequestInterface $request): VariantResponse
     {
         if (!$request instanceof VariantRequest) {
@@ -154,10 +166,10 @@ final readonly class VariantResource implements RequestResourceInterface
         return $response;
     }
 
-        /**
-         * @throws InvalidRequestException
-         * @throws \Apiera\Sdk\Exception\Http\ApiException
-         */
+    /**
+     * @throws InvalidRequestException
+     * @throws \Apiera\Sdk\Exception\Http\ApiException
+     */
     public function delete(RequestInterface $request): void
     {
         if (!$request instanceof VariantRequest) {
