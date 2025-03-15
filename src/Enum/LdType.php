@@ -18,6 +18,8 @@ use Apiera\Sdk\DTO\Response\Distributor\DistributorCollectionResponse;
 use Apiera\Sdk\DTO\Response\Distributor\DistributorResponse;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
+use Apiera\Sdk\DTO\Response\Integration\IntegrationCollectionResponse;
+use Apiera\Sdk\DTO\Response\Integration\IntegrationResponse;
 use Apiera\Sdk\DTO\Response\Inventory\InventoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Inventory\InventoryResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationCollectionResponse;
@@ -40,7 +42,6 @@ use Apiera\Sdk\DTO\Response\Tag\TagCollectionResponse;
 use Apiera\Sdk\DTO\Response\Tag\TagResponse;
 use Apiera\Sdk\DTO\Response\Variant\VariantCollectionResponse;
 use Apiera\Sdk\DTO\Response\Variant\VariantResponse;
-use Exception;
 use InvalidArgumentException;
 
 /**
@@ -70,9 +71,6 @@ enum LdType: string
     case Variant = 'Variant';
     case Collection = 'Collection';
 
-    /**
-     * @throws Exception
-     */
     public static function getResponseClassForType(self $ldType, ResponseType $responseType): string
     {
         $match = match ($ldType) {
@@ -148,7 +146,10 @@ enum LdType: string
                 ResponseType::Single->value => ResourceMapResponse::class,
                 ResponseType::Collection->value => ResourceMapCollectionResponse::class,
             ],
-            self::Integration => throw new Exception('To be implemented'),
+            self::Integration => [
+                ResponseType::Single->value => IntegrationResponse::class,
+                ResponseType::Collection->value => IntegrationCollectionResponse::class,
+            ],
             self::Collection => throw new InvalidArgumentException(
                 'Collection type cannot be mapped directly'
             ),
