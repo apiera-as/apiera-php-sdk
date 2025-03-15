@@ -14,6 +14,7 @@ use Apiera\Sdk\Resource\BrandResource;
 use Apiera\Sdk\Resource\CategoryResource;
 use Apiera\Sdk\Resource\DistributorResource;
 use Apiera\Sdk\Resource\FileResource;
+use Apiera\Sdk\Resource\IntegrationResource;
 use Apiera\Sdk\Resource\InventoryLocationResource;
 use Apiera\Sdk\Resource\InventoryResource;
 use Apiera\Sdk\Resource\OrganizationResource;
@@ -49,6 +50,7 @@ use BadMethodCallException;
  * @method PropertyTermResource propertyTerm()
  * @method ResourceMapResource resourceMap()
  * @method InventoryResource inventory()
+ * @method IntegrationResource integration()
  */
 final readonly class ApieraSdk
 {
@@ -72,6 +74,7 @@ final readonly class ApieraSdk
         'propertyTerm' => PropertyTermResource::class,
         'resourceMap' => ResourceMapResource::class,
         'inventory' => InventoryResource::class,
+        'integration' => IntegrationResource::class,
     ];
 
     private ResourceFactory $resourceFactory;
