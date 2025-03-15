@@ -7,6 +7,8 @@ namespace Apiera\Sdk\DTO\Response\Integration;
 use Apiera\Sdk\Attribute\JsonLdResponseField;
 use Apiera\Sdk\Attribute\ResponseField;
 use Apiera\Sdk\DTO\Response\AbstractResponse;
+use Apiera\Sdk\Enum\IntegrationProtocol;
+use Apiera\Sdk\Enum\IntegrationStatus;
 use Apiera\Sdk\Enum\LdType;
 use Apiera\Sdk\Transformer\DateTimeTransformer;
 use Apiera\Sdk\Transformer\IntegrationProtocolTransformer;
@@ -29,8 +31,8 @@ final readonly class IntegrationResponse extends AbstractResponse
      * @param DateTimeInterface $createdAt Creation timestamp
      * @param DateTimeInterface $updatedAt Last update timestamp
      * @param string $name Integration name
-     * @param string $protocol Integration protocol enumeration
-     * @param string $status Integration status enumeration
+     * @param IntegrationProtocol $protocol Integration protocol enumeration
+     * @param IntegrationStatus $status Integration status enumeration
      */
     public function __construct(
         #[JsonLdResponseField('@id')]
@@ -46,9 +48,9 @@ final readonly class IntegrationResponse extends AbstractResponse
         #[ResponseField('name')]
         private string $name,
         #[ResponseField('protocol', IntegrationProtocolTransformer::class)]
-        private string $protocol,
+        private IntegrationProtocol $protocol,
         #[ResponseField('status', IntegrationStatusTransformer::class)]
-        private string $status,
+        private IntegrationStatus $status,
     ) {
         parent::__construct(
             $this->ldId,
@@ -64,12 +66,12 @@ final readonly class IntegrationResponse extends AbstractResponse
         return $this->name;
     }
 
-    public function getProtocol(): string
+    public function getProtocol(): IntegrationProtocol
     {
         return $this->protocol;
     }
 
-    public function getStatus(): string
+    public function getStatus(): IntegrationStatus
     {
         return $this->status;
     }
