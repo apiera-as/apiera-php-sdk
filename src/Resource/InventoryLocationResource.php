@@ -9,16 +9,18 @@ use Apiera\Sdk\DTO\Request\InventoryLocation\InventoryLocationRequest;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationCollectionResponse;
 use Apiera\Sdk\DTO\Response\InventoryLocation\InventoryLocationResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 1.0.0
  */
-final readonly class InventoryLocationResource implements RequestResourceInterface
+final readonly class InventoryLocationResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/inventory_locations';
 
@@ -53,6 +55,8 @@ final readonly class InventoryLocationResource implements RequestResourceInterfa
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -67,7 +71,15 @@ final readonly class InventoryLocationResource implements RequestResourceInterfa
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No inventory location found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No inventory location found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple inventory locations found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

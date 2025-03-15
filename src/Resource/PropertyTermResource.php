@@ -9,16 +9,18 @@ use Apiera\Sdk\DTO\Request\PropertyTerm\PropertyTermRequest;
 use Apiera\Sdk\DTO\Response\PropertyTerm\PropertyTermCollectionResponse;
 use Apiera\Sdk\DTO\Response\PropertyTerm\PropertyTermResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 1.0.0
  */
-final readonly class PropertyTermResource implements RequestResourceInterface
+final readonly class PropertyTermResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/terms';
 
@@ -55,6 +57,8 @@ final readonly class PropertyTermResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,7 +73,15 @@ final readonly class PropertyTermResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No property term found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No property term found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple property terms found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

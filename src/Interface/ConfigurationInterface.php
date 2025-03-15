@@ -38,4 +38,10 @@ interface ConfigurationInterface
     public function getOptions(): array;
 
     public function getCache(): CacheItemPoolInterface;
+
+    public function getDefaultIntegration(): ?string;
+
+    public function getDefaultInventoryLocation(): ?string;
+
+    public function getDefaultStore(): ?string;
 }

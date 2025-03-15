@@ -9,17 +9,19 @@ use Apiera\Sdk\DTO\Request\File\FileRequest;
 use Apiera\Sdk\DTO\Response\File\FileCollectionResponse;
 use Apiera\Sdk\DTO\Response\File\FileResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
 use Apiera\Sdk\Exception\NotSupportedOperationException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
+use Apiera\Sdk\Interface\NoContextRequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 1.0.0
  */
-final readonly class FileResource implements RequestResourceInterface
+final readonly class FileResource implements NoContextRequestResourceInterface
 {
     private const string ENDPOINT = '/api/v1/files';
 
@@ -52,6 +54,8 @@ final readonly class FileResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -66,7 +70,15 @@ final readonly class FileResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No file found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No file found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple files found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];

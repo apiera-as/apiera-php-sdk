@@ -9,22 +9,26 @@ use Apiera\Sdk\DTO\Request\Category\CategoryRequest;
 use Apiera\Sdk\DTO\Response\Category\CategoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Category\CategoryResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
+use Apiera\Sdk\Interface\ConfigurationInterface;
+use Apiera\Sdk\Interface\ContextRequestResourceInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**
  * @author Fredrik Tveraaen <fredrik.tveraaen@apiera.io>
  * @since 0.1.0
  */
-final readonly class CategoryResource implements RequestResourceInterface
+final readonly class CategoryResource implements ContextRequestResourceInterface
 {
     private const string ENDPOINT = '/categories';
 
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
+        private ConfigurationInterface $configuration,
     ) {
     }
 
@@ -41,13 +45,15 @@ final readonly class CategoryResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
         /** @var CategoryCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getStore() . self::ENDPOINT, $params)
+            $this->client->get($store . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -55,6 +61,8 @@ final readonly class CategoryResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,7 +77,15 @@ final readonly class CategoryResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No category found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No category found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple categories found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];
@@ -113,7 +129,9 @@ final readonly class CategoryResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getStore()) {
+        $store = $request->getStore() ?? $this->configuration->getDefaultStore();
+
+        if ($store === null) {
             throw new InvalidRequestException('Store IRI is required for this operation');
         }
 
@@ -121,7 +139,7 @@ final readonly class CategoryResource implements RequestResourceInterface
 
         /** @var CategoryResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getStore() . self::ENDPOINT, $requestData)
+            $this->client->post($store . self::ENDPOINT, $requestData)
         ));
 
         return $response;

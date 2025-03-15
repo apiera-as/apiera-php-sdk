@@ -34,7 +34,10 @@ $apieraConfig = new \Apiera\Sdk\Configuration(
     cache: $yourCacheInstance, // Pass a CacheItemPoolInterface object
     timeout: 15, // Optional: Request timeout (default: 10 seconds)
     debugMode: true, // Optional: Enable or disable debug mode (default: false)
-    options: [] // Optional: Pass your custom Guzzle handlers or middlewares
+    options: [], // Optional: Pass your custom Guzzle handlers or middlewares
+    defaultIntegration: 'integration-iri', // Optional: Pass a default integration iri reference
+    defaultInventoryLocation: 'inventory-location-iri', // Optional: Pass a default inventory location iri reference
+    defaultStore: 'store-iri' // Optional: Pass a default store iri reference
 );
 ```
 

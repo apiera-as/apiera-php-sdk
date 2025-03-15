@@ -9,22 +9,26 @@ use Apiera\Sdk\DTO\Request\Inventory\InventoryRequest;
 use Apiera\Sdk\DTO\Response\Inventory\InventoryCollectionResponse;
 use Apiera\Sdk\DTO\Response\Inventory\InventoryResponse;
 use Apiera\Sdk\Exception\InvalidRequestException;
+use Apiera\Sdk\Exception\MultipleResourcesFoundException;
+use Apiera\Sdk\Exception\ResourceNotFoundException;
 use Apiera\Sdk\Interface\ClientInterface;
+use Apiera\Sdk\Interface\ConfigurationInterface;
+use Apiera\Sdk\Interface\ContextRequestResourceInterface;
 use Apiera\Sdk\Interface\DataMapperInterface;
 use Apiera\Sdk\Interface\DTO\RequestInterface;
-use Apiera\Sdk\Interface\RequestResourceInterface;
 
 /**int
  * @author Marie Rinden <marie@shoppingnorge.no>
  * @since 1.0.0
  */
-final readonly class InventoryResource implements RequestResourceInterface
+final readonly class InventoryResource implements ContextRequestResourceInterface
 {
     private const string ENDPOINT = '/inventories';
 
     public function __construct(
         private ClientInterface $client,
         private DataMapperInterface $mapper,
+        private ConfigurationInterface $configuration,
     ) {
     }
 
@@ -41,13 +45,15 @@ final readonly class InventoryResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getInventoryLocation()) {
+        $inventoryLocation = $request->getInventoryLocation() ?? $this->configuration->getDefaultInventoryLocation();
+
+        if ($inventoryLocation === null) {
             throw new InvalidRequestException('Inventory location IRI is required for this operation');
         }
 
         /** @var InventoryCollectionResponse $collectionResponse */
         $collectionResponse = $this->mapper->fromCollectionResponse($this->client->decodeResponse(
-            $this->client->get($request->getInventoryLocation() . self::ENDPOINT, $params)
+            $this->client->get($inventoryLocation . self::ENDPOINT, $params)
         ));
 
         return $collectionResponse;
@@ -55,6 +61,8 @@ final readonly class InventoryResource implements RequestResourceInterface
 
     /**
      * @throws InvalidRequestException
+     * @throws ResourceNotFoundException
+     * @throws MultipleResourcesFoundException
      * @throws \Apiera\Sdk\Exception\Http\ApiException
      * @throws \Apiera\Sdk\Exception\Mapping\MappingException
      */
@@ -69,7 +77,15 @@ final readonly class InventoryResource implements RequestResourceInterface
         $collection = $this->find($request, $params);
 
         if ($collection->getLdTotalItems() < 1) {
-            throw new InvalidRequestException('No inventory found matching the given criteria');
+            throw new ResourceNotFoundException(
+                'No inventory found matching the given criteria'
+            );
+        }
+
+        if ($collection->getLdTotalItems() > 1) {
+            throw new MultipleResourcesFoundException(
+                'Multiple inventories found matching the given criteria'
+            );
         }
 
         return $collection->getLdMembers()[0];
@@ -113,7 +129,9 @@ final readonly class InventoryResource implements RequestResourceInterface
             );
         }
 
-        if (!$request->getInventoryLocation()) {
+        $inventoryLocation = $request->getInventoryLocation() ?? $this->configuration->getDefaultInventoryLocation();
+
+        if ($inventoryLocation === null) {
             throw new InvalidRequestException('Inventory location IRI is required for this operation');
         }
 
@@ -121,7 +139,7 @@ final readonly class InventoryResource implements RequestResourceInterface
 
         /** @var InventoryResponse $response */
         $response = $this->mapper->fromResponse($this->client->decodeResponse(
-            $this->client->post($request->getInventoryLocation() . self::ENDPOINT, $requestData)
+            $this->client->post($inventoryLocation . self::ENDPOINT, $requestData)
         ));
 
         return $response;
