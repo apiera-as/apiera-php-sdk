@@ -16,11 +16,9 @@ namespace Apiera\Sdk\DTO;
 final readonly class QueryParameters
 {
     /**
-     * @param array<string, scalar|array<scalar>> $params
      * @param array<string, string> $filters
      */
     public function __construct(
-        private array $params = [],
         private array $filters = [],
         private ?int $page = null,
     ) {
@@ -31,10 +29,12 @@ final readonly class QueryParameters
      */
     public function toArray(): array
     {
-        return array_filter([
-            'params' => $this->params,
-            'filters' => $this->filters,
-            'page' => $this->page,
-        ], fn($value) => $value !== null && $value !== []);
+        $params = $this->filters;
+
+        if ($this->page !== null) {
+            $params['page'] = $this->page;
+        }
+
+        return $params;
     }
 }
